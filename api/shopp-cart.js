@@ -26,3 +26,10 @@ export function getPersonalCart() {
 export function cartDelete(data) {
   return request.post(`/mall/api/shippingCart/delete`, { data })
 }
+
+/**
+ * 修改购物车商品数量
+ */
+export function changeCount(data) {
+  return request.get(`/mall/api/shippingCart/changeCount`, { data })
+}

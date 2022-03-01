@@ -91,7 +91,7 @@
       // input的字体大小，单位rpx
       size: {
         type: [Number, String],
-        default: 24
+        default: 26
       },
       // 加减图标的颜色
       color: {

@@ -5,15 +5,17 @@
       :back-text-style="{color: '#fff'}" title="购物车" back-icon-name="nav-back" back-icon-size="50" />
     <view class="list-view " v-if="cartList.length">
       <view class="select-all-view" style="flex-direction: row; align-items: center;">
-        <u-icon custom-prefix="hongyan-icon" :name="allSelect?'a-ic_click_shangpin2x':'a-ic_normal_shangpin2x'"
-          size="32" :color="allSelect?'#156FFF': '#CCCCCC'" @click="toAllSelect" />
+        <view style="padding: 10rpx;" @click="toAllSelect">
+          <u-icon custom-prefix="hongyan-icon" :name="allSelect?'a-ic_click_shangpin2x':'a-ic_normal_shangpin2x'"
+            size="32" :color="allSelect?'#156FFF': '#CCCCCC'" />
+        </view>
         <text class="qx-text">全选</text>
       </view>
 
       <u-swipe-action bg-color="rgb(250, 250, 250,250)" @open="open" :disabled="false" :index="index"
         v-for="(item, index) in cartList" :key="item.id" @click="click" :show="false" :btn-width="btnWidth"
         @close="close" :options="options" @content-click="contentClick">
-        <shopping-cart-item :item="item" :index="index" @chooseItem="chooseItem" />
+        <shopping-cart-item :item="item" :index="index" @chooseItem="chooseItem" @changeCount="changeCount" />
 
       </u-swipe-action>
 
@@ -27,9 +29,11 @@
     </view>
 
     <view class="buttom-view" v-show="cartList.length">
-      <view style="height: 104rpx; align-items: center;display: flex;padding-left: 52rpx;">
-        <u-icon custom-prefix="hongyan-icon" :name="allSelect?'a-ic_click_shangpin2x':'a-ic_normal_shangpin2x'"
-          size="32" :color="allSelect?'#156FFF': '#CCCCCC'" @click="toAllSelect" />
+      <view style="height: 104rpx; align-items: center;display: flex;padding-left: 42rpx;">
+        <view style="padding: 10rpx;" @click="toAllSelect">
+          <u-icon custom-prefix="hongyan-icon" :name="allSelect?'a-ic_click_shangpin2x':'a-ic_normal_shangpin2x'"
+            size="32" :color="allSelect?'#156FFF': '#CCCCCC'" />
+        </view>
         <text class="qx-text">全选</text>
 
         <view
@@ -41,7 +45,7 @@
           </view>
           <text style="color: #999999;font-size: 24rpx;">已选{{selectAllCart}}件</text>
         </view>
-        <text class="js-text">结算</text>
+        <text class="js-text" @click="toSubmit">结算</text>
       </view>
 
     </view>
@@ -52,7 +56,8 @@
   import shoppingCartItem from './components/shopping-cart-item.vue'
   import {
     getPersonalCart,
-    cartDelete
+    cartDelete,
+    changeCount
   } from '@/api/shopp-cart.js'
   export default {
     components: {
@@ -138,11 +143,30 @@
         })
         this.allSelect = !tempList.length
       },
+      /**
+       * @param {Object} e 修改购物车商品数量
+       */
+      changeCount(e) {
+
+        let param = {
+          id: this.cartList[e.index].id,
+          count: e.value
+        }
+
+        changeCount(param)
+          .then(res => {
+
+          })
+          .catch(err => {
+
+          })
+
+      },
       //去全选
       toAllSelect() {
         this.allSelect = !this.allSelect
         this.cartList.forEach((item, index) => {
-          this.cartList[index].select = !this.cartList[index].select
+          this.cartList[index].select = this.allSelect
         })
 
       },
@@ -180,6 +204,18 @@
         uni.reLaunch({
           url: '../home/index'
         })
+      },
+      toSubmit(){
+        let idArr =[]
+        this.cartList.forEach(item=>{
+          if(item.select){
+            idArr.push(item.id)
+          }
+        })
+
+        uni.navigateTo({
+          url:`../shopping-info/confirm-order?detail=false&ids=${idArr.toString()}`
+        })
       }
     }
 
@@ -207,7 +243,7 @@
     height: 84rpx;
     align-items: center;
     display: flex;
-    padding-left: 28rpx;
+    padding-left: 18rpx;
   }
 
   .empty-view {

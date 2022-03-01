@@ -1,8 +1,10 @@
 <template>
   <view class="parent-view">
+    <view style="padding: 10rpx 10rpx 10rpx 26rpx;" @click="chooseCart">
     <u-icon custom-prefix="hongyan-icon" :name="isSelect?'a-ic_click_shangpin2x' :'a-ic_normal_shangpin2x'" size="32"
-      :color="isSelect?'#156FFF': '#CCCCCC'" style="margin-left: 26rpx;" v-show="showChoseIcon" @click="chooseCart" />
-    <view style="margin-left:26rpx;display: flex;">
+      :color="isSelect?'#156FFF': '#CCCCCC'" v-show="showChoseIcon" />
+       </view>
+    <view style="margin-left:16rpx;display: flex;">
       <image :src="imgUrl" class="head-image" />
       <view
         style="padding-left: 30rpx;margin-right: 20rpx;justify-content: space-around;display: flex;flex-direction: column;">
@@ -12,6 +14,9 @@
           <text class="price-text">￥{{item.goodsPrice}}</text>
           <u-number-box v-model="item.goodsCount" :bg-color="bgColor" :color="color" :min="1" :max="item.goodsInventory" :step="step" :index="index"
             :disabled="disabled" @change="change" @focus="focus"></u-number-box>
+        </view>
+        <view style="display: flex;align-items: flex-end;justify-content: flex-end;">
+          <text style="color: #EF293B;font-size: 22rpx;font-family: PingFangSC-Regular;">起订量 {{item.goodsMoq}}  库存{{item.goodsInventory}}</text>
         </view>
       </view>
     </view>
@@ -56,6 +61,7 @@
     },
     methods: {
       change(e) {
+        this.$emit("changeCount",e)
       },
       focus() {
         console.log('focus');
@@ -110,7 +116,7 @@
   .title-text {
     width: 380rpx;
     color: #000000;
-    margin-top: -10rpx;
+    margin-top: 10rpx;
     font-size: 28rpx;
     font-family: PingFangSC-Regular;
     height: 70rpx;
