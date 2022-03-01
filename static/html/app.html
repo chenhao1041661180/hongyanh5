@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
+    <title>运营数据</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/H5/static/images/favicon.ico">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <style type="text/css">
+      body {
+        margin: 0;
+        background-color: #f3f3f3;
+      }
+
+      iframe {
+        width: 375px;
+        height: 667px;
+        background-color: #fff;
+        box-sizing: content-box;
+        border: none;
+      }
+
+      @media screen and (min-width: 450px) {
+        iframe {
+          position: fixed;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          margin: auto;
+          border: rgba(0, 0, 0, 0.7) solid 10px;
+          border-radius: 4px;
+        }
+      }
+    </style>
+    <script type="text/javascript">
+      window.isPC = true
+      // iframe pathname 配制
+      // manifest.json > h5 > router > base
+      window.onload = function() {
+        // 监听电脑浏览器窗口尺寸改变
+        window.onresize = function() {
+          // 窗口宽度 小于或等于420px 时，跳转回H5页面
+          if (window.innerWidth <= 420) {
+            window.location.pathname = '/H5'
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <iframe src="/H5"></iframe>
+  </body>
+</html>

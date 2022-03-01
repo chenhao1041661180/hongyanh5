@@ -1,0 +1,270 @@
+{
+    "name" : "运营数据",
+    "appid" : "__UNI__C8F4AD5",
+    "description" : "",
+    "versionName" : "1.0.0",
+    "versionCode" : 100,
+    "transformPx" : false,
+    "debug" : false,
+    // uni统计配置
+    "uniStatistics" : {
+        "enable" : false
+    },
+    // 超时
+    "networkTimeout" : {
+        "request" : 60000,
+        "connectSocket" : 60000,
+        "uploadFile" : 60000,
+        "downloadFile" : 60000
+    },
+    // 5+App特有相关
+    "app-plus" : {
+        // 自定义组件模式
+        "usingComponents" : true,
+        // 是否启用 uni-app/weex 模式
+        "nvueCompiler" : "uni-app",
+        // 启用V3版本编译器
+        "compilerVersion" : 3,
+        // "nvueLaunchMode" : "fast",
+        // 可不加载基于 webview 的运行框架
+        // "renderer": "native",
+        "launchwebview" : {
+            "render" : "onscreen"
+        },
+        // 默认值auto，iOS上是否支持屏幕左边滑动关闭当前页面。默认是可关闭。设为none则不响应左滑动画。
+        "popGesture" : "none",
+        // 开启硬件加速
+        // "hardwareAccelerated" : true,
+        "compatible" : {
+            // true表示忽略版本检查提示框，HBuilderX1.9.0及以上版本支持
+            "ignoreVersion" : true
+        },
+        // 底部不被软键盘弹起
+        "softinput" : {
+            // 是否显示iOS软键盘上的导航条 上一项、下一项和完成等按钮 auto|none
+            // "navBar" : "none",
+            // 是否开启辅助输入功能 true|false
+            // "auxiliary" : true,
+            // 软键盘webview窗体高度挤压/不变 adjustPan|adjustResize
+            "mode" : "adjustResize"
+        },
+        // 文件原生混淆加密
+        "confusion" : {},
+        // "description": "NVUE原生混淆",
+        // "resources": {
+        // 	"pages/barcode/barcode.nvue": {},
+        // 	"pages/map/map.nvue": {}
+        // }
+        // 5+App特有相关
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : false,
+            "waiting" : false,
+            "autoclose" : false,
+            "delay" : 0
+        },
+        "optimization" : {
+            // 开启分包优化
+            "subPackages" : true
+        },
+        "runmode" : "liberate", // 开启分包优化后，必须配置资源释放模式
+
+        // 模块配置
+        "modules" : {
+            // 使用Canvas模块
+            "Canvas" : "nvue canvas",
+            "Maps" : {},
+            "Push" : {},
+            "VideoPlayer" : {}
+        },
+        // 应用发布信息
+        "distribute" : {
+            "google" : {},
+            // 开启硬件加速
+            // "hardwareAccelerated" : true
+            // android打包配置
+            "android" : {
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_LOCATION_EXTRA_COMMANDS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_MULTICAST_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.INSTALL_PACKAGES\"/>",
+                    "<uses-permission android:name=\"android.permission.INSTALL_SHORTCUT\"/>",
+                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.NFC\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\"/>",
+                    "<uses-permission android:name=\"android.permission.UNINSTALL_SHORTCUT\"/>",
+                    "<uses-permission android:name=\"android.permission.USE_FINGERPRINT\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ]
+            },
+            // ios打包配置
+            "ios" : {
+                "urlschemewhitelist" : [ "baidumap", "iosamap" ],
+                "UIBackgroundModes" : [ "location" ],
+                // 适配暗黑模式
+                "UIUserInterfaceStyle" : "Automatic",
+                "idfa" : true
+            },
+            // SDK配置
+            "sdkConfigs" : {
+                "maps" : {
+                    "amap" : {
+                        // 原生壳
+                        "appkey_ios" : "cecd9ab6a866c24a209f8a1bca9587e2",
+                        // 生产打包 Bundle ID：com.RunLion.HSEmployeeHBuilder
+                        // "appkey_ios" : "1b33e06eaac98cd9d5e892d628e5956d",
+                        // 离线打包 Bundle ID：com.RunLion.ChannelsToVisit
+                        // "appkey_ios" : "e8761919e4ae8c69aa0d39eb8115fc5b",
+                        // 原生壳
+                        // "appkey_android" : "cfca19c4dbb9a2e300d2b435603c053d",
+                        // 本地 uni.hongshi.customer.visit
+                        "appkey_android" : "c3717770f6d07edaa2946742603eded2"
+                    }
+                },
+                "ad" : {},
+                "push" : {
+                    "unipush" : {}
+                }
+            },
+            // 屏幕方向
+            "orientation" : [ "portrait-primary" ],
+            "icons" : {
+                "android" : {
+                    "hdpi" : "unpackage/res/icons/72x72.png",
+                    "xhdpi" : "unpackage/res/icons/96x96.png",
+                    "xxhdpi" : "unpackage/res/icons/144x144.png",
+                    "xxxhdpi" : "unpackage/res/icons/192x192.png"
+                },
+                "ios" : {
+                    "appstore" : "unpackage/res/icons/1024x1024.png",
+                    "ipad" : {
+                        "app" : "unpackage/res/icons/76x76.png",
+                        "app@2x" : "unpackage/res/icons/152x152.png",
+                        "notification" : "unpackage/res/icons/20x20.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png",
+                        "proapp@2x" : "unpackage/res/icons/167x167.png",
+                        "settings" : "unpackage/res/icons/29x29.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "spotlight" : "unpackage/res/icons/40x40.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png"
+                    },
+                    "iphone" : {
+                        "app@2x" : "unpackage/res/icons/120x120.png",
+                        "app@3x" : "unpackage/res/icons/180x180.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png",
+                        "notification@3x" : "unpackage/res/icons/60x60.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "settings@3x" : "unpackage/res/icons/87x87.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
+                        "spotlight@3x" : "unpackage/res/icons/120x120.png"
+                    }
+                }
+            }
+        },
+        "nativePlugins" : {}
+    },
+    // 快应用特有相关
+    "quickapp" : {},
+    // 小程序特有相关
+    "mp-weixin" : {
+        "appid" : "",
+        "setting" : {
+            "urlCheck" : false,
+            "es6" : false,
+            "postcss" : true,
+            "minified" : true
+        },
+        // 微信平台关闭统计
+        // "uniStatistics": {
+        // 		"enable" : false
+        // },
+        // 自定义组件模式
+        "usingComponents" : true
+    },
+    "mp-alipay" : {
+        "usingComponents" : true
+    },
+    "mp-baidu" : {
+        "usingComponents" : true
+    },
+    "mp-toutiao" : {
+        "setting" : {
+            "minified" : true,
+            "es6" : false,
+            "postcss" : true,
+            "urlCheck" : false
+        },
+        "usingComponents" : true
+    },
+    "h5" : {
+        "title" : "红岩扶贫",
+        // "domain" : "",
+        "template" : "public/index.html",
+        "devServer" : {
+            "https" : false,
+            "disableHostCheck" : true,
+            "proxy" : {
+                "/api" : {
+                    "target" : "https://jd.hongyanfuli.com/",
+                    "changeOrigin" : true, //是否跨域
+                    "secure" : true, // 设置支持https协议的代理
+                    "pathRewrite" : {
+                        "^/api" : ""
+                    }
+                },
+                "/board" : {
+                    // "target": "192.168.173.25",
+                    "target" : "https://jd.hongyanfuli.com/",
+                    "changeOrigin" : true, //是否跨域
+                    "secure" : true, // 设置支持https协议的代理
+                    "pathRewrite" : {
+                        "^/board" : ""
+                    }
+                },
+                "/business-analysis" : {
+                    // "target": "http://192.168.173.39:8000",
+                    "target" : "http://192.168.158.158:8020",
+                    // "target" : "http://192.168.173.39:8000/api",
+                    "changeOrigin" : true,
+                    "secure" : false
+                },
+                "/group1" : {
+                    "target" : "http://192.168.173.155:8880",
+                    "changeOrigin" : true,
+                    "pathRewrite" : {
+                        "^/H5" : ""
+                    }
+                },
+                "/group2" : {
+                    "target" : "http://192.168.10.40",
+                    "changeOrigin" : true,
+                    "pathRewrite" : {
+                        "^/group2" : "/group2"
+                    }
+                }
+            }
+        },
+        "router" : {
+            "mode" : "hash",
+            "base" : "./"
+        },
+        "optimization" : {
+            // 是否启用摇树优化
+            "treeShaking" : {
+                "enable" : true
+            }
+        }
+    }
+}

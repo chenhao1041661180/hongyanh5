@@ -1,0 +1,18 @@
+{
+  "_name": "English",
+
+  "public_title": "News bulletin",
+  "public_contentdown": "Pull up to show more",
+  "public_contentrefresh": "Loading...",
+  "public_contentnomore": "—— I have a bottom line ——",
+
+  "page_home_barTitle": "My schedule",
+  "page_plan_barTitle": "plan",
+  "page_my_container_title": "My",
+  "page_news_refresh_text_refreshed": "Refreshed",
+  "page_news_refresh_text_refreshing": "Refreshing...",
+  "page_news_refresh_text_now": "Release refresh now",
+  "page_news_refresh_text_dropdown": "Drop down to refresh",
+
+  "page_detail_error": "getting information failure"
+}

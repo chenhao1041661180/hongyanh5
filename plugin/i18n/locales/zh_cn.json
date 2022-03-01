@@ -1,0 +1,19 @@
+{
+  "_name": "简体中文",
+
+  "public_title": "新闻公告",
+  "public_contentdown": "上拉显示更多",
+  "public_contentrefresh": "正在加载...",
+  "public_contentnomore": "—— 我是有底线的 ——",
+
+  "page_home_barTitle": "我的日程",
+  "page_plan_barTitle": "计划",
+  "page_my_container_title": "我的",
+  "page_news_refresh_text_refreshed": "已刷新",
+  "page_news_refresh_text_refreshing": "正在刷新...",
+  "page_news_refresh_text_now": "释放立即刷新",
+  "page_news_refresh_text_dropdown": "下拉可以刷新",
+
+  "page_detail_error": "获取信息失败"
+
+}

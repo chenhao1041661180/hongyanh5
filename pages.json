@@ -1,0 +1,109 @@
+{
+  "pages": [
+    {
+      "path": "pages/home/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/shopping-cart/index",
+      "style": {
+        "navigationBarTitleText": "购物车"
+      }
+    },{
+      "path": "pages/personal-center/index",
+      "style": {
+        "navigationBarTitleText": "个人中心"
+      }
+    },
+    {
+      "path": "pages/more-shopping/index",
+      "style": {
+        "navigationBarTitleText": "更多商品"
+      }
+    },
+    {
+      "path": "pages/shopping-info/index",
+      "style": {
+        "navigationBarTitleText": "商品详情"
+      }
+    },
+    {
+      "path": "pages/shopping-info/confirm-order",
+      "style": {
+        "navigationBarTitleText": "确认订单"
+      }
+    },
+    {
+      "path": "pages/shopping-info/submit-order",
+      "style": {
+        "navigationBarTitleText": "选择支付方式"
+      }
+    },
+    {
+      "path": "pages/address/receiving-address",
+      "style": {
+        "navigationBarTitleText": "新增收货地址"
+      }
+    },
+    {
+      "path": "pages/address/address-list",
+      "style": {
+        "navigationBarTitleText": "我的收货地址"
+      }
+    }
+  ],
+  // 并符合components/组件名称/组件名称.vue目录结构
+  "easycom": {
+    // "custom": {
+    //   "uni-(.*)": "@/components/uni-$1.vue"
+    // },
+    "^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue",
+    "autoscan": true
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "运营数据",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF",
+    // 横屏配置，全局屏幕旋转设置(仅 APP/微信/QQ小程序)，支持 auto / portrait / landscape
+    "pageOrientation": "portrait",
+    "app-plus": {
+      // 不显示滚动条
+      "scrollIndicator": "none",
+      // 页面回弹效果
+      "bounce": "none",
+      // 不显示导航栏
+      "titleNView": false
+    }
+  },
+  // 使用自定义底部 tab
+  "tabBar": {
+  	"color": "#CED5DE",
+  	"selectedColor": "#2059F7",
+  	"backgroundColor": "#FFFFFF",
+  	"borderStyle": "#F2F2F2",
+    "fontSize":"22rpx",
+  	"list": [{
+  			"pagePath": "pages/home/index",
+  			"iconPath": "/static/tabbar/tabbar_homepage_normal.png",
+  			"selectedIconPath": "static/tabbar/tabbar_homepage_click.png",
+  			"text": "首页"
+
+  		},
+  		{
+  			"pagePath": "pages/shopping-cart/index",
+  			"iconPath": "/static/tabbar/tabbar_gouwuche_normal.png",
+  			"selectedIconPath": "static/tabbar/tabbar_gouwuche_click.png",
+  			"text": "购物车"
+  		},
+  		{
+  			"pagePath": "pages/personal-center/index",
+  			"iconPath": "/static/tabbar/tabbar_my_normal.png",
+  			"selectedIconPath": "static/tabbar/tabbar_my_click.png",
+  			"text": "个人中心"
+  		}
+  	]
+  }
+}

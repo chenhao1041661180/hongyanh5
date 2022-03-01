@@ -1,0 +1,12 @@
+node_modules/
+.project
+unpackage/
+.DS_Store
+wxcomponents/**/*.vue
+wxcomponents/**/*.css
+package-lock.json
+/mixins/i18n-nvue.js
+/libs/canvas
+/.eslintrc.js.js
+/.eslintrc.vue.js
+/pages/component/circularProgress
