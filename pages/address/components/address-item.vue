@@ -1,17 +1,17 @@
 <template>
   <view class="item-bg-view">
     <view class="name-logo-view">
-      <text class="name-logo-text">加</text>
+      <text class="name-logo-text">{{item.consigneeName.slice(0,1)}}</text>
     </view>
 
 
     <view class="name-address-view">
       <view class="name-view">
-        <text class="name-text">加菲猫</text>
-        <text class="phone-text">1790988777</text>
-        <text class="default-text">默认</text>
+        <text class="name-text">{{item.consigneeName}}</text>
+        <text class="phone-text">{{item.consigneeMobile}}</text>
+        <text class="default-text" v-show="item.defaultAddress==1">默认</text>
       </view>
-      <text class="address-text">浙江省杭州市钱塘区下沙经济技术开发区下沙街道金沙大道281号</text>
+      <text class="address-text">{{item.consigneeRegionName}}{{item.consigneeAddress}}</text>
     </view>
 
     <view style="width: 2rpx;background-color: #EEEEEE;height: 38rpx;margin-left: 24rpx;"></view>
@@ -23,9 +23,17 @@
 
 <script>
   export default{
+    props:{
+      item:{
+        type:Object,
+        default:()=>{
+          return {}
+        }
+      }
+    },
     data(){
       return{
-  
+
       }
     },
     methods:{
@@ -69,7 +77,7 @@
   }
 
   .name-address-view {
-    margin-left: 13rpx;
+    margin-left: 16rpx;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -99,7 +107,7 @@
   .default-text {
     background: linear-gradient(to right, #FD7C51, #F63A2F);
     height: 32rpx;
-    border-radius: 3rpx;
+    border-radius: 4rpx;
     color: #FFFFFF;
     font-size: 22rpx;
     width: 61rpx;
@@ -115,6 +123,6 @@
     font-family: PingFangSC-Regular;
     color: #666666;
     margin-top: 8rpx;
-    font-size: 24rpx;
+    font-size: 26rpx;
   }
 </style>

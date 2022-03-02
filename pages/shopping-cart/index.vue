@@ -45,7 +45,7 @@
           </view>
           <text style="color: #999999;font-size: 24rpx;">已选{{selectAllCart}}件</text>
         </view>
-        <text class="js-text" @click="toSubmit">结算</text>
+        <text class="js-text" :style="{backgroundColor:allCount?'#2059F7':'#EEEEEE'}" @click="toSubmit">结算</text>
       </view>
 
     </view>
@@ -205,16 +205,24 @@
           url: '../home/index'
         })
       },
-      toSubmit(){
-        let idArr =[]
-        this.cartList.forEach(item=>{
-          if(item.select){
+      toSubmit() {
+        if (!this.allCount) {
+          uni.showToast({
+            icon: 'none',
+            title: '还未选择商品'
+          })
+          return
+        }
+
+        let idArr = []
+        this.cartList.forEach(item => {
+          if (item.select) {
             idArr.push(item.id)
           }
         })
 
         uni.navigateTo({
-          url:`../shopping-info/confirm-order?detail=false&ids=${idArr.toString()}`
+          url: `../shopping-info/confirm-order?detail=false&ids=${idArr.toString()}`
         })
       }
     }

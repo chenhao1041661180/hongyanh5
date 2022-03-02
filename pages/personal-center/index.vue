@@ -6,14 +6,14 @@
         <image src="../../static/images/img_default_avatar_female.png" style="width: 128rpx; height: 128rpx;"></image>
         <view class="info-content-view">
           <view style="flex-direction: row;align-items: center; display: flex;">
-            <text class="name-text">羽生结弦</text>
+            <text class="name-text">{{userName}}</text>
             <view style=" position: relative;margin-left: 20rpx;">
               <image src="../../static/images/ic_membership_level.png" class="hyh-img" />
-              <text class="hyh-text">32233565</text>
+              <text class="hyh-text">{{userCode}}</text>
             </view>
           </view>
 
-          <text class="phone-text">1890753321</text>
+          <text class="phone-text">{{userMobile}}</text>
         </view>
 
       </view>
@@ -73,8 +73,19 @@
        */
       toAddress() {
         uni.navigateTo({
-          url: '../address/address-list'
+          url: '../address/address-list?order=false&choose=false'
         })
+      }
+    },
+    computed: {
+      userName() {
+        return uni.$util.token.all().userName
+      },
+      userMobile() {
+        return uni.$util.token.all().userMobile
+      },
+      userCode() {
+        return uni.$util.token.all().userCode
       }
     }
   }

@@ -6,15 +6,15 @@
 
     <view class="address-view">
       <view class="address-view2" v-if="dataInfo.shippingAddressVo"  @click="toAddressList">
-        <image src="../../static/images/ic_address.png" style="width: 32rpx;height: 32rpx;"></image>
+        <image src="../../static/images/ic_address.png" style="width: 32rpx;height: 32rpx;"/>
         <view class="address-info-view">
-          <text class="ssq-text">浙江省 杭州市 余杭区 崇贤街道</text>
-          <text class="detail-address">崇杭街与唐康路交汇处旭辉时代城崇</text>
-          <text class="user-info">加菲猫 18769786543</text>
+          <text class="ssq-text">{{dataInfo.shippingAddressVo.consigneeRegionName}}</text>
+          <text class="detail-address">{{dataInfo.shippingAddressVo.consigneeAddress}}</text>
+          <text class="user-info">{{dataInfo.shippingAddressVo.consigneeName}} {{dataInfo.shippingAddressVo.consigneeMobile}}</text>
         </view>
         <u-icon custom-prefix="hongyan-icon" name="a-ic_arrow_shouhuodizhi2x" size="26" color="#CCCCCC"></u-icon>
       </view>
-      <view class="no-address" v-else @click="toAddAddress">
+      <view class="no-address" v-else @click="toAddressList">
         <view class="no-address2">
           <u-icon custom-prefix="hongyan-icon" name="tianjiadizhi-02" color="#CCCCCC" size="50" />
           <text style="margin-top: 5rpx;">添加收货地址</text>
@@ -74,8 +74,14 @@
       console.log(this.ids)
     },
     mounted() {
+      uni.$on("addAddress",this.addAddressEmit)
       this.getList()
     },
+
+    beforeDestroy() {
+      uni.$off('addAddress',this.addAddressEmit);
+    },
+
     computed: {
       totalCount() {
         let count = 0
@@ -110,6 +116,9 @@
 
           })
       },
+      addAddressEmit(data){
+         this.dataInfo.shippingAddressVo = data
+      },
       toConfirmOrder() {
         uni.navigateTo({
           url: './submit-order'
@@ -120,12 +129,12 @@
        */
       toAddAddress() {
         uni.navigateTo({
-          url: '../address/receiving-address'
+          url: '../address/receiving-address?order=true'
         })
       },
       toAddressList(){
         uni.navigateTo({
-          url: '../address/address-list'
+          url: '../address/address-list?order=true'
         })
       }
     }
@@ -153,6 +162,7 @@
   .address-view2 {
     flex-direction: row;
     display: flex;
+    width: 100%;
     align-items: center;
   }
 
@@ -187,6 +197,7 @@
   }
 
   .line-image {
+    width: 100%;
     background-repeat: no-repeat;
     height: 6rpx;
   }
