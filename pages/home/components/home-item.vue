@@ -30,7 +30,6 @@
       url() {
         if (this.item && this.item.thumbnail) {
           let imageUrl = uni.$util.assetsPath.IMAGE_URL + this.item.thumbnail;
-          console.log(imageUrl)
           return imageUrl
         } else {
           return uni.$util.config.loadingImg

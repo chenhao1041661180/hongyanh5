@@ -1,7 +1,7 @@
 <template>
   <!-- 收货地址列表 -->
   <view style="width: 100%;">
-    <u-navbar back-icon-color="#666666" :background="{background: 'rgba(255,255,255)'}" z-index="333" title="我的收货地址"
+    <u-navbar back-icon-color="#666666" :titleBold="true" :background="{background: 'rgba(255,255,255)'}" z-index="333" title="我的收货地址"
       :border-bottom="false" />
 
     <view class="list-view" v-if="addressList.length">
@@ -83,9 +83,9 @@
       //编辑
       edit(item) {
         // let encode = encodeURIComponent(JSON.stringify(item))
-        uni.navigateTo({
-          url: `/pages/address/receiving-address?id=${item.id}&order=false`
-        })
+        // uni.navigateTo({
+        //   url: `/pages/address/receiving-address?id=${item.id}&order=false`
+        // })
 
       }
     },

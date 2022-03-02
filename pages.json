@@ -52,6 +52,12 @@
       "style": {
         "navigationBarTitleText": "我的收货地址"
       }
+    },
+    {
+      "path": "pages/order/order-list",
+      "style": {
+        "navigationBarTitleText": "订单管理"
+      }
     }
   ],
   // 并符合components/组件名称/组件名称.vue目录结构

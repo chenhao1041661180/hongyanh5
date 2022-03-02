@@ -15,9 +15,11 @@
     </view>
 
     <view style="width: 2rpx;background-color: #EEEEEE;height: 38rpx;margin-left: 24rpx;"></view>
+<view @click.stop="modify">
+  <u-icon custom-prefix="hongyan-icon" name="a-ic_edit2x" size="32" color="#7F7E86"
+    style="padding-left: 24rpx;padding-right: 24rpx;" ></u-icon>
+</view>
 
-    <u-icon custom-prefix="hongyan-icon" name="a-ic_edit2x" size="32" color="#7F7E86"
-      style="padding-left: 24rpx;padding-right: 24rpx;" @click="modify"></u-icon>
   </view>
 </template>
 
@@ -38,7 +40,9 @@
     },
     methods:{
       modify(){
-        this.$emit("edit")
+        uni.navigateTo({
+          url: `/pages/address/receiving-address?id=${this.item.id}&order=false`
+        })
       }
     }
   }

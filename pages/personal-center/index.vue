@@ -25,7 +25,7 @@
         <!-- <image ></image> -->
         <text class="fire-title">我的订单</text>
 
-        <text class="more-text">更多</text>
+        <text class="more-text" @click="toOrderList(0)">更多</text>
         <u-icon name="a-ic_arrow_shouhuodizhi2x" custom-prefix="hongyan-icon" size="30" color="#979797"
           style="margin-right: 26rpx;" />
 
@@ -33,23 +33,26 @@
 
       <view style="flex-direction: row; display: flex; justify-content: space-around;margin-top: 50rpx;">
 
-        <view class="state-item-view">
+        <view class="state-item-view" @click="toOrderList(1)">
           <image src="../../static/images/ic_daifukuan.png" class="state-img-logo"></image>
           <text class="state-text">待付款</text>
 
-          <text class="num-text">9</text>
+          <text class="num-text" v-show="orderCount.nonPayment>0">{{orderCount.nonPayment}}</text>
         </view>
-        <view class="state-item-view">
+        <view class="state-item-view" @click="toOrderList(2)">
           <image src="../../static/images/ic_ daifahuo.png" class="state-img-logo"></image>
           <text class="state-text">待发货</text>
+           <text class="num-text" v-show="orderCount.notYetShipped>0">{{orderCount.notYetShipped}}</text>
         </view>
-        <view class="state-item-view">
+        <view class="state-item-view" @click="toOrderList(3)">
           <image src="../../static/images/ic_daishouhuo.png" class="state-img-logo"></image>
           <text class="state-text">待收货</text>
+           <text class="num-text" v-show="orderCount.notReceive>0">{{orderCount.notReceive}}</text>
         </view>
-        <view class="state-item-view">
+        <view class="state-item-view" @click="toOrderList(4)">
           <image src="../../static/images/ic_done.png" class="state-img-logo"></image>
           <text class="state-text">已完成</text>
+           <text class="num-text" v-show="orderCount.completed>0">{{orderCount.completed}}</text>
         </view>
       </view>
     </view>
@@ -63,9 +66,12 @@
 </template>
 
 <script>
+  import {getMyOrderCount} from '@/api/order.js'
   export default {
     data() {
-      return {}
+      return {
+        orderCount:{}
+      }
     },
     methods: {
       /**
@@ -73,7 +79,22 @@
        */
       toAddress() {
         uni.navigateTo({
-          url: '../address/address-list?order=false&choose=false'
+          url: '../address/address-list?order=false'
+        })
+      },
+      toOrderList(index){
+        uni.navigateTo({
+          url:`../order/order-list?current=${index}`
+        })
+      },
+      getNumber(){
+        getMyOrderCount()
+        .then(res=>{
+          this.orderCount  = res.data
+          console.log(res.data)
+        })
+        .catch(err=>{
+
         })
       }
     },
@@ -87,6 +108,9 @@
       userCode() {
         return uni.$util.token.all().userCode
       }
+    },
+    onShow() {
+      this.getNumber()
     }
   }
 </script>

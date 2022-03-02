@@ -44,12 +44,12 @@
     <view class="bottom-view">
       <text class="bottom-btn-text gm-text" @click="saveInfo">保存</text>
     </view>
-    <!-- <uCitySelect v-model="showPopup" @city-change="cityChange" /> -->
+    <uCitySelect v-model="showPopup" @city-change="cityChange" />
 
-  <!--  <u-modal ref="uModal" v-model="showDeletePopup" :show-cancel-button="true" :show-title="showTitle"
+    <u-modal ref="uModal" v-model="showDeletePopup" :show-cancel-button="true" :show-title="showTitle"
       :async-close="false" @confirm="confirm" :content="modalContent">
 
-    </u-modal> -->
+    </u-modal>
   </view>
 </template>
 
@@ -95,6 +95,7 @@
         this.id = option.id;
 
         this.getAddressDetail()
+        // this.model.defaultAddress =this.model.defaultAddress?1:0
       }
       if (option.order) {
         this.order = option.order
@@ -102,16 +103,16 @@
 
     },
     methods: {
-      //获取地址详情
       getAddressDetail() {
         addressDetail(this.id)
           .then(res => {
             this.model = res.data
-            this.model.defaultAddress = this.model.defaultAddress ==1
-          })
-          .catch(err => {
+            this.model.defaultAddress = this.model.defaultAddress == 1
 
-          })
+          }).catch(err => {})
+      },
+      addressInput(e) {
+        console.log(e)
       },
       //选择省市区返回
       cityChange(e) {
@@ -149,12 +150,12 @@
         // if(tempModel.defaultAddress){
 
         // }
-        tempModel.defaultAddress = tempModel.defaultAddress==1
-        // if (this.edit) {
-        //   this.modify(tempModel)
-        // } else {
-        //   this.submit(tempModel)
-        // }
+        tempModel.defaultAddress = tempModel.defaultAddress ? 1 : 0
+        if (this.edit) {
+          this.modify(tempModel)
+        } else {
+          this.submit(tempModel)
+        }
 
       },
       /**
