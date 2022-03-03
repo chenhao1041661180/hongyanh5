@@ -50,8 +50,9 @@
     data() {
       return {
         total: '',
-        orderPayId:'',
-        orderWay:1
+        orderPayId: '',
+        orderWay: 1,//下单方式：1-商品详情下单，2-购物车下单
+        href: "https://tyzy.jsghfw.com/sky-epay-test/epay/index.html?order_pay_id="
       }
     },
 
@@ -64,20 +65,30 @@
       submitOrder(paymentMode) {
         if (paymentMode == 0) {
           //工会支付
+          //在线支付
+          window.open(this.href + this.orderPayId)
 
         } else if (paymentMode == 1) {
           //对公打款
+          uni.navigateTo({
+
+            url: `../order/order-public?orderId=${this.orderPayId}`
+          })
         }
       },
-      customBack(){
+      customBack() {
         uni.reLaunch({
-          url:'../order/order-list'
+          url: '../order/order-list'
         })
       }
     },
     onBackPress() {
       console.log('onBackPress')
-  
+
+      uni.redirectTo({
+        url: '../order/order-list'
+      })
+
     }
   }
 </script>

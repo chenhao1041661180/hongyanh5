@@ -64,6 +64,12 @@
       "style": {
         "navigationBarTitleText": "订单详情"
       }
+    },
+    {
+      "path": "pages/order/order-public",
+      "style": {
+        "navigationBarTitleText": "上传支付凭证"
+      }
     }
   ],
   // 并符合components/组件名称/组件名称.vue目录结构

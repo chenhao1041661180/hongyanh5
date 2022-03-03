@@ -10,7 +10,7 @@
           <image src="../../static/images/bg_dingdanxiangqing.png" style="width: 100%;height: 214rpx;display: flex;" />
           <view class="status-view">
             <u-icon custom-prefix="hongyan-icon" name="a-ic_to_pay2x" color="#FFFFFF" size="38" />
-            <text class="status-text">待付款</text>
+            <text class="status-text">{{orderStatusStr}}</text>
           </view>
 
           <view class="address-view">
@@ -25,16 +25,17 @@
                     style="margin-left: 15rpx;">{{orderInfo.shippingAddressVo.consigneeMobile}}</text>
                 </view>
               </view>
-              <u-icon custom-prefix="hongyan-icon" name="a-ic_arrow_shouhuodizhi2x" size="26" color="#CCCCCC"></u-icon>
+              <u-icon custom-prefix="hongyan-icon" name="a-ic_arrow_shouhuodizhi2x" size="26" color="#CCCCCC"
+                v-show="orderStatus ==0"></u-icon>
             </view>
-            <view class="no-address" v-else @click="toAddressList">
+            <!-- <view class="no-address" v-else @click="toAddressList">
               <view class="no-address2">
                 <u-icon custom-prefix="hongyan-icon" name="tianjiadizhi-02" color="#CCCCCC" size="50" />
                 <text style="margin-top: 5rpx;">添加收货地址</text>
               </view>
               <u-icon custom-prefix="hongyan-icon" name="a-ic_arrow_shouhuodizhi2x" size="26" color="#CCCCCC"></u-icon>
 
-            </view>
+            </view> -->
             <image src="../../static/images/img_address_line.png" class="line-image" />
           </view>
         </view>
@@ -95,40 +96,45 @@
 
           <view class="order-item-view">
             <text class="order-item-text" style="font-size: 25rpx;">（1）企业/单位可通过客服电话及客户经理完成采购需求、商品品报价、商品样品寄送以及其他相关事宜：
-咨询电话：0510-82866863【周一至周五9：00--17：00】
-客户经理1：18014931413【周一至周日8：00--22：00】
-客户经理2：18912362930【周一至周日8：00--22：00】；
-（2）转款/汇款前请仔细核对账户信息；
-（3）对公汇款后请保存汇款凭证并及时与客户经理确认入账；
-（4）汇款完成后请及时与客户经理对接并确认交/收货事宜；
-（5）涉及商品售后及其他相关事宜请及时与客户经理对接并确认。</text>
+              咨询电话：0510-82866863【周一至周五9：00--17：00】
+              客户经理1：18014931413【周一至周日8：00--22：00】
+              客户经理2：18912362930【周一至周日8：00--22：00】；
+              （2）转款/汇款前请仔细核对账户信息；
+              （3）对公汇款后请保存汇款凭证并及时与客户经理确认入账；
+              （4）汇款完成后请及时与客户经理对接并确认交/收货事宜；
+              （5）涉及商品售后及其他相关事宜请及时与客户经理对接并确认。</text>
           </view>
         </view>
       </view>
     </scroll-view>
-    <view class="bottom-view">
+    <view class="bottom-view" v-if="orderStatus != 4 && orderStatus!=1">
       <text class="bottom-btn-text delete-text" @click="toDeleteOrder">删除订单</text>
-      <text class="bottom-btn-text gm-text" @click="toConfirmOrder">去付款</text>
+      <text class="bottom-btn-text gm-text" @click="toConfirmOrder">{{orderInfo.paymentMode==1?'上传支付凭证':'去付款'}}</text>
     </view>
   </view>
 </template>
 
 <script>
   import {
-    getOrderDetail
+    getOrderDetail,
+    deleteOrder
   } from "@/api/order.js"
   export default {
     data() {
       return {
         orderId: '',
+        href: "https://tyzy.jsghfw.com/sky-epay-test/epay/index.html?order_pay_id=",
         paymentMode: 0, //支付方式：0-在线支付，1-对公支付
-        orderInfo: {}
+        orderInfo: {},
+        orderStatus: ''
       }
     },
 
     onLoad(option) {
       this.orderId = option.orderId
       this.paymentMode = option.paymentMode
+      this.orderStatus = option.orderStatus
+      this.orderStatusStr = option.orderStatusStr
     },
     mounted() {
       this.getOrderDetail()
@@ -151,9 +157,36 @@
       //删除订单
       toDeleteOrder() {
 
+        uni.showLoading({
+          title: ''
+        })
+        deleteOrder(this.orderInfo.orderId)
+          .then(res => {
+            uni.hideLoading()
+            uni.showToast({
+              icon: 'none',
+              title: '订单删除成功'
+            })
+            uni.navigateBack({})
+          }).catch(err => {
+            uni.hideLoading()
+          })
+
       },
       //去付款
       toConfirmOrder() {
+
+        if (this.orderInfo.paymentMode == 1) {
+          //对公付款
+          uni.navigateTo({
+            url: `./order-public?orderId=${this.orderInfo.orderId}`
+          })
+
+        } else {
+          //在线支付
+          window.open(this.href + this.orderInfo.orderPayId)
+
+        }
 
       }
     },
@@ -198,7 +231,7 @@
     display: flex;
     z-index: 4000;
     margin: -80rpx 24rpx 24rpx 24rpx;
-
+    min-height: 170rpx;
     padding-left: 24rpx;
     padding-right: 24rpx;
     align-items: center;
@@ -211,6 +244,7 @@
   .address-view2 {
     flex-direction: row;
     display: flex;
+    min-height: 170rpx;
     width: 100%;
     align-items: center;
   }

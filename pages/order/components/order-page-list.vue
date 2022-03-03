@@ -82,7 +82,7 @@
         console.log('seeDetail')
         //paymentMode  支付方式：0-在线支付，1-对公支付
         uni.navigateTo({
-          url: `./order-detail?orderId=${item.orderId}&paymentMode=${item.paymentMode||0}`
+          url: `./order-detail?orderId=${item.orderId}&paymentMode=${item.paymentMode||0}&orderStatus=${item.orderStatus}&orderStatusStr=${item.orderStatusStr}`
         })
       }
     }

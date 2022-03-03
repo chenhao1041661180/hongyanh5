@@ -15,7 +15,7 @@
     </view>
 
     <view class="btn-view">
-      <text class="qfk-text" v-show="item.orderStatus==0" @click.stop="toFk">去付款</text>
+      <text class="qfk-text" v-show="item.orderStatus==0" @click.stop="toFk(item)">去付款</text>
       <text class="qrsh-text" v-show="item.orderStatus==2">确认收货</text>
     </view>
   </view>
@@ -47,9 +47,22 @@
     },
     methods:{
       //去付款
-      toFk(){
+      toFk(item){
         console.log("toFk")
-  
+
+        if(this.item.paymentMode==1){
+          //对公支付 去上传凭证页面
+          uni.navigateTo({
+            url:`./order-public?orderPayId=${item.orderId}`
+          })
+        }else{
+
+          uni.navigateTo({
+            url:`../shopping-info/submit-order?total=${item.total}&orderPayId=${item.orderPayId}&orderWay=${item.orderWay}`
+          })
+
+        }
+
       }
     }
   }

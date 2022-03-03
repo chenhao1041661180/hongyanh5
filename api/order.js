@@ -33,3 +33,17 @@ export function getOrderDetail(orderId) {
 export function submitOrder(data) {
   return request.post('/mall/api/order/submit', { data })
 }
+
+/**
+ * 删除订单信息
+ */
+export function deleteOrder(orderId) {
+  return request.get(`/mall/api/order/deleteOrder?orderId=${orderId}`)
+}
+
+/**
+ * 对公支付，上传凭证
+ */
+export function contraryToPay(data) {
+  return request.get(`/mall/api/order/contraryToPay`, { data })
+}

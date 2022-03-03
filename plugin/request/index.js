@@ -35,7 +35,6 @@ request.interceptors.request(config => {
 
   // 覆盖请求头
   config.header = {
-    'repeater': 'web',
     'Language': uni.$i18n.locale,
     'Authorization': uni.$util.token.get(),
 
