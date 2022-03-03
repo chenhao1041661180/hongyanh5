@@ -1,7 +1,7 @@
 <template>
   <!-- 订单列表Item -->
   <view class="item-view">
-    <text class="state-text">已完成</text>
+    <text class="state-text" :style="{color:item.orderStatus==3?'#666666':'#FF6900'}">{{item.orderStatusStr}}</text>
     <view class="content-view" v-for="(child,index) in item.orderGoodsItemVos">
       <image :src="imageUrl" style="width: 192rpx;height: 192rpx;border-radius: 8rpx;" />
       <view class="content-item-view">
@@ -15,8 +15,8 @@
     </view>
 
     <view class="btn-view">
-      <text class="qfk-text">去付款</text>
-      <text class="qrsh-text">确认收货</text>
+      <text class="qfk-text" v-show="item.orderStatus==0" @click.stop="toFk">去付款</text>
+      <text class="qrsh-text" v-show="item.orderStatus==2">确认收货</text>
     </view>
   </view>
 </template>
@@ -44,6 +44,13 @@
     },
     data() {
       return {}
+    },
+    methods:{
+      //去付款
+      toFk(){
+        console.log("toFk")
+  
+      }
     }
   }
 </script>

@@ -3,51 +3,44 @@
 
   <view style="width: 100%;">
     <u-navbar back-icon-color="#666666" :background="{background: 'rgba(255,255,255)'}" z-index="333" title="选择付款方式"
-      :border-bottom="false" />
+      :border-bottom="false" :customBack="customBack" />
     <view
       style="width: 100%;  display: flex;flex-direction: column;align-items: center; background-color: #FFFFFF;padding-top: 50rpx;">
       <text class="order-tips-text">订单金额</text>
       <view style="display: flex;flex-direction: row;align-items: flex-end;font-family: medium;">
         <text style="font-size: 40rpx;margin-bottom: 10rpx;">￥</text>
-        <text class="price-text">3559</text>
+        <text class="price-text">{{total}}</text>
       </view>
       <view class="ddbh-view">
         <text class="ddbh-tips-text">订单编号</text>
-        <text class="ddbh-text">HD492932123300</text>
+        <text class="ddbh-text">{{orderPayId}}</text>
       </view>
-      <view class="line-view"></view>
+      <view class="line-view" />
       <text class="payment-method-tips">选择支付方式</text>
 
-
-      <view class="payment-item-view">
-        <u-icon name="a-img_zhifubao2x" custom-prefix="hongyan-icon" color="#3C73F1" size="52"></u-icon>
+      <!-- <view class="line-view"/> -->
+      <view class="payment-item-view" @click="submitOrder(0)">
+        <image src="../../static/images/img_yunshanfu2.png" style="width: 52rpx; height: 52rpx;"></image>
         <view class="item-view">
-          <text class="item-text1">支付宝支付</text>
-          <text class="item-text2">银联安全支付平台</text>
+          <text class="item-text1">江苏工会收银台</text>
+          <!-- <text class="item-text2">银联安全支付平台</text> -->
         </view>
-        <u-icon name="a-ic_close_search2x" custom-prefix="hongyan-icon" size="32"></u-icon>
+        <u-icon name="a-ic_arrow_right2x" custom-prefix="hongyan-icon" color="#CCCCCC" size="32"></u-icon>
       </view>
-      <view class="payment-item-view">
-        <image src="../../static/images/img_yunshanfu.png" style="width: 52rpx; height: 52rpx;"></image>
-        <view class="item-view">
-          <text class="item-text1">云闪付支付</text>
-          <text class="item-text2">银联安全支付平台</text>
-        </view>
-        <u-icon name="a-ic_close_search2x" custom-prefix="hongyan-icon" size="32"></u-icon>
-      </view>
-      <view class="payment-item-view">
-        <u-icon name="a-img_qiyecaigou2x" custom-prefix="hongyan-icon" color="#3C73F1" size="52"></u-icon>
+      <view class="line-view" />
+      <view class="payment-item-view" @click="submitOrder(1)">
+        <u-icon name="a-img_qiyecaigou2x" custom-prefix="hongyan-icon" color="#3C73F1" size="52" />
         <view class="item-view">
           <text class="item-text1">企业采购</text>
           <text class="item-text2">确认后请进行对公汇款</text>
         </view>
-        <u-icon name="a-ic_close_search2x" custom-prefix="hongyan-icon" size="32"></u-icon>
+        <u-icon name="a-ic_arrow_right2x" custom-prefix="hongyan-icon" size="32" color="#CCCCCC" />
       </view>
 
     </view>
-<view class="bottom-view">
+    <view class="bottom-view">
 
-      <text class="bottom-btn-text gm-text" @click="submitOrder">确认支付</text>
+      <!-- <text class="bottom-btn-text gm-text" @click="submitOrder">确认支付</text> -->
     </view>
   </view>
 </template>
@@ -56,8 +49,35 @@
   export default {
     data() {
       return {
-
+        total: '',
+        orderPayId:'',
+        orderWay:1
       }
+    },
+
+    onLoad(option) {
+      this.total = option.total
+      this.orderPayId = option.orderPayId
+      this.orderWay = option.orderWay
+    },
+    methods: {
+      submitOrder(paymentMode) {
+        if (paymentMode == 0) {
+          //工会支付
+
+        } else if (paymentMode == 1) {
+          //对公打款
+        }
+      },
+      customBack(){
+        uni.reLaunch({
+          url:'../order/order-list'
+        })
+      }
+    },
+    onBackPress() {
+      console.log('onBackPress')
+  
     }
   }
 </script>
@@ -118,12 +138,13 @@
   .payment-item-view {
     width: 100%;
     display: flex;
+    height: 130rpx;
     padding-left: 34rpx;
     padding-right: 50rpx;
     align-items: center;
     flex-direction: row;
-    margin-top: 26rpx;
-    margin-bottom: 26rpx;
+    /* margin-top: 26rpx;
+    margin-bottom: 26rpx; */
   }
 
   .item-view {
@@ -145,6 +166,7 @@
     font-size: 28rpx;
     font-family: PingFangSC-Regular;
   }
+
   .bottom-view {
     position: fixed;
     bottom: 0;
@@ -158,6 +180,7 @@
     display: flex;
     background-color: #FFFFFF;
   }
+
   .bottom-btn-text {
     width: 90%;
     height: 76rpx;
@@ -175,5 +198,4 @@
     border: 0;
     color: #FFFFFF;
   }
-
 </style>

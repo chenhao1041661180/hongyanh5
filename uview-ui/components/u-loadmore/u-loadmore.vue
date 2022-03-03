@@ -58,7 +58,7 @@
 			},
 			// 字体颜色
 			color: {
-				type: String, 
+				type: String,
 				default: '#606266'
 			},
 			// 组件状态，loadmore-加载前的状态，loading-加载中的状态，nomore-没有更多的状态
@@ -105,7 +105,7 @@
 			// 高度，单位rpx
 			height: {
 				type: [String, Number],
-				default: 'auto'
+				default: '70'
 			}
 		},
 		data() {

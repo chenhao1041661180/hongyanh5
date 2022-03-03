@@ -222,7 +222,7 @@
         })
 
         uni.navigateTo({
-          url: `../shopping-info/confirm-order?detail=false&ids=${idArr.toString()}`
+          url: `../shopping-info/confirm-order?detail=false&orderWay=2&ids=${idArr.toString()}`
         })
       }
     }

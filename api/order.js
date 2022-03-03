@@ -19,3 +19,17 @@ export function getMyOrderCount() {
 export function getMyOrderList(data) {
   return request.post(`/mall/api/order/getMyOrderList`, { data })
 }
+
+/**
+ * 查询我的订单详情
+ */
+export function getOrderDetail(orderId) {
+  return request.get(`/mall/api/order/getOrderDetail?orderId=${orderId}`)
+}
+
+/**
+ * 提交订单信息
+ */
+export function submitOrder(data) {
+  return request.post('/mall/api/order/submit', { data })
+}

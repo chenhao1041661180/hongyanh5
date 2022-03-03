@@ -5,12 +5,16 @@
       :border-bottom="false" />
 
     <view class="address-view">
-      <view class="address-view2" v-if="dataInfo.shippingAddressVo"  @click="toAddressList">
-        <image src="../../static/images/ic_address.png" style="width: 32rpx;height: 32rpx;"/>
+      <view class="address-view2" v-if="dataInfo.shippingAddressVo" @click="toAddressList">
+        <image src="../../static/images/ic_address.png" style="width: 32rpx;height: 32rpx;" />
         <view class="address-info-view">
           <text class="ssq-text">{{dataInfo.shippingAddressVo.consigneeRegionName}}</text>
           <text class="detail-address">{{dataInfo.shippingAddressVo.consigneeAddress}}</text>
-          <text class="user-info">{{dataInfo.shippingAddressVo.consigneeName}} {{dataInfo.shippingAddressVo.consigneeMobile}}</text>
+          <view style="display: flex;flex-direction: row;align-items: center;">
+             <text class="user-info">{{dataInfo.shippingAddressVo.consigneeName}}</text>
+              <text class="user-info" style="margin-left: 15rpx;">{{dataInfo.shippingAddressVo.consigneeMobile}}</text>
+          </view>
+
         </view>
         <u-icon custom-prefix="hongyan-icon" name="a-ic_arrow_shouhuodizhi2x" size="26" color="#CCCCCC"></u-icon>
       </view>
@@ -48,7 +52,8 @@
   import shoppingCartItem from '../shopping-cart/components/shopping-cart-item.vue'
 
   import {
-    confirmOrder
+    confirmOrder,
+    submitOrder
   } from '@/api/order.js'
   export default {
     components: {
@@ -58,12 +63,14 @@
       return {
         ids: [],
         detail: false,
+        orderWay: 1, //下单方式：1-商品详情下单，2-购物车下单
         dataInfo: {}
       }
     },
 
     onLoad(option) {
       this.detail = option.detail
+      this.orderWay = option.orderWay
       if (option.detail == "true") {
         console.log(option.ids)
         this.ids = option.ids
@@ -74,12 +81,12 @@
       console.log(this.ids)
     },
     mounted() {
-      uni.$on("addAddress",this.addAddressEmit)
+      uni.$on("addAddress", this.addAddressEmit)
       this.getList()
     },
 
     beforeDestroy() {
-      uni.$off('addAddress',this.addAddressEmit);
+      uni.$off('addAddress', this.addAddressEmit);
     },
 
     computed: {
@@ -109,20 +116,58 @@
         }
         confirmOrder(param)
           .then(res => {
-
             this.dataInfo = res.data
-
           }).catch(err => {
 
           })
       },
-      addAddressEmit(data){
-         this.dataInfo.shippingAddressVo = data
+      addAddressEmit(data) {
+        this.dataInfo.shippingAddressVo = data
       },
       toConfirmOrder() {
-        uni.navigateTo({
-          url: './submit-order'
+        if (!this.dataInfo.shippingAddressVo) {
+
+          uni.showToast({
+            icon: 'none',
+            title: '请先添加收货地址'
+          })
+          return
+        }
+
+        uni.showLoading({
+          title: ''
         })
+
+        let goodsItemDtoList = []
+
+        this.dataInfo.orderGoodsItemVos.forEach(item => {
+          goodsItemDtoList.push({
+            goodsId: item.id,
+            goodsCount: item.goodsCount
+          })
+        })
+
+        //生成预支付订单id
+        let param = {
+          orderWay: this.orderWay,
+          addressId: this.dataInfo.shippingAddressVo.id,
+          goodsItemDtoList
+        }
+        console.log(JSON.stringify(param) )
+        submitOrder(param)
+          .then(res => {
+            uni.hideLoading()
+            let orderPayId = res.data.orderPayId //支付平台预支付ID
+            let total = res.data.total //订单总额
+
+            uni.navigateTo({
+              url: `./submit-order?total=${total}&orderPayId=${orderPayId}&orderWay=${this.orderWay}`
+            })
+          }).catch(err => {
+            uni.hideLoading()
+
+          })
+
       },
       /**
        * 去地址新增页面
@@ -132,7 +177,7 @@
           url: '../address/receiving-address?order=true'
         })
       },
-      toAddressList(){
+      toAddressList() {
         uni.navigateTo({
           url: '../address/address-list?order=true'
         })
