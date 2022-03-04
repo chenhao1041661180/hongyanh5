@@ -46,12 +46,15 @@
 </template>
 
 <script>
+  import {
+    setPaymentMode
+  } from '@/api/order.js'
   export default {
     data() {
       return {
         total: '',
         orderPayId: '',
-        orderWay: 1,//下单方式：1-商品详情下单，2-购物车下单
+        orderWay: 1, //下单方式：1-商品详情下单，2-购物车下单
         href: "https://tyzy.jsghfw.com/sky-epay-test/epay/index.html?order_pay_id="
       }
     },
@@ -60,33 +63,48 @@
       this.total = option.total
       this.orderPayId = option.orderPayId
       this.orderWay = option.orderWay
+      uni.$emit('shopping-cart')
     },
     methods: {
       submitOrder(paymentMode) {
-        if (paymentMode == 0) {
-          //工会支付
-          //在线支付
-          window.open(this.href + this.orderPayId)
-
-        } else if (paymentMode == 1) {
-          //对公打款
-          uni.navigateTo({
-
-            url: `../order/order-public?orderId=${this.orderPayId}`
-          })
+        let param = {
+          orderPayId: this.orderPayId,
+          paymentMode
         }
+        uni.showLoading({
+          title: ''
+        })
+
+        setPaymentMode(param)
+          .then(res => {
+            uni.hideLoading()
+            if (paymentMode == 0) {
+              //工会支付
+              //在线支付
+              window.open(this.href + this.orderPayId)
+
+            } else if (paymentMode == 1) {
+              //对公打款
+              uni.navigateTo({
+                url: `../order/order-public?orderPayId=${this.orderPayId}`
+              })
+            }
+          })
+          .catch(err => {
+            uni.hideLoading()
+          })
       },
       customBack() {
-        uni.reLaunch({
-          url: '../order/order-list'
+        const pages = getCurrentPages()
+        uni.navigateBack({
+          delta: pages.length - 1
         })
       }
     },
     onBackPress() {
-      console.log('onBackPress')
-
-      uni.redirectTo({
-        url: '../order/order-list'
+      const pages = getCurrentPages()
+      uni.navigateBack({
+        delta: pages.length - 1
       })
 
     }

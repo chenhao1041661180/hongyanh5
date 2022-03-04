@@ -5,7 +5,7 @@
 
         <image src="../../../static/images/img_popup_picture.png" style="width: 342rpx;height: 226rpx;"></image>
         <text class="kfdh-tips"> 是否拨打客服电话？</text>
-        <text class="kfdh-text">4000-115-855</text>
+        <text class="kfdh-text">4000-615-855</text>
         <text class="call-btn" @click="call">拨打电话</text>
       </view>
       <u-icon name="a-ic_close_search2x" custom-prefix="hongyan-icon" size="58" color="#888888" style="margin-top: 30rpx;" @click="show = false"></u-icon>
@@ -31,7 +31,7 @@
 
         setTimeout(()=>{
           uni.makePhoneCall({
-              phoneNumber: '4000-115-855' //仅为示例
+              phoneNumber: '4000-615-855' //仅为示例
           });
         },150)
 

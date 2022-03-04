@@ -42,8 +42,22 @@ export function deleteOrder(orderId) {
 }
 
 /**
+ * 选择支付方式
+ */
+export function setPaymentMode(data) {
+  return request.get(`/mall/api/order/setPaymentMode`, { data })
+}
+
+/**
  * 对公支付，上传凭证
  */
 export function contraryToPay(data) {
   return request.get(`/mall/api/order/contraryToPay`, { data })
+}
+
+/**
+ * 查询支付平台订单状态
+ */
+export function queryPayOrder(orderPayId) {
+  return request.get(`/mall/api/order/queryPayOrder?orderPayId=${orderPayId}`)
 }

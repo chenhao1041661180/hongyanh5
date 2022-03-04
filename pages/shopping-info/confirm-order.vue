@@ -62,23 +62,22 @@
     data() {
       return {
         ids: [],
-        detail: false,
+        // detail: false,
         orderWay: 1, //下单方式：1-商品详情下单，2-购物车下单
         dataInfo: {}
       }
     },
 
     onLoad(option) {
-      this.detail = option.detail
+      // this.detail = option.detail
       this.orderWay = option.orderWay
-      if (option.detail == "true") {
-        console.log(option.ids)
+      if (this.orderWay == 1) {
+        // console.log(option.ids)
         this.ids = option.ids
       } else {
         this.ids = option.ids.split(",")
       }
-
-      console.log(this.ids)
+      // console.log(this.ids)
     },
     mounted() {
       uni.$on("addAddress", this.addAddressEmit)
@@ -105,11 +104,11 @@
     methods: {
       getList() {
         let param = {
-          goodsId: "",
-          shippingCartIds: ""
+          goodsId: '',
+          shippingCartIds: null
         }
 
-        if (this.detail == "true") {
+        if (this.orderWay == 1) {
           param.goodsId = this.ids
         } else {
           param.shippingCartIds = this.ids

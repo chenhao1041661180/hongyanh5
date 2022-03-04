@@ -46,6 +46,9 @@
       this.getMyOrderList()
     },
     methods: {
+      refreshList(){
+        this.getMyOrderList()
+      },
       getMyOrderList() {
 
         let param = {

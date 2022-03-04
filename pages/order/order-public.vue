@@ -29,10 +29,8 @@
         </view>
 
         <view class="order-item-view">
-          <text class="order-item-text" style="font-size: 25rpx;">（1）企业/单位可通过客服电话及客户经理完成采购需求、商品品报价、商品样品寄送以及其他相关事宜：
-            咨询电话：0510-82866863【周一至周五9：00--17：00】
-            客户经理1：18014931413【周一至周日8：00--22：00】
-            客户经理2：18912362930【周一至周日8：00--22：00】；
+          <text class="order-item-text" style="font-size: 25rpx;line-height: 1.5;">（1）企业/单位可通过客服电话及客户经理完成采购需求、商品报价、商品样品寄送以及其他相关事宜：
+                客服电话：4000615855；
             （2）转款/汇款前请仔细核对账户信息；
             （3）对公汇款后请保存汇款凭证并及时与客户经理确认入账；
             （4）汇款完成后请及时与客户经理对接并确认交/收货事宜；
@@ -40,12 +38,15 @@
         </view>
       </view>
       <view class="shopping-list-view">
-
-        <text class="label-text">上传支付凭证</text>
+        <text class="label-text">付款流水号</text>
+        <u-input v-model="paymentSerialNumber" placeholder="请输入付款流水号" style="width: 100%;"></u-input>
+        <text class="label-text" style="margin-top: 20rpx;">上传支付凭证</text>
 
         <view style="width: 100%;">
-         <!-- <u-icon custom-prefix="hongyan-icon" name="shangchuantupian" color="#DDDDDD" size="120"></u-icon> -->
-         <u-upload width="160" height="160" max-count="1" :action="uploadUrl" :header="{Authorization}"></u-upload>
+
+          <!-- <u-icon custom-prefix="hongyan-icon" name="shangchuantupian" color="#DDDDDD" size="120"></u-icon> -->
+          <u-upload width="160" height="160" max-count="1" :action="uploadUrl" :header="{Authorization}"
+            @on-success="onUploadSuccess"></u-upload>
         </view>
       </view>
     </view>
@@ -65,33 +66,66 @@
   export default {
     data() {
       return {
-        orderPayId: '' ,//订单编号
-        Authorization:uni.$util.token.get(),
+        orderPayId: '', //订单编号
+        uri: '',
+        paymentSerialNumber: '',
+        Authorization: uni.$util.token.get(),
         uploadUrl: window.location.origin + "/mall/api/file/onefile/upload"
       }
     },
     onLoad(option) {
-      this.orderPayId = option.orderId
+      this.orderPayId = option.orderPayId
       // console.log(window.location.origin)
+
     },
     methods: {
       upload() {
+        if (!this.paymentSerialNumber) {
+
+          uni.showToast({
+            icon: 'none',
+            title: '请输入付款流水号'
+          })
+
+          return
+        }
+        if (!this.uri) {
+          uni.showToast({
+            icon: 'none',
+            title: '请上传支付凭证'
+          })
+          return
+        }
 
         uni.showLoading({
           title: ''
         })
         let param = {
           orderPayId: this.orderPayId,
-          paymentDocument:""
+          paymentDocument: this.uri,
+          paymentSerialNumber: this.paymentSerialNumber
         }
 
         contraryToPay(param)
           .then(res => {
             uni.hideLoading()
+            const pages = getCurrentPages()
+            // console.log(pages)
+
+            uni.navigateBack({
+              delta: pages.length-1
+            })
           }).catch(err => {
             uni.hideLoading()
           })
 
+      },
+      /**
+       * 上传成功回调
+       */
+      onUploadSuccess(data, index, lists, index2) {
+        console.log(data.data.uri)
+        this.uri = data.data.uri
       }
     }
   }

@@ -95,8 +95,16 @@
     },
     methods: {
       toConfirmOrder() {
+
+        // let idArr = []
+        // this.cartList.forEach(item => {
+        //   if (item.select) {
+        //     idArr.push(item.id)
+        //   }
+        // })
+
         uni.navigateTo({
-          url: "./confirm-order"
+          url: `./confirm-order?&orderWay=1&ids=${this.goodsDetail.id}`
         })
       },
       /**
@@ -157,9 +165,10 @@
 
       },
       toHome() {
-        uni.reLaunch({
-          url: '../home/index?enstring=ecyxJpvhcpGVuaWQiOiJ3YXBfdXNlcl8xNF8xODA2OTg5OTk1NiIsInVuaWFjaWQiOjE0fQO0O0OO0O0O'
-        })
+        let enstring =  uni.$util.uniStore.getStorage("enstring");
+         uni.reLaunch({
+           url: `../home/index?enstring=${enstring}`
+         })
       }
 
     }

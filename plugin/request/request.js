@@ -293,16 +293,26 @@ class Request {
     }
     return mergeConfig
   }
-  _deepCopy(obj) {
-    const result = Array.isArray(obj) ? [] : {}
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        if (typeof obj[key] === 'object') {
-          result[key] = this._deepCopy(obj[key])
-        } else {
-          result[key] = obj[key]
+  _deepCopy(target) {
+    let result
+    if (typeof target === 'object') {
+      if (Array.isArray(target)) {
+        result = []
+        for (const i in target) {
+          result.push(this._deepCopy(target[i]))
+        }
+      } else if (target === null) {
+        result = null
+      } else if (target.constructor === RegExp) {
+        result = target
+      } else {
+        result = {}
+        for (const i in target) {
+          result[i] = this._deepCopy(target[i])
         }
       }
+    } else {
+      result = target
     }
     return result
   }

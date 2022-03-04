@@ -7,19 +7,19 @@
       swiperWidth="750"></u-tabs-swiper>
     <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
       <swiper-item class="swiper-item">
-       <order-page-list status=""/>
+        <order-page-list status="" ref="pageList1" />
       </swiper-item>
       <swiper-item class="swiper-item">
-       <order-page-list :status="0"/>
+        <order-page-list :status="0" ref="pageList2" />
       </swiper-item>
       <swiper-item class="swiper-item">
-        <order-page-list :status="1"/>
+        <order-page-list :status="1" ref="pageList3" />
       </swiper-item>
       <swiper-item class="swiper-item">
-       <order-page-list :status="2"/>
+        <order-page-list :status="2" ref="pageList4" />
       </swiper-item>
       <swiper-item class="swiper-item">
-        <order-page-list :status="3"/>
+        <order-page-list :status="3" ref="pageList5" />
       </swiper-item>
     </swiper>
   </view>
@@ -35,7 +35,7 @@
     },
     data() {
       return {
-        current:0,
+        current: 0,
         swiperCurrent: 0,
         list: [{
             name: '全部'
@@ -57,24 +57,25 @@
       }
     },
 
-    onLoad(option ) {
+    onLoad(option) {
       this.current = option.current
       this.swiperCurrent = option.current
     },
 
     mounted() {
-      // this.getMyOrderList()
+      uni.$on('orderList', this.refreshList)
+    },
+
+    beforeDestroy() {
+      uni.$off('orderList', this.refreshList)
     },
     methods: {
-
-      reachBottom() {
-        // 此tab为空数据
-        if (this.current != 2) {
-          this.loadStatus.splice(this.current, 1, "loading")
-          setTimeout(() => {
-            // this.getOrderList(this.current);
-          }, 1200);
-        }
+      refreshList() {
+        this.$refs.pageList1.refreshList()
+        this.$refs.pageList2.refreshList()
+        this.$refs.pageList3.refreshList()
+        this.$refs.pageList4.refreshList()
+        this.$refs.pageList5.refreshList()
       },
       // tab栏切换
       change(index) {
@@ -103,11 +104,12 @@
 
 <style scoped>
   .wrap {
-  	display: flex;
-  	flex-direction: column;
-  	height: calc(100vh - var(--window-top));
-  	width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--window-top));
+    width: 100%;
   }
+
   .swiper-box {
     flex: 1;
   }

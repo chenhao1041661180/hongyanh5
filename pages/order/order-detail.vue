@@ -95,10 +95,8 @@
           </view>
 
           <view class="order-item-view">
-            <text class="order-item-text" style="font-size: 25rpx;">（1）企业/单位可通过客服电话及客户经理完成采购需求、商品品报价、商品样品寄送以及其他相关事宜：
-              咨询电话：0510-82866863【周一至周五9：00--17：00】
-              客户经理1：18014931413【周一至周日8：00--22：00】
-              客户经理2：18912362930【周一至周日8：00--22：00】；
+            <text class="order-item-text" style="font-size: 25rpx;line-height: 1.5;">（1）企业/单位可通过客服电话及客户经理完成采购需求、商品报价、商品样品寄送以及其他相关事宜：
+              客服电话：4000615855；
               （2）转款/汇款前请仔细核对账户信息；
               （3）对公汇款后请保存汇款凭证并及时与客户经理确认入账；
               （4）汇款完成后请及时与客户经理对接并确认交/收货事宜；
@@ -108,9 +106,14 @@
       </view>
     </scroll-view>
     <view class="bottom-view" v-if="orderStatus != 4 && orderStatus!=1">
-      <text class="bottom-btn-text delete-text" @click="toDeleteOrder">删除订单</text>
+      <text class="bottom-btn-text delete-text" @click="showDeletePopup = true">删除订单</text>
       <text class="bottom-btn-text gm-text" @click="toConfirmOrder">{{orderInfo.paymentMode==1?'上传支付凭证':'去付款'}}</text>
     </view>
+
+    <u-modal ref="uModal" v-model="showDeletePopup" :show-cancel-button="true" title="删除订单"
+      :async-close="false" @confirm="confirm" content="确定删除订单吗？删除后,订单将不能恢复">
+
+    </u-modal>
   </view>
 </template>
 
@@ -122,6 +125,7 @@
   export default {
     data() {
       return {
+        showDeletePopup:false,
         orderId: '',
         href: "https://tyzy.jsghfw.com/sky-epay-test/epay/index.html?order_pay_id=",
         paymentMode: 0, //支付方式：0-在线支付，1-对公支付
@@ -167,6 +171,7 @@
               icon: 'none',
               title: '订单删除成功'
             })
+            uni.$emit('orderList',)
             uni.navigateBack({})
           }).catch(err => {
             uni.hideLoading()
@@ -179,7 +184,7 @@
         if (this.orderInfo.paymentMode == 1) {
           //对公付款
           uni.navigateTo({
-            url: `./order-public?orderId=${this.orderInfo.orderId}`
+            url: `./order-public?orderPayId=${this.orderInfo.orderId}`
           })
 
         } else {
@@ -188,7 +193,13 @@
 
         }
 
-      }
+      },
+      confirm() {
+        this.showDeletePopup = false;
+        setTimeout(() => {
+          this.toDeleteOrder()
+        }, 200)
+      },
     },
     computed: {
       imageUrl() {

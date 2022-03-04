@@ -53,7 +53,7 @@
         if(this.item.paymentMode==1){
           //对公支付 去上传凭证页面
           uni.navigateTo({
-            url:`./order-public?orderPayId=${item.orderId}`
+            url:`./order-public?orderPayId=${item.orderPayId}`
           })
         }else{
 

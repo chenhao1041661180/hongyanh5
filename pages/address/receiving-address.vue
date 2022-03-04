@@ -46,7 +46,7 @@
     </view>
     <uCitySelect v-model="showPopup" @city-change="cityChange" />
 
-    <u-modal ref="uModal" v-model="showDeletePopup" :show-cancel-button="true" :show-title="showTitle"
+    <u-modal ref="uModal" v-model="showDeletePopup" :show-cancel-button="true" :title="showTitle"
       :async-close="false" @confirm="confirm" :content="modalContent">
 
     </u-modal>
@@ -203,7 +203,7 @@
           })
       },
       confirm() {
-        this.show = false;
+        this.showDeletePopup = false;
         setTimeout(() => {
           this.deleteAddress()
         }, 200)

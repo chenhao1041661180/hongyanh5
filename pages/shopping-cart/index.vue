@@ -85,16 +85,23 @@
 
       cartList: {
         handler(newName, oldName) {
-          // console.log(newName)
+          console.log(newName)
           this.allCount = 0
           this.selectAllCart = 0
           newName.forEach(item => {
             if (item.select) {
+              //商品价格
               let goodsPriceCount = uni.$util.number.accMul(item.goodsPrice, item.goodsCount)
               this.allCount = uni.$util.number.accAdd(this.allCount, goodsPriceCount)
               this.selectAllCart += item.goodsCount
             }
           })
+
+          let tempList = newName.filter(item => {
+            return !item.select
+          })
+
+          this.allSelect = !tempList.length
 
         },
         immediate: true,
@@ -102,11 +109,16 @@
       }
     },
     onShow() {
-      this.getPersonalCart()
+      // this.getPersonalCart()
     },
-    // onLoad() {
-    //   this.getPersonalCart()
-    // },
+    onLoad() {
+      this.getPersonalCart()
+      uni.$on("shopping-cart",this.getPersonalCart)
+    },
+  
+    beforeDestroy() {
+       uni.$off("shopping-cart",this.getPersonalCart)
+    },
     methods: {
       getPersonalCart() {
         getPersonalCart()
@@ -136,12 +148,13 @@
        * 选中某一个商品
        */
       chooseItem(data) {
+        console.log('chooseItem')
         this.allSelect = null
         this.cartList[data.index].select = data.isSelect
-        let tempList = this.cartList.filter(item => {
-          return !item.select
-        })
-        this.allSelect = !tempList.length
+        // let tempList = this.cartList.filter(item => {
+        //   return !item.select
+        // })
+        // this.allSelect = !tempList.length
       },
       /**
        * @param {Object} e 修改购物车商品数量
@@ -201,9 +214,13 @@
       },
 
       toHome() {
+       let enstring =  uni.$util.uniStore.getStorage("enstring");
         uni.reLaunch({
-          url: '../home/index'
+          url: `../home/index?enstring=${enstring}`
         })
+        // uni.switchTab({
+        //   url:'../home/index'
+        // })
       },
       toSubmit() {
         if (!this.allCount) {
@@ -222,7 +239,7 @@
         })
 
         uni.navigateTo({
-          url: `../shopping-info/confirm-order?detail=false&orderWay=2&ids=${idArr.toString()}`
+          url: `../shopping-info/confirm-order?&orderWay=2&ids=${idArr.toString()}`
         })
       }
     }

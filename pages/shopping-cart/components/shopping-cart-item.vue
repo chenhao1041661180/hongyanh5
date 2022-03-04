@@ -55,7 +55,6 @@
     },
     watch: {
       item(n, o) {
-        console.log('item')
         this.isSelect = this.item.select
       }
     },
