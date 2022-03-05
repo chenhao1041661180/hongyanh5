@@ -2,7 +2,7 @@
   <!-- 支付成功页面 -->
   <view style="width: 100%;">
     <u-navbar back-icon-color="#666666" :titleBold="true" :background="{background: 'rgba(255,255,255)'}" z-index="333"
-      title="支付结果" :border-bottom="false" />
+      title="支付结果" :border-bottom="false" :customBack="customBack"/>
     <view class="head-bg-view">
       <!-- <image src="../../static/images/bg_dingdanxiangqing.png" style="width: 100%;height: 214rpx;display: flex;" /> -->
       <view class="status-view">
@@ -29,7 +29,7 @@
       </view>
     </view>
 
-    <text class="complete-text">完成</text>
+    <text class="complete-text" @click="customBack()">完成</text>
   </view>
 </template>
 
@@ -67,6 +67,11 @@
 
             this.dataInfo = res.data
           }).catch(err => {})
+      },
+      customBack(){
+        uni.reLaunch({
+          url:'../home/index'
+        })
       }
     }
   }

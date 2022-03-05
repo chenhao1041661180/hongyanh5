@@ -1,32 +1,63 @@
 <template>
   <!-- 订单详情页面 -->
   <view style="width: 100%;">
-    <u-navbar back-icon-color="#666666" :titleBold="true" :background="{background: 'rgba(255,255,255)'}" z-index="333"
-      title="订单详情" :border-bottom="false" />
-    <scroll-view :scroll-y="true" style="padding-bottom: 120rpx;">
+    <u-navbar
+      :title-bold="true"
+      :background="{background: 'rgba(255,255,255)'}"
+      :border-bottom="false"
+      back-icon-color="#666666"
+      z-index="333"
+      title="订单详情"
+    />
+    <scroll-view
+      :scroll-y="true"
+      style="padding-bottom: 120rpx;"
+    >
 
       <view>
         <view class="head-bg-view">
-          <image src="../../static/images/bg_dingdanxiangqing.png" style="width: 100%;height: 214rpx;display: flex;" />
+          <image
+            src="../../static/images/bg_dingdanxiangqing.png"
+            style="width: 100%;height: 214rpx;display: flex;"
+          />
           <view class="status-view">
-            <u-icon custom-prefix="hongyan-icon" name="a-ic_to_pay2x" color="#FFFFFF" size="38" />
-            <text class="status-text">{{orderStatusStr}}</text>
+            <u-icon
+              custom-prefix="hongyan-icon"
+              name="a-ic_to_pay2x"
+              color="#FFFFFF"
+              size="38"
+            />
+            <text class="status-text">{{ orderStatusStr }}</text>
           </view>
 
           <view class="address-view">
-            <view class="address-view2" v-if="orderInfo.shippingAddressVo" @click="toAddressList">
-              <image src="../../static/images/ic_address.png" style="width: 32rpx;height: 32rpx;" />
+            <view
+              v-if="orderInfo.shippingAddressVo"
+              class="address-view2"
+              @click="toAddressList"
+            >
+              <image
+                src="../../static/images/ic_address.png"
+                style="width: 32rpx;height: 32rpx;"
+              />
               <view class="address-info-view">
-                <text class="ssq-text">{{orderInfo.shippingAddressVo.consigneeRegionName}}</text>
-                <text class="detail-address">{{orderInfo.shippingAddressVo.consigneeAddress}}</text>
+                <text class="ssq-text">{{ orderInfo.shippingAddressVo.consigneeRegionName }}</text>
+                <text class="detail-address">{{ orderInfo.shippingAddressVo.consigneeAddress }}</text>
                 <view style="display: flex;flex-direction: row;align-items: center;">
-                  <text class="user-info">{{orderInfo.shippingAddressVo.consigneeName}}</text>
-                  <text class="user-info"
-                    style="margin-left: 15rpx;">{{orderInfo.shippingAddressVo.consigneeMobile}}</text>
+                  <text class="user-info">{{ orderInfo.shippingAddressVo.consigneeName }}</text>
+                  <text
+                    class="user-info"
+                    style="margin-left: 15rpx;"
+                  >{{ orderInfo.shippingAddressVo.consigneeMobile }}</text>
                 </view>
               </view>
-              <u-icon custom-prefix="hongyan-icon" name="a-ic_arrow_shouhuodizhi2x" size="26" color="#CCCCCC"
-                v-show="orderStatus ==0"></u-icon>
+              <u-icon
+                v-show="orderStatus ==0"
+                custom-prefix="hongyan-icon"
+                name="a-ic_arrow_shouhuodizhi2x"
+                size="26"
+                color="#CCCCCC"
+              />
             </view>
             <!-- <view class="no-address" v-else @click="toAddressList">
               <view class="no-address2">
@@ -36,19 +67,28 @@
               <u-icon custom-prefix="hongyan-icon" name="a-ic_arrow_shouhuodizhi2x" size="26" color="#CCCCCC"></u-icon>
 
             </view> -->
-            <image src="../../static/images/img_address_line.png" class="line-image" />
+            <image
+              src="../../static/images/img_address_line.png"
+              class="line-image"
+            />
           </view>
         </view>
         <view class="shopping-list-view">
 
-          <view class="content-view" v-for="(child,index) in orderInfo.orderGoodsItemVos">
-            <image :src="imageUrl" style="width: 192rpx;height: 192rpx;border-radius: 8rpx;" />
+          <view
+            v-for="(child,index) in orderInfo.orderGoodsItemVos"
+            class="content-view"
+          >
+            <image
+              :src="imageUrl"
+              style="width: 192rpx;height: 192rpx;border-radius: 8rpx;"
+            />
             <view class="content-item-view">
-              <text class="title-text">{{child.goodsName}}</text>
-              <text class="describle-text">{{child.goodsDescribe}}</text>
+              <text class="title-text">{{ child.goodsName }}</text>
+              <text class="describle-text">{{ child.goodsDescribe }}</text>
               <view style="display: flex;flex-direction: row;align-items: center;">
-                <text class="price-text">¥{{child.goodsPrice}}</text>
-                <text class="num-text">x{{child.goodsCount}}</text>
+                <text class="price-text">¥{{ child.goodsPrice }}</text>
+                <text class="num-text">x{{ child.goodsCount }}</text>
               </view>
             </view>
           </view>
@@ -57,161 +97,197 @@
 
         <view class="shopping-list-view">
           <text
-            style="width: 100%; font-family: PingFangSC-Regular; color: #333333; font-size: 30rpx;margin-bottom: 10rpx;">订单信息</text>
+            style="width: 100%; font-family: PingFangSC-Regular; color: #333333; font-size: 30rpx;margin-bottom: 10rpx;"
+          >订单信息</text>
 
           <view class="order-item-view">
             <text class="order-item-text">订单编号</text>
-            <text class="order-item-text" style="color: #333333;">{{orderInfo.orderId}}</text>
+            <text
+              class="order-item-text"
+              style="color: #333333;"
+            >{{ orderInfo.orderId }}</text>
           </view>
           <view class="order-item-view">
             <text class="order-item-text">创建时间</text>
-            <text class="order-item-text" style="color: #333333;">{{orderInfo.gmtCreate}}</text>
+            <text
+              class="order-item-text"
+              style="color: #333333;"
+            >{{ orderInfo.gmtCreate }}</text>
           </view>
         </view>
 
-        <view class="shopping-list-view" v-if="paymentMode==1">
+        <view
+          v-if="paymentMode==1"
+          class="shopping-list-view"
+        >
           <text
-            style="width: 100%; font-family: PingFangSC-Regular; color: #333333; font-size: 30rpx;margin-bottom: 10rpx;">汇款账户信息</text>
+            style="width: 100%; font-family: PingFangSC-Regular; color: #333333; font-size: 30rpx;margin-bottom: 10rpx;"
+          >汇款账户信息</text>
 
           <view class="order-item-view">
             <text class="order-item-text">公司名称</text>
-            <text class="order-item-text" style="color: #333333;">江苏职工之家网络信息科技有限公司</text>
+            <text
+              class="order-item-text"
+              style="color: #333333;"
+            >江苏职工之家网络信息科技有限公司</text>
           </view>
           <view class="order-item-view">
             <text class="order-item-text">信用代码</text>
-            <text class="order-item-text" style="color: #333333;">91320106302645648U</text>
+            <text
+              class="order-item-text"
+              style="color: #333333;"
+            >91320106302645648U</text>
           </view>
           <view class="order-item-view">
             <text class="order-item-text">银行账户</text>
-            <text class="order-item-text" style="color: #333333;">32001595636052513089</text>
+            <text
+              class="order-item-text"
+              style="color: #333333;"
+            >32001595636052513089</text>
           </view>
           <view class="order-item-view">
             <text class="order-item-text">开户行</text>
-            <text class="order-item-text" style="color: #333333;">中国建设银行南京市白下支行柜台</text>
+            <text
+              class="order-item-text"
+              style="color: #333333;"
+            >中国建设银行南京市白下支行柜台</text>
           </view>
           <view class="order-item-view">
             <text class="order-item-text">联系电话</text>
-            <text class="order-item-text" style="color: #333333;">13062598165</text>
+            <text
+              class="order-item-text"
+              style="color: #333333;"
+            >13062598165</text>
           </view>
 
           <view class="order-item-view">
-            <text class="order-item-text" style="font-size: 25rpx;line-height: 1.5;">（1）企业/单位可通过客服电话及客户经理完成采购需求、商品报价、商品样品寄送以及其他相关事宜：
-              客服电话：4000615855；
-              （2）转款/汇款前请仔细核对账户信息；
-              （3）对公汇款后请保存汇款凭证并及时与客户经理确认入账；
-              （4）汇款完成后请及时与客户经理对接并确认交/收货事宜；
-              （5）涉及商品售后及其他相关事宜请及时与客户经理对接并确认。</text>
+            <text
+              class="order-item-text"
+              style="font-size: 25rpx;line-height: 1.5;"
+            >（1）企业/单位可通过客服电话及客户经理完成采购需求、商品报价、商品样品寄送以及其他相关事宜：
+            客服电话：4000615855；
+            （2）转款/汇款前请仔细核对账户信息；
+            （3）对公汇款后请保存汇款凭证并及时与客户经理确认入账；
+            （4）汇款完成后请及时与客户经理对接并确认交/收货事宜；
+            （5）涉及商品售后及其他相关事宜请及时与客户经理对接并确认。</text>
           </view>
         </view>
       </view>
     </scroll-view>
-    <view class="bottom-view" v-if="orderStatus != 4 && orderStatus!=1">
-      <text class="bottom-btn-text delete-text" @click="showDeletePopup = true">删除订单</text>
-      <text class="bottom-btn-text gm-text" @click="toConfirmOrder">{{orderInfo.paymentMode==1?'上传支付凭证':'去付款'}}</text>
+    <view
+      v-if="orderStatus != 4 && orderStatus!=1"
+      class="bottom-view"
+    >
+      <text
+        class="bottom-btn-text delete-text"
+        @click="showDeletePopup = true"
+      >删除订单</text>
+      <text
+        class="bottom-btn-text gm-text"
+        @click="toConfirmOrder"
+      >{{ orderInfo.paymentMode==1?'上传支付凭证':'去付款' }}</text>
     </view>
 
-    <u-modal ref="uModal" v-model="showDeletePopup" :show-cancel-button="true" title="删除订单"
-      :async-close="false" @confirm="confirm" content="确定删除订单吗？删除后,订单将不能恢复">
-
-    </u-modal>
+    <u-modal
+      ref="uModal"
+      v-model="showDeletePopup"
+      :show-cancel-button="true"
+      :async-close="false"
+      title="删除订单"
+      content="确定删除订单吗？删除后,订单将不能恢复"
+      @confirm="confirm"
+    />
   </view>
 </template>
 
 <script>
-  import {
-    getOrderDetail,
-    deleteOrder
-  } from "@/api/order.js"
-  export default {
-    data() {
-      return {
-        showDeletePopup:false,
-        orderId: '',
-        href: "https://tyzy.jsghfw.com/sky-epay-test/epay/index.html?order_pay_id=",
-        paymentMode: 0, //支付方式：0-在线支付，1-对公支付
-        orderInfo: {},
-        orderStatus: ''
+import {
+  getOrderDetail,
+  deleteOrder
+} from '@/api/order.js'
+export default {
+  data() {
+    return {
+      showDeletePopup: false,
+      orderId: '',
+      href: 'https://tyzy.jsghfw.com/sky-epay-test/epay/index.html?order_pay_id=',
+      paymentMode: 0, // 支付方式：0-在线支付，1-对公支付
+      orderInfo: {},
+      orderStatus: ''
+    }
+  },
+
+  onLoad(option) {
+    this.orderId = option.orderId
+    this.paymentMode = option.paymentMode
+    this.orderStatus = option.orderStatus
+    this.orderStatusStr = option.orderStatusStr
+  },
+  computed: {
+    imageUrl() {
+      if (this.orderInfo && this.orderInfo.orderGoodsItemVos.thumbnail) {
+        const imageUrl = uni.$util.assetsPath.IMAGE_URL + this.orderInfo.orderGoodsItemVos.thumbnail
+        return imageUrl
+      } else {
+        return uni.$util.config.loadingImg
+      }
+    }
+  },
+  mounted() {
+    this.getOrderDetail()
+  },
+  methods: {
+    getOrderDetail() {
+      uni.showLoading({
+        title: ''
+      })
+      getOrderDetail(this.orderId)
+        .then(res => {
+          uni.hideLoading()
+          this.orderInfo = res.data
+        }).catch(err => {
+          uni.hideLoading()
+        })
+    },
+    // 删除订单
+    toDeleteOrder() {
+      uni.showLoading({
+        title: ''
+      })
+      deleteOrder(this.orderInfo.orderId)
+        .then(res => {
+          uni.hideLoading()
+          uni.showToast({
+            icon: 'none',
+            title: '订单删除成功'
+          })
+          uni.$emit('orderList',)
+          uni.navigateBack({})
+        }).catch(err => {
+          uni.hideLoading()
+        })
+    },
+    // 去付款
+    toConfirmOrder() {
+      if (this.orderInfo.paymentMode == 1) {
+        // 对公付款
+        uni.navigateTo({
+          url: `./order-public?orderPayId=${this.orderInfo.orderId}`
+        })
+      } else {
+        // 在线支付
+        // window.open(this.href + this.orderInfo.orderPayId)
+        window.location.href = this.href + this.orderInfo.orderPayId
       }
     },
-
-    onLoad(option) {
-      this.orderId = option.orderId
-      this.paymentMode = option.paymentMode
-      this.orderStatus = option.orderStatus
-      this.orderStatusStr = option.orderStatusStr
-    },
-    mounted() {
-      this.getOrderDetail()
-    },
-    methods: {
-      getOrderDetail() {
-
-        uni.showLoading({
-          title: ''
-        })
-        getOrderDetail(this.orderId)
-          .then(res => {
-            uni.hideLoading()
-            this.orderInfo = res.data
-          }).catch(err => {
-            uni.hideLoading()
-          })
-
-      },
-      //删除订单
-      toDeleteOrder() {
-
-        uni.showLoading({
-          title: ''
-        })
-        deleteOrder(this.orderInfo.orderId)
-          .then(res => {
-            uni.hideLoading()
-            uni.showToast({
-              icon: 'none',
-              title: '订单删除成功'
-            })
-            uni.$emit('orderList',)
-            uni.navigateBack({})
-          }).catch(err => {
-            uni.hideLoading()
-          })
-
-      },
-      //去付款
-      toConfirmOrder() {
-
-        if (this.orderInfo.paymentMode == 1) {
-          //对公付款
-          uni.navigateTo({
-            url: `./order-public?orderPayId=${this.orderInfo.orderId}`
-          })
-
-        } else {
-          //在线支付
-          window.open(this.href + this.orderInfo.orderPayId)
-
-        }
-
-      },
-      confirm() {
-        this.showDeletePopup = false;
-        setTimeout(() => {
-          this.toDeleteOrder()
-        }, 200)
-      },
-    },
-    computed: {
-      imageUrl() {
-        if (this.orderInfo && this.orderInfo.orderGoodsItemVos.thumbnail) {
-          let imageUrl = uni.$util.assetsPath.IMAGE_URL + this.orderInfo.orderGoodsItemVos.thumbnail;
-          return imageUrl
-        } else {
-          return uni.$util.config.loadingImg
-        }
-      }
-    },
+    confirm() {
+      this.showDeletePopup = false
+      setTimeout(() => {
+        this.toDeleteOrder()
+      }, 200)
+    }
   }
+}
 </script>
 
 <style scoped>
@@ -312,7 +388,6 @@
     background-repeat: no-repeat;
     height: 6rpx;
   }
-
 
   .shopping-list-view {
     display: flex;

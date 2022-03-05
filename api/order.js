@@ -42,6 +42,13 @@ export function deleteOrder(orderId) {
 }
 
 /**
+ * 确认签收-确认收货
+ */
+export function signFor(orderId) {
+  return request.get(`/mall/api/order/signFor?orderId=${orderId}`)
+}
+
+/**
  * 选择支付方式
  */
 export function setPaymentMode(data) {

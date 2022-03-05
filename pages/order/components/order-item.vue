@@ -16,12 +16,15 @@
 
     <view class="btn-view">
       <text class="qfk-text" v-show="item.orderStatus==0" @click.stop="toFk(item)">去付款</text>
-      <text class="qrsh-text" v-show="item.orderStatus==2">确认收货</text>
+      <text class="qrsh-text" v-show="item.orderStatus==2" @click.stop="confirmReceipt(item)">确认收货</text>
     </view>
   </view>
 </template>
 
 <script>
+  import {
+    signFor
+  } from '@/api/order.js'
   export default {
     props: {
       item: {
@@ -45,24 +48,42 @@
     data() {
       return {}
     },
-    methods:{
+    methods: {
       //去付款
-      toFk(item){
+      toFk(item) {
         console.log("toFk")
 
-        if(this.item.paymentMode==1){
+        if (this.item.paymentMode == 1) {
           //对公支付 去上传凭证页面
           uni.navigateTo({
-            url:`./order-public?orderPayId=${item.orderPayId}`
+            url: `./order-public?orderPayId=${item.orderPayId}`
           })
-        }else{
+        } else {
 
           uni.navigateTo({
-            url:`../shopping-info/submit-order?total=${item.total}&orderPayId=${item.orderPayId}&orderWay=${item.orderWay}`
+            url: `../shopping-info/submit-order?total=${item.total}&orderPayId=${item.orderPayId}&orderWay=${item.orderWay}`
           })
 
         }
 
+      },
+      //确认收货
+      confirmReceipt(item) {
+        uni.showLoading({
+          title: ''
+        })
+        signFor(item.orderPayId)
+          .then(res => {
+            uni.hideLoading()
+            uni.showToast({
+              icon: 'none',
+              title: '已确认收货'
+            })
+          })
+          uni.$emit("orderList")
+          .catch(err => {
+            uni.hideLoading()
+          })
       }
     }
   }

@@ -81,7 +81,8 @@
             if (paymentMode == 0) {
               //工会支付
               //在线支付
-              window.open(this.href + this.orderPayId)
+              // window.open(this.href + this.orderPayId)
+			   window.location.href = this.href + this.orderPayId
 
             } else if (paymentMode == 1) {
               //对公打款
