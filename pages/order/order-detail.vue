@@ -210,7 +210,6 @@ export default {
     return {
       showDeletePopup: false,
       orderId: '',
-      href: 'https://tyzy.jsghfw.com/sky-epay-test/epay/index.html?order_pay_id=',
       paymentMode: 0, // 支付方式：0-在线支付，1-对公支付
       orderInfo: {},
       orderStatus: ''
@@ -261,7 +260,7 @@ export default {
             icon: 'none',
             title: '订单删除成功'
           })
-          uni.$emit('orderList',)
+          uni.$emit('orderList')
           uni.navigateBack({})
         }).catch(err => {
           uni.hideLoading()
@@ -277,7 +276,7 @@ export default {
       } else {
         // 在线支付
         // window.open(this.href + this.orderInfo.orderPayId)
-        window.location.href = this.href + this.orderInfo.orderPayId
+        window.location.href = uni.$util.PAY_HERF + this.orderInfo.orderPayId
       }
     },
     confirm() {

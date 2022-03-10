@@ -7,9 +7,9 @@
 		   }"
 	 :class="'u-lazy-item-' + elIndex">
 		<view :class="'u-lazy-item-' + elIndex">
-			<image :style="{borderRadius: borderRadius + 'rpx', height: imgHeight}" v-if="!isError" class="u-lazy-item"
+			<image :style="{borderTopLeftRadius: borderRadius + 'rpx',borderTopRightRadius: borderRadius + 'rpx', height: imgHeight}" v-if="!isError" class="u-lazy-item"
 			 :src="isShow ? image : loadingImg" :mode="imgMode" @load="imgLoaded" @error="loadError" @tap="clickImg"></image>
-			<image :style="{borderRadius: borderRadius + 'rpx', height: imgHeight}" class="u-lazy-item error" v-else :src="errorImg"
+			<image :style="{borderTopLeftRadius: borderRadius + 'rpx',borderTopRightRadius: borderRadius + 'rpx',  height: imgHeight}" class="u-lazy-item error" v-else :src="errorImg"
 			 :mode="imgMode" @load="errorImgLoaded" @tap="clickImg"></image>
 		</view>
 	</view>
@@ -50,7 +50,7 @@
 			// 图片裁剪模式
 			imgMode: {
 				type: String,
-				default: 'widthFix'
+				default: 'aspectFit'
 			},
 			// 占位图片路径
 			loadingImg: {
@@ -92,7 +92,7 @@
 			// 图片高度，单位rpx
 			height: {
 				type: [Number, String],
-				default: '450'
+				default: '350'
 			}
 		},
 		data() {
@@ -225,9 +225,9 @@
 
 <style scoped lang="scss">
 	@import "../../libs/css/style.components.scss";
-	
+
 	.u-wrap {
-		background-color: #eee;
+		// background-color: #eee;
 		overflow: hidden;
 	}
 

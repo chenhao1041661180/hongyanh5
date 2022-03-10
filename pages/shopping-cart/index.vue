@@ -1,8 +1,8 @@
 <template>
   <view style="align-items: center; justify-content: center;">
-    <u-navbar title-color="#333333" back-icon-color="#666666" :is-fixed="true" :is-back="true"
+   <!-- <u-navbar title-color="#333333" back-icon-color="#666666" :is-fixed="true" :is-back="true"
       :background="{background: '#FFFFFF'}" :titleBold="true" titleSize="36" z-index="333"
-      :back-text-style="{color: '#fff'}" title="购物车" back-icon-name="nav-back" back-icon-size="50" />
+      :back-text-style="{color: '#fff'}" title="购物车" back-icon-name="nav-back" back-icon-size="50" /> -->
     <view class="list-view " v-if="cartList.length">
       <view class="select-all-view" style="flex-direction: row; align-items: center;">
         <view style="padding: 10rpx;" @click="toAllSelect">

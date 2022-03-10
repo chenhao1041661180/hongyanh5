@@ -1,6 +1,6 @@
 <template>
   <view style="background-color: #FFFFFF;border-radius: 16rpx;margin-top: 24rpx;">
-    <u-lazy-load threshold="-450" border-radius="10" :image="url" :index="index"></u-lazy-load>
+    <u-lazy-load threshold="-250" border-radius="10" :image="url" :index="index"></u-lazy-load>
     <text
       class="title-text">{{item.goodsName}}</text>
     <view class="price-view">
@@ -51,8 +51,9 @@
     color: #333333;
     display: flex;
     font-size: 30rpx;
+    height: 84rpx;
     word-break: break-all;
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
     /* word-break: normal; */
     margin-left: 16rpx;
     margin-right: 16rpx;

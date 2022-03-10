@@ -55,7 +55,6 @@
         total: '',
         orderPayId: '',
         orderWay: 1, //下单方式：1-商品详情下单，2-购物车下单
-        href: "https://tyzy.jsghfw.com/sky-epay-test/epay/index.html?order_pay_id="
       }
     },
 
@@ -82,7 +81,7 @@
               //工会支付
               //在线支付
               // window.open(this.href + this.orderPayId)
-			   window.location.href = this.href + this.orderPayId
+			   window.location.href = uni.$util.PAY_HERF + this.orderPayId
 
             } else if (paymentMode == 1) {
               //对公打款

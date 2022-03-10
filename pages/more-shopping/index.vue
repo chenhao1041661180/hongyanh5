@@ -24,7 +24,7 @@
         <u-dropdown :close-on-click-mask="true" ref="uDropdown" activeColor="#333333" inactiveColor="#999999"
           titleSize="32" style="width: 500rpx;" menuIcon="arrow-down-fill" :menuIconSize="10" @open="dropOpen"
           @close="dropClose">
-          <u-dropdown-item :title="leftDropText" @change="change" :options="options1">
+          <u-dropdown-item :title="leftDropText" @change="change" :options="options1"  :showMask="showMask">
           </u-dropdown-item>
           <u-dropdown-item title="销量" :drapIcon="false" :showMask="false">
           </u-dropdown-item>
@@ -36,23 +36,31 @@
 
     <view class="list-view" v-if="!useSlot">
 
-      <view class="waterfall-view" v-if="listGrad">
-        <u-waterfall v-model="dataList" ref="uWaterfall">
+      <!-- <view class="waterfall-view" v-if="listGrad && dataList.length"> -->
+       <!-- <u-waterfall v-model="dataList" ref="uWaterfall">
           <template v-slot:left="{ leftList }">
             <home-item class="demo-warter" v-for="(item, index) in leftList" :key="index"
-              @click.native="goToDetail(item)" :item="item" :index="index">
+              @click.native="goToDetail(item)" :item="item" :index="index"> -->
               <!-- 微信小程序需要hx2.8.11版本才支持在template中引入其他组件，比如下方的u-lazy-load组件 -->
-            </home-item>
+          <!--  </home-item>
           </template>
           <template v-slot:right="{ rightList }">
             <home-item class="demo-warter" v-for="(item, index) in rightList" :key="index"
               @click.native="goToDetail(item)" :item="item" :index="index">
             </home-item>
           </template>
-        </u-waterfall>
+        </u-waterfall -->
+        <view class="u-demo-area" v-if="listGrad && dataList.length">
+          <u-row gutter="12" offset="1" v-if="dataList.length">
+            <u-col span="6" v-for="(item,index)  in dataList" @click="goToDetail(item)" :key="index">
+              <home-item :item="item" :index="index" />
+            </u-col>
+
+          </u-row>
+        <!-- </view> -->
       </view>
 
-      <view class="linear-view" v-else>
+      <view class="linear-view" v-if="!listGrad && dataList.length">
         <linear-more-shopping-item v-for="(item, index) in dataList" :key="index" @click.native="goToDetail(item)"
           :item="item" :index="index" />
       </view>
@@ -69,7 +77,8 @@
     <view class="search-view" v-if="useSlot">
       <view style="display: flex;flex-direction: row;align-items: center; flex: 1;padding-top: 28rpx;">
         <text class="search-history-text">搜索历史</text>
-        <u-icon name="a-ic_delete2x" custom-prefix="hongyan-icon" size="38" color="#999999" @click="clearHistory"></u-icon>
+        <u-icon name="a-ic_delete2x" custom-prefix="hongyan-icon" size="38" color="#999999" @click="clearHistory">
+        </u-icon>
       </view>
 
       <view style="display: flex;
@@ -96,6 +105,7 @@
     },
     data() {
       return {
+        showMask:true,
         firstLoad: true,
         leftDropText: '综合',
         listGrad: true,
@@ -118,8 +128,12 @@
           }
         ],
         loadStatus: 'loadmore',
-        dataList: []
+        dataList: [],
+        categoryId:''
       }
+    },
+    onLoad(option) {
+      this.categoryId = option.categoryId
     },
     mounted() {
       this.getList()
@@ -143,7 +157,8 @@
           pageNum: this.pageNum,
           pageSize: 10,
           keyword: this.keyword,
-          sortord: this.sortord
+          sortord: this.sortord,
+          categoryId: this.categoryId
         }
         homeList(params)
           .then(res => {
@@ -151,10 +166,13 @@
             if (params.pageNum == 1) {
               this.dataList = []
               //清除原先的数据
-              this.$refs.uWaterfall.clear()
+              // this.$refs.uWaterfall.clear()
             }
             setTimeout(() => {
-              this.dataList = this.dataList.concat(res.data.records)
+              if(res.data.records){
+                 this.dataList = this.dataList.concat(res.data.records)
+              }
+
               this.loadStatus = 'loadmore';
             })
 
@@ -188,8 +206,8 @@
       /**
        * 清除历史
        */
-      clearHistory(){
-       uni.$util.uniStore.setStorage("historyList", "")
+      clearHistory() {
+        uni.$util.uniStore.setStorage("historyList", "")
         this.historyList = []
       },
       /**
@@ -202,20 +220,20 @@
         //保存当前搜索的数据 添加到第一位
         temHistoryList.unshift(e)
         //去重
-       temHistoryList = this.uniq(temHistoryList)
+        temHistoryList = this.uniq(temHistoryList)
         this.historyList = temHistoryList
         let historyListStr = temHistoryList.toString()
         uni.$util.uniStore.setStorage("historyList", historyListStr)
         this.getList()
       },
-      uniq(array){
-          var temp = []; //一个新的临时数组
-          for(var i = 0; i < array.length; i++){
-              if(temp.indexOf(array[i]) == -1){
-                  temp.push(array[i]);
-              }
+      uniq(array) {
+        var temp = []; //一个新的临时数组
+        for (var i = 0; i < array.length; i++) {
+          if (temp.indexOf(array[i]) == -1) {
+            temp.push(array[i]);
           }
-          return temp;
+        }
+        return temp;
       },
       /**
        * 取消搜索
@@ -258,14 +276,21 @@
         this.pageNum = 1;
         this.leftDropText = this.options1[index].label
         this.sortord = this.options1[index].value
+        this.showMask = false
         this.getList()
+
       },
       /**
        * 上拉加载更多触发
        */
       addRandomData() {
-        this.loadStatus = 'loading';
-        console.log('addRandomData')
+      console.log('addRandomData')
+      this.loadStatus = 'loading';
+      this.pageNum = this.pageNum + 1
+      // 模拟数据加载
+      setTimeout(() => {
+        this.getList();
+      }, 200);
       },
       goToDetail(item) {
         uni.navigateTo({
@@ -282,7 +307,17 @@
     align-items: center;
     flex: 1;
   }
-
+/* #ifdef H5 */
+  .u-demo-area /deep/ .u-row {
+    display: flex;
+    /* flex-wrap: wrap; */
+    height: 100%;
+    flex: 1;
+    align-items: center;
+    padding-left: 15rpx;
+    padding-right: 15rpx;
+    padding-bottom: 30rpx;
+  }
   .navbar-right {
     margin-right: 24rpx;
     display: flex;
@@ -344,7 +379,7 @@
     border-radius: 8px;
     margin: 5px;
     background-color: #ffffff;
-    padding: 8px;
+    /* padding: 8px; */
     position: relative;
   }
 </style>

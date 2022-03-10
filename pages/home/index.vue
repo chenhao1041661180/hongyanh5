@@ -1,15 +1,24 @@
 <template>
   <view style="position: relative;">
     <view class="head-bg" />
-    <view class="title-view">
+   <!-- <view class="title-view">
       <text class="title-text">红岩扶贫</text>
-    </view>
+    </view> -->
 
     <u-swiper :list="list" mode="round" indicator-pos="bottomCenter"
       style="margin-top: -190rpx; margin-left: 24rpx;margin-right: 24rpx;" :border-radius="12"></u-swiper>
 
-    <view style="margin-top: 33rpx;display: flex;text-align: center;align-items: center;">
-      <!-- <image ></image> -->
+    <u-grid col="4" :border="false"
+      style="margin-top: 24rpx;margin-left: 24rpx; margin-right: 24rpx;display: flex;width: 702rpx; border-radius: 16rpx;">
+      <u-grid-item :name="'item'+index" :index="index" @click="itemClick" v-for="(item,index) in homeFlList">
+        <image style="width: 90rpx;height: 90rpx;" :src="imgUrl(item)"></image>
+        <view class="grid-text">{{item.categoryName}}</view>
+      </u-grid-item>
+
+    </u-grid>
+
+    <view style="padding-top: 33rpx;padding-bottom: 24rpx; display: flex;text-align: center;align-items: center;">
+      <image src="../../static/images/ic_baokuan.png" style="width: 34rpx;height: 34rpx;margin-left: 24rpx;"/>
       <text class="fire-title">爆款新品</text>
 
       <text class="more-text" @click="toMore">更多</text>
@@ -45,7 +54,9 @@
     login,
     homeList
   } from '@/api/home.js'
-
+  import {
+    goodsCategoryList
+  } from '@/api/classification.js'
   export default {
 
     components: {
@@ -57,6 +68,7 @@
         dataList: [],
         enstring: "",
         showCall: false,
+        homeFlList: [",","",""],
 
         list: ["https://cdn.uviewui.com/uview/swiper/1.jpg", "https://cdn.uviewui.com/uview/swiper/1.jpg"]
 
@@ -81,6 +93,7 @@
           // 保存用户信息
           uni.$util.token.set(res.data)
 
+          this.goodsCategoryList()
           this.getList()
 
         })
@@ -89,7 +102,37 @@
 
         })
     },
+
+    computed: {
+      imgUrl() {
+        return function(item) {
+          if (item.categoryPicture.indexOf('group') != -1) {
+
+            let imageUrl = uni.$util.assetsPath.IMAGE_URL + item.categoryPicture;
+            return imageUrl
+          } else {
+            return item.categoryPicture
+          }
+
+        }
+
+      }
+    },
     methods: {
+      goodsCategoryList() {
+        goodsCategoryList(1)
+          .then(res => {
+            this.homeFlList = []
+            this.homeFlList = res.data
+            this.homeFlList.push({
+              categoryName: "全部",
+              categoryPicture: '../../static/images/ic_all.png'
+            })
+          })
+          .catch(err => {
+
+          })
+      },
       /**
        * 获取首页列表数据
        */
@@ -98,7 +141,8 @@
           pageNum: 1,
           pageSize: 10,
           keyword: "",
-          sortord: ""
+          sortord: "",
+          categoryId: ""
         }
         homeList(params)
           .then(res => {
@@ -109,6 +153,19 @@
           .catch(err => {
 
           })
+
+      },
+      itemClick(index){
+        console.log(index)
+        if(index==3){
+          uni.switchTab({
+            url:'../classification/index'
+          })
+        }else{
+          uni.navigateTo({
+            url: `../more-shopping/index?categoryId=${this.homeFlList[index].id}`
+          })
+        }
 
       },
       showCallPopup() {
@@ -138,6 +195,12 @@
     width: 750rpx;
   }
 
+  .grid-text {
+    font-size: 24rpx;
+    margin-top: 10rpx;
+    color: #333333;
+  }
+
   .title-view {
     position: absolute;
     top: 20rpx;
@@ -162,6 +225,7 @@
     color: #333333;
     text-align: left;
     margin-left: 20rpx;
+    line-height: 36rpx;
     flex: 1;
     font-family: PingFangSC-Medium;
   }
