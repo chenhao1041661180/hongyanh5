@@ -33,7 +33,7 @@
 
     <view class="address-view" style="padding-left: 0;padding-right: 0;padding-bottom: 20rpx; margin-bottom: 120rpx;">
       <shopping-cart-item :showChoseIcon="false" v-for="(item,index) in dataInfo.orderGoodsItemVos" :item="item"
-        :key="index" />
+        :key="index" @changeCount="changeCount"/>
 
     </view>
     <view class="bottom-view">
@@ -120,6 +120,17 @@
 
           })
       },
+      /**
+       * @param {Object} e 修改购物车商品数量
+       */
+      changeCount(e) {
+  
+        let param = {
+          id: this.cartList[e.index].id,
+          count: e.value
+        }
+  
+      },
       addAddressEmit(data) {
         this.dataInfo.shippingAddressVo = data
       },
@@ -152,7 +163,7 @@
           addressId: this.dataInfo.shippingAddressVo.id,
           goodsItemDtoList
         }
-        console.log(JSON.stringify(param) )
+        // console.log(JSON.stringify(param) )
         submitOrder(param)
           .then(res => {
             uni.hideLoading()

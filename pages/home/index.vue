@@ -22,8 +22,7 @@
       <text class="fire-title">爆款新品</text>
 
       <text class="more-text" @click="toMore">更多</text>
-      <u-icon name="a-ic_arrow_shouhuodizhi2x" custom-prefix="hongyan-icon" size="28" color="#979797"
-        style="margin-right: 26rpx;" />
+      <u-icon name="a-ic_arrow_shouhuodizhi2x" custom-prefix="hongyan-icon" size="28" color="#979797" style="margin-right: 26rpx;" />
     </view>
 
 

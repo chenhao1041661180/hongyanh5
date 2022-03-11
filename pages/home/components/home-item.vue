@@ -51,7 +51,7 @@
     color: #333333;
     display: flex;
     font-size: 30rpx;
-    height: 84rpx;
+    height: 80rpx;
     word-break: break-all;
     /* word-wrap: break-word; */
     /* word-break: normal; */

@@ -8,14 +8,14 @@
 			}">
       <u-icon name="minus" :size="size"></u-icon>
     </view>
-    <text :disabled="disabledInput || disabled" :cursor-spacing="getCursorSpacing"
+    <input :disabled="disabledInput || disabled" :cursor-spacing="getCursorSpacing"
       :class="{ 'u-input-disabled': disabled }" v-model="inputVal" class="u-number-input" @blur="onBlur"
       @focus="onFocus" type="number" :style="{
 				color: color,
 				fontSize: size + 'rpx',
 				height: inputHeight + 'rpx',
 				width: inputWidth + 'rpx'
-			}">{{inputVal}}</text>
+			}">{{inputVal}}</input>
       <!-- 	background: bgColor, -->
     <view class="u-icon-plus" @touchstart.stop.prevent="btnTouchStart('plus')" @touchend.stop.prevent="clearTimer"
       :class="{ 'u-icon-disabled': disabled || inputVal >= max }" :style="{

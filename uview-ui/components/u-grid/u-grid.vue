@@ -29,7 +29,7 @@ export default {
 		// 宫格对齐方式，表现为数量少的时候，靠左，居中，还是靠右
 		align: {
 			type: String,
-			default: 'left'
+			default: 'center'
 		},
 		// 宫格按压时的样式类，"none"为无效果
 		hoverClass: {

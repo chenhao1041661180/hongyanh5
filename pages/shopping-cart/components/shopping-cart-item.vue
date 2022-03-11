@@ -13,7 +13,7 @@
         <view style="justify-content: space-between;display: flex;align-items: center;">
           <text class="price-text">￥{{item.goodsPrice}}</text>
           <u-number-box v-model="item.goodsCount" :bg-color="bgColor" :color="color" :min="1" :max="item.goodsInventory" :step="step" :index="index"
-            :disabled="disabled" @change="change" @focus="focus"></u-number-box>
+            :disabled="disabled" @input="change"  @focus="focus"></u-number-box>
         </view>
         <view style="display: flex;align-items: flex-end;justify-content: flex-end;">
           <text style="color: #EF293B;font-size: 22rpx;font-family: PingFangSC-Regular;">起订量 {{item.goodsMoq}}  库存{{item.goodsInventory}}</text>
