@@ -13,7 +13,7 @@
       </view>
 
       <u-swipe-action bg-color="rgb(250, 250, 250,250)" @open="open" :disabled="false" :index="index"
-        v-for="(item, index) in cartList" :key="item.id" @click="click" :show="false" :btn-width="btnWidth"
+        v-for="(item, index) in cartList" :key="index" @click="click" :show="false" :btn-width="btnWidth"
         @close="close" :options="options" @content-click="contentClick">
         <shopping-cart-item :item="item" :index="index" @chooseItem="chooseItem" @changeCount="changeCount" />
 
@@ -115,7 +115,7 @@
       this.getPersonalCart()
       uni.$on("shopping-cart",this.getPersonalCart)
     },
-  
+
     beforeDestroy() {
        uni.$off("shopping-cart",this.getPersonalCart)
     },
@@ -160,7 +160,7 @@
        * @param {Object} e 修改购物车商品数量
        */
       changeCount(e) {
-
+        console.log(e)
         let param = {
           id: this.cartList[e.index].id,
           count: e.value

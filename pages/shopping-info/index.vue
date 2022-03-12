@@ -27,7 +27,7 @@
       </view>
       <text class="goods-describe-text">{{goodsDetail.goodsDescribe}}</text>
       <view style="flex-direction: column;display: flex;width: 100%;height: auto;">
-        <u-lazy-load threshold="-500" border-radius="10" :image="detailPictureUrl(item)" :index="index"
+        <u-lazy-load threshold="-100" border-radius="0" :image="detailPictureUrl(item)" :index="index" imgMode="widthFix"
           v-for="(item,index) in goodsDetail.detailPicture" />
 
         <!-- <image mode="widthFix" :src="detailPictureUrl(item)" style="width:100%;margin-top: 12rpx;"
@@ -253,8 +253,10 @@
   .bottom-view {
     position: fixed;
     bottom: 0;
+    padding-bottom: constant(safe-area-inset-bottom );
+    padding-bottom: env(safe-area-inset-bottom );
+    height: calc(104rpx + env(safe-area-inset-bottom));
     align-items: center;
-    height: 104rpx;
     padding-left: 20rpx;
     padding-right: 24rpx;
     width: 100%;

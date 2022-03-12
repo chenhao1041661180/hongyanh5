@@ -20,3 +20,10 @@ export function homeList(data) {
 export function goodsInfo(id) {
   return request.get(`/mall/api/goods/detail?id=${id}`)
 }
+
+/**
+ * @param {Object} data 轮播图List
+ */
+export function bannerList() {
+  return request.get(`/mall/api/banner/list`)
+}

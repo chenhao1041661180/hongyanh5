@@ -18,13 +18,13 @@
       </view>
     </u-navbar>
     <view
-      style="height: 84rpx;background-color: #FFFFFF;display: flex;flex-direction: row;padding-right: 40rpx;position: fixed;width: 100%;z-index: 3;"
+      style="height: 84rpx;background-color: #FFFFFF;display: flex;flex-direction: row;padding-right: 40rpx;position: fixed;width: 100%;"
       v-if="!useSlot">
       <view style="flex: 1;">
         <u-dropdown :close-on-click-mask="true" ref="uDropdown" activeColor="#333333" inactiveColor="#999999"
           titleSize="32" style="width: 500rpx;" menuIcon="arrow-down-fill" :menuIconSize="10" @open="dropOpen"
           @close="dropClose">
-          <u-dropdown-item :title="leftDropText" @change="change" :options="options1"  :showMask="showMask">
+          <u-dropdown-item :title="leftDropText" @change="change" :options="options1"  >
           </u-dropdown-item>
           <u-dropdown-item title="销量" :drapIcon="false" :showMask="false">
           </u-dropdown-item>

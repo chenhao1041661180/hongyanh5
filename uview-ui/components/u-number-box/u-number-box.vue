@@ -15,8 +15,7 @@
 				fontSize: size + 'rpx',
 				height: inputHeight + 'rpx',
 				width: inputWidth + 'rpx'
-			}">{{inputVal}}</input>
-      <!-- 	background: bgColor, -->
+			}"></input>
     <view class="u-icon-plus" @touchstart.stop.prevent="btnTouchStart('plus')" @touchend.stop.prevent="clearTimer"
       :class="{ 'u-icon-disabled': disabled || inputVal >= max }" :style="{
 				background: bgColor,

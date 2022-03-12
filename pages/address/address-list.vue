@@ -1,8 +1,8 @@
 <template>
   <!-- 收货地址列表 -->
   <view style="width: 100%;">
-    <u-navbar back-icon-color="#666666" :titleBold="true" :background="{background: 'rgba(255,255,255)'}" z-index="333" title="我的收货地址"
-      :border-bottom="false" />
+    <u-navbar back-icon-color="#666666" :titleBold="true" :background="{background: 'rgba(255,255,255)'}" z-index="333"
+      title="我的收货地址" :border-bottom="false" />
 
     <view class="list-view" v-if="addressList.length">
       <address-item @edit="edit(item)" v-for="(item,index) in addressList" :item="item" :key="index"
@@ -99,7 +99,9 @@
     bottom: 0;
     align-items: center;
     justify-content: center;
-    height: 104rpx;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+    height: calc(104rpx + env(safe-area-inset-bottom));
     padding-left: 34rpx;
     padding-right: 24rpx;
     width: 100%;

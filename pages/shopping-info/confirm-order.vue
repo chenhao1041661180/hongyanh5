@@ -11,8 +11,8 @@
           <text class="ssq-text">{{dataInfo.shippingAddressVo.consigneeRegionName}}</text>
           <text class="detail-address">{{dataInfo.shippingAddressVo.consigneeAddress}}</text>
           <view style="display: flex;flex-direction: row;align-items: center;">
-             <text class="user-info">{{dataInfo.shippingAddressVo.consigneeName}}</text>
-              <text class="user-info" style="margin-left: 15rpx;">{{dataInfo.shippingAddressVo.consigneeMobile}}</text>
+            <text class="user-info">{{dataInfo.shippingAddressVo.consigneeName}}</text>
+            <text class="user-info" style="margin-left: 15rpx;">{{dataInfo.shippingAddressVo.consigneeMobile}}</text>
           </view>
 
         </view>
@@ -33,7 +33,7 @@
 
     <view class="address-view" style="padding-left: 0;padding-right: 0;padding-bottom: 20rpx; margin-bottom: 120rpx;">
       <shopping-cart-item :showChoseIcon="false" v-for="(item,index) in dataInfo.orderGoodsItemVos" :item="item"
-        :key="index" @changeCount="changeCount"/>
+        :key="index" @changeCount="changeCount" />
 
     </view>
     <view class="bottom-view">
@@ -41,7 +41,7 @@
         <text class="custom-text">共{{totalCount}}件</text>
         <text class="custom-text" space="emsp" style="margin-left: 10rpx;margin-right: 10rpx;">|</text>
         <text class="custom-text">合计</text>
-        <text class="price-text">￥{{dataInfo.total}}</text>
+        <text class="price-text">￥{{totalPrice}}</text>
       </view>
       <text class="bottom-btn-text gm-text" @click="toConfirmOrder">立即支付</text>
     </view>
@@ -99,6 +99,18 @@
         }
 
         return count
+      },
+      totalPrice() {
+        let price = 0
+        let orderGoods = this.dataInfo.orderGoodsItemVos
+        if (orderGoods) {
+          orderGoods.forEach(item => {
+            let goodsPriceCount = uni.$util.number.accMul(item.goodsPrice, item.goodsCount)
+            price = uni.$util.number.accAdd(price, goodsPriceCount)
+          })
+        }
+
+        return price
       }
     },
     methods: {
@@ -124,12 +136,12 @@
        * @param {Object} e 修改购物车商品数量
        */
       changeCount(e) {
-  
+
         let param = {
           id: this.cartList[e.index].id,
           count: e.value
         }
-  
+
       },
       addAddressEmit(data) {
         this.dataInfo.shippingAddressVo = data
@@ -260,8 +272,10 @@
   .bottom-view {
     position: fixed;
     bottom: 0;
+    padding-bottom: constant(safe-area-inset-bottom );
+    padding-bottom: env(safe-area-inset-bottom );
+    height: calc(104rpx + env(safe-area-inset-bottom));
     align-items: center;
-    height: 104rpx;
     padding-left: 34rpx;
     padding-right: 24rpx;
     width: 100%;

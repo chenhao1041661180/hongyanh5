@@ -121,8 +121,8 @@
 					color: this.color,
 					fontSize: this.fontSize + 'rpx',
 					position: 'relative',
-					zIndex: 1,
-					backgroundColor: this.bgColor,
+					// zIndex: 1,
+					// backgroundColor: this.bgColor,
 					// 如果是加载中状态，动画和文字需要距离近一点
 				}
 			},
@@ -159,7 +159,7 @@
 
 <style scoped lang="scss">
 	@import "../../libs/css/style.components.scss";
-	
+
 	/* #ifdef MP */
 	// 在mp.scss中，赋予了u-line为flex: 1，这里需要一个明确的长度，所以重置掉它
 	// 在组件内部，把组件名(u-line)当做选择器，在微信开发工具会提示不合法，但不影响使用
@@ -167,34 +167,34 @@
 		flex: none;
 	}
 	/* #endif */
-	
+
 	.u-load-more-wrap {
 		@include vue-flex;
 		justify-content: center;
 		align-items: center;
 	}
-	
+
 	.u-load-more-inner {
 		@include vue-flex;
 		justify-content: center;
 		align-items: center;
 		padding: 0 12rpx;
 	}
-	
+
 	.u-more {
 		position: relative;
 		@include vue-flex;
 		justify-content: center;
 	}
-	
+
 	.u-dot-text {
 		font-size: 28rpx;
 	}
-	
+
 	.u-loadmore-icon-wrap {
 		margin-right: 8rpx;
 	}
-	
+
 	.u-loadmore-icon {
 		@include vue-flex;
 		align-items: center;

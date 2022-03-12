@@ -38,10 +38,10 @@
       </view>
 
     </view>
-    <view class="bottom-view">
+    <!-- <view class="bottom-view"> -->
 
       <!-- <text class="bottom-btn-text gm-text" @click="submitOrder">确认支付</text> -->
-    </view>
+    <!-- </view> -->
   </view>
 </template>
 
@@ -96,6 +96,7 @@
       },
       customBack() {
         const pages = getCurrentPages()
+        console.log(pages)
         uni.navigateBack({
           delta: pages.length - 1
         })

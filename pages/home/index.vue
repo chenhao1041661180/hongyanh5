@@ -1,12 +1,12 @@
 <template>
   <view style="position: relative;">
-    <view class="head-bg" />
-   <!-- <view class="title-view">
+    <!-- <view class="head-bg" /> -->
+    <!-- <view class="title-view">
       <text class="title-text">红岩扶贫</text>
     </view> -->
 
-    <u-swiper :list="list" mode="round" indicator-pos="bottomCenter"
-      style="margin-top: -190rpx; margin-left: 24rpx;margin-right: 24rpx;" :border-radius="12"></u-swiper>
+    <u-swiper :list="bannerList" mode="round" indicator-pos="bottomCenter" v-if="bannerList.length"
+      style="margin-top: 0rpx;" :height="400" :border-radius="0"></u-swiper>
 
     <u-grid col="4" :border="false"
       style="margin-top: 24rpx;margin-left: 24rpx; margin-right: 24rpx;display: flex;width: 702rpx; border-radius: 16rpx;">
@@ -18,11 +18,12 @@
     </u-grid>
 
     <view style="padding-top: 33rpx;padding-bottom: 24rpx; display: flex;text-align: center;align-items: center;">
-      <image src="../../static/images/ic_baokuan.png" style="width: 34rpx;height: 34rpx;margin-left: 24rpx;"/>
+      <image src="../../static/images/ic_baokuan.png" style="width: 34rpx;height: 34rpx;margin-left: 24rpx;" />
       <text class="fire-title">爆款新品</text>
 
       <text class="more-text" @click="toMore">更多</text>
-      <u-icon name="a-ic_arrow_shouhuodizhi2x" custom-prefix="hongyan-icon" size="28" color="#979797" style="margin-right: 26rpx;" />
+      <u-icon name="a-ic_arrow_shouhuodizhi2x" custom-prefix="hongyan-icon" size="28" color="#979797"
+        style="margin-right: 26rpx;" />
     </view>
 
 
@@ -51,7 +52,8 @@
 
   import {
     login,
-    homeList
+    homeList,
+    bannerList
   } from '@/api/home.js'
   import {
     goodsCategoryList
@@ -64,13 +66,11 @@
     },
     data() {
       return {
+        bannerList: [],
         dataList: [],
         enstring: "",
         showCall: false,
-        homeFlList: [",","",""],
-
-        list: ["https://cdn.uviewui.com/uview/swiper/1.jpg", "https://cdn.uviewui.com/uview/swiper/1.jpg"]
-
+        homeFlList: [",", "", ""],
       }
     },
 
@@ -86,26 +86,29 @@
     },
 
     mounted() {
-      login(this.enstring ? this.enstring : uni.$util.uniStore.getStorage("enstring"))
-        .then(res => {
-          uni.$util.token.remove()
-          // 保存用户信息
-          uni.$util.token.set(res.data)
+      this.$nextTick(() => {
+        login(this.enstring ? this.enstring : uni.$util.uniStore.getStorage("enstring"))
+          .then(res => {
+            uni.$util.token.remove()
+            // 保存用户信息
+            uni.$util.token.set(res.data)
+            this.getBannerList()
+            this.goodsCategoryList()
+            this.getList()
 
-          this.goodsCategoryList()
-          this.getList()
+          })
+          .catch(err => {
+            console.log(err)
 
-        })
-        .catch(err => {
-          console.log(err)
+          })
+      })
 
-        })
     },
 
     computed: {
       imgUrl() {
         return function(item) {
-          if (item.categoryPicture.indexOf('group') != -1) {
+          if (item.categoryPicture && item.categoryPicture.indexOf('group') != -1) {
 
             let imageUrl = uni.$util.assetsPath.IMAGE_URL + item.categoryPicture;
             return imageUrl
@@ -118,6 +121,18 @@
       }
     },
     methods: {
+      getBannerList() {
+        bannerList()
+          .then(res => {
+            res.data.forEach(item => {
+              this.bannerList.push(uni.$util.assetsPath.IMAGE_URL + item.pictureUrl)
+            })
+
+          })
+          .catch(err => {
+
+          })
+      },
       goodsCategoryList() {
         goodsCategoryList(1)
           .then(res => {
@@ -154,18 +169,22 @@
           })
 
       },
-      itemClick(index){
-        console.log(index)
-        if(index==3){
+      itemClick(index) {
+        if (index == 3) {
           uni.switchTab({
-            url:'../classification/index'
+            url: '../classification/index',
+            fail:()=>{
+              console.log('switchTab 失败')
+            }
           })
-        }else{
+        } else {
           uni.navigateTo({
-            url: `../more-shopping/index?categoryId=${this.homeFlList[index].id}`
+            url: `../more-shopping/index?categoryId=${this.homeFlList[index].id}`,
+            fail:()=>{
+              console.log('navigateTo 失败')
+            }
           })
         }
-
       },
       showCallPopup() {
         this.$refs.callPopup.open()

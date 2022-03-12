@@ -60,7 +60,7 @@
     },
     methods: {
       change(e) {
-        this.$emit("changeCount",e)
+        this.$emit("changeCount",{index:this.index,value:e})
       },
       focus() {
         console.log('focus');

@@ -142,7 +142,7 @@
 				type: Boolean,
 				default: true
 			},
-			// 图片的裁剪模式 
+			// 图片的裁剪模式
 			imgMode: {
 				type: String,
 				default: 'aspectFill'
@@ -155,7 +155,7 @@
 			// 背景颜色
 			bgColor: {
 				type: String,
-				default: '#f3f4f6'
+				default: 'rgba(255,255,255,0)'
 			},
 			// 初始化时，默认显示第几项
 			current: {

@@ -46,8 +46,8 @@
     </view>
     <uCitySelect v-model="showPopup" @city-change="cityChange" />
 
-    <u-modal ref="uModal" v-model="showDeletePopup" :show-cancel-button="true" :title="showTitle"
-      :async-close="false" @confirm="confirm" :content="modalContent">
+    <u-modal ref="uModal" v-model="showDeletePopup" :show-cancel-button="true" :title="showTitle" :async-close="false"
+      @confirm="confirm" :content="modalContent">
 
     </u-modal>
   </view>
@@ -258,7 +258,9 @@
     bottom: 0;
     align-items: center;
     justify-content: center;
-    height: 104rpx;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+    height: calc(104rpx + env(safe-area-inset-bottom));
     padding-left: 34rpx;
     padding-right: 24rpx;
     width: 100%;
