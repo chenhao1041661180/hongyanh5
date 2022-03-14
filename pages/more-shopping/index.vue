@@ -303,11 +303,9 @@
 
 <style scoped>
   .search-wrap {
-    /* display: flex; */
     align-items: center;
     flex: 1;
   }
-/* #ifdef H5 */
   .u-demo-area /deep/ .u-row {
     display: flex;
     /* flex-wrap: wrap; */

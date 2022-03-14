@@ -10,7 +10,7 @@
           <image src="../../static/images/bg_dingdanxiangqing.png" style="width: 100%;height: 214rpx;display: flex;" />
           <view class="status-view">
             <u-icon custom-prefix="hongyan-icon" name="a-ic_to_pay2x" color="#FFFFFF" size="38" />
-            <text class="status-text">{{ orderStatusStr }}</text>
+            <text class="status-text">{{ orderInfo.writeOff ==0 ?'未核销':orderInfo.writeOff ==2?'核销不通过': orderStatus }}</text>
           </view>
 
           <view class="address-view">
@@ -67,6 +67,10 @@
             <text class="order-item-text">创建时间</text>
             <text class="order-item-text" style="color: #333333;">{{ orderInfo.gmtCreate }}</text>
           </view>
+          <view class="order-item-view" v-if="orderInfo.writeOff==2">
+            <text class="order-item-text">核销失败原因</text>
+            <text class="order-item-text" style="color: #333333;">{{ orderInfo.writeOffRefusalReason }}</text>
+          </view>
         </view>
 
         <view v-if="paymentMode==1" class="shopping-list-view">
@@ -110,6 +114,11 @@
       <text class="bottom-btn-text delete-text" @click="showDeletePopup = true">删除订单</text>
       <text class="bottom-btn-text gm-text" @click="toConfirmOrder">{{ orderInfo.paymentMode==1?'上传支付凭证':'去付款' }}</text>
     </view>
+ <view v-else-if="orderInfo.writeOff ==0 ||orderInfo.writeOff ==2" class="bottom-view">
+      <text class="bottom-btn-text delete-text" @click="modifyPz">修改凭证</text>
+
+    </view>
+
 
     <u-modal ref="uModal" v-model="showDeletePopup" :show-cancel-button="true" :async-close="false" title="删除订单"
       content="确定删除订单吗？删除后,订单将不能恢复" @confirm="confirm" />
@@ -200,6 +209,13 @@
         setTimeout(() => {
           this.toDeleteOrder()
         }, 200)
+      },
+      //去修改凭证
+      modifyPz(){
+          // 对公付款
+          uni.navigateTo({
+            url: `./order-public?orderPayId=${this.orderInfo.orderId}`
+          })
       }
     }
   }

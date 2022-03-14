@@ -3,7 +3,7 @@
     {
       "path": "pages/home/index",
       "style": {
-        "navigationBarTitleText": "首页"
+        "navigationBarTitleText": "红岩扶贫"
       }
     },
     {
@@ -118,7 +118,7 @@
   			"pagePath": "pages/home/index",
   			"iconPath": "/static/tabbar/tabbar_homepage_normal.png",
   			"selectedIconPath": "static/tabbar/tabbar_homepage_click.png",
-  			"text": "首页"
+  			"text": "红岩扶贫"
 
   		},
       {

@@ -70,7 +70,7 @@
         dataList: [],
         enstring: "",
         showCall: false,
-        homeFlList: [",", "", ""],
+        homeFlList: [",", "", "",""],
       }
     },
 

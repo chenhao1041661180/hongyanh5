@@ -46,7 +46,7 @@
 
           <!-- <u-icon custom-prefix="hongyan-icon" name="shangchuantupian" color="#DDDDDD" size="120"></u-icon> -->
           <u-upload width="160" height="160" max-count="1" :action="uploadUrl" :header="{Authorization}"
-            @on-success="onUploadSuccess"></u-upload>
+            @on-success="onUploadSuccess" @on-remove="removeFile"></u-upload>
         </view>
       </view>
     </view>
@@ -110,7 +110,6 @@
           .then(res => {
             uni.hideLoading()
             const pages = getCurrentPages()
-            // console.log(pages)
 
             uni.navigateBack({
               delta: pages.length-1
@@ -126,6 +125,10 @@
       onUploadSuccess(data, index, lists, index2) {
         console.log(data.data.uri)
         this.uri = data.data.uri
+      },
+      //移除文件
+      removeFile(index, lists, index2){
+         this.uri = ""
       }
     }
   }
