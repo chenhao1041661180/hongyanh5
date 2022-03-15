@@ -18,7 +18,7 @@
       </view>
     </u-navbar>
     <view
-      style="height: 84rpx;background-color: #FFFFFF;display: flex;flex-direction: row;padding-right: 40rpx;position: fixed;width: 100%;"
+      style="height: 84rpx;background-color: #FFFFFF;display: flex;flex-direction: row;padding-right: 40rpx;position: fixed;width: 100%;z-index: 33;"
       v-if="!useSlot">
       <view style="flex: 1;">
         <u-dropdown :close-on-click-mask="true" ref="uDropdown" activeColor="#333333" inactiveColor="#999999"
@@ -261,7 +261,6 @@
         }
       },
       dropClose(current) {
-        console.log(current)
         if (current == 1) {
           //初始化页数
           this.pageNum = 1

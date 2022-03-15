@@ -10,7 +10,7 @@
           <image src="../../static/images/bg_dingdanxiangqing.png" style="width: 100%;height: 214rpx;display: flex;" />
           <view class="status-view">
             <u-icon custom-prefix="hongyan-icon" name="a-ic_to_pay2x" color="#FFFFFF" size="38" />
-            <text class="status-text">{{ orderInfo.writeOff ==0 ?'未核销':orderInfo.writeOff ==2?'核销不通过': orderStatus }}</text>
+            <text class="status-text">{{ orderInfo.writeOff == 0 ?'待核销':orderInfo.writeOff ==2?'核销不通过': orderStatusStr }}</text>
           </view>
 
           <view class="address-view">
@@ -28,14 +28,6 @@
               <u-icon v-show="orderStatus ==0" custom-prefix="hongyan-icon" name="a-ic_arrow_shouhuodizhi2x" size="26"
                 color="#CCCCCC" />
             </view>
-            <!-- <view class="no-address" v-else @click="toAddressList">
-              <view class="no-address2">
-                <u-icon custom-prefix="hongyan-icon" name="tianjiadizhi-02" color="#CCCCCC" size="50" />
-                <text style="margin-top: 5rpx;">添加收货地址</text>
-              </view>
-              <u-icon custom-prefix="hongyan-icon" name="a-ic_arrow_shouhuodizhi2x" size="26" color="#CCCCCC"></u-icon>
-
-            </view> -->
             <image src="../../static/images/img_address_line.png" class="line-image" />
           </view>
         </view>
@@ -69,7 +61,7 @@
           </view>
           <view class="order-item-view" v-if="orderInfo.writeOff==2">
             <text class="order-item-text">核销失败原因</text>
-            <text class="order-item-text" style="color: #333333;">{{ orderInfo.writeOffRefusalReason }}</text>
+            <text class="order-item-text" style="color: #F94265; flex: 1; text-align: end;margin-left: 10rpx;">{{ orderInfo.writeOffRefusalReason }}{{ orderInfo.writeOffRefusalReason }}{{ orderInfo.writeOffRefusalReason }}</text>
           </view>
         </view>
 
@@ -196,7 +188,7 @@
         if (this.orderInfo.paymentMode == 1) {
           // 对公付款
           uni.navigateTo({
-            url: `./order-public?orderPayId=${this.orderInfo.orderId}`
+            url: `./order-public?orderId=${this.orderInfo.orderId}&orderPayId=${this.orderInfo.orderPayId}&modify=false`
           })
         } else {
           // 在线支付
@@ -214,7 +206,7 @@
       modifyPz(){
           // 对公付款
           uni.navigateTo({
-            url: `./order-public?orderPayId=${this.orderInfo.orderId}`
+            url: `./order-public?orderId=${this.orderInfo.orderId}&orderPayId=${this.orderInfo.orderPayId}&modify=true`
           })
       }
     }

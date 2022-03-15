@@ -193,6 +193,7 @@
 			},
 			// 设置下拉菜单处于收起状态
 			close() {
+         this.showMask = false
 				this.$emit('close', this.current);
 				// 设置为收起状态，同时current归位，设置为空字符串
 				this.active = false;

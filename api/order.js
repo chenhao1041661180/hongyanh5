@@ -56,10 +56,17 @@ export function setPaymentMode(data) {
 }
 
 /**
- * 对公支付，上传凭证
+ * 首次提交对公支付，上传凭证
  */
 export function contraryToPay(data) {
   return request.get(`/mall/api/order/contraryToPay`, { data })
+}
+
+/**
+ * 编辑修改对公支付，上传凭证
+ */
+export function editPaymentInfo(data) {
+  return request.get(`/mall/api/order/editPaymentInfo`, { data })
 }
 
 /**

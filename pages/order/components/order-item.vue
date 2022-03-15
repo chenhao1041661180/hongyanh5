@@ -1,22 +1,22 @@
 <template>
   <!-- 订单列表Item -->
   <view class="item-view">
-    <text class="state-text" :style="{color:item.orderStatus==3?'#666666':'#FF6900'}">{{item.orderStatusStr}}</text>
-    <view class="content-view" v-for="(child,index) in item.orderGoodsItemVos">
+    <text :style="{color:item.orderStatus==3?'#666666':'#FF6900'}" class="state-text">{{orderStatusStr}}</text>
+    <view v-for="(child,index) in item.orderGoodsItemVos" class="content-view">
       <image :src="imageUrl" style="width: 192rpx;height: 192rpx;border-radius: 8rpx;" />
       <view class="content-item-view">
-        <text class="title-text">{{child.goodsName}}</text>
-        <text class="describle-text">{{child.goodsDescribe}}</text>
+        <text class="title-text">{{ child.goodsName }}</text>
+        <text class="describle-text">{{ child.goodsDescribe }}</text>
         <view style="display: flex;flex-direction: row;align-items: center;">
-          <text class="price-text">¥{{child.goodsPrice}}</text>
-          <text class="num-text">x{{child.goodsCount}}</text>
+          <text class="price-text">¥{{ child.goodsPrice }}</text>
+          <text class="num-text">x{{ child.goodsCount }}</text>
         </view>
       </view>
     </view>
 
     <view class="btn-view">
-      <text class="qfk-text" v-show="item.orderStatus==0" @click.stop="toFk(item)">去付款</text>
-      <text class="qrsh-text" v-show="item.orderStatus==2" @click.stop="confirmReceipt(item)">确认收货</text>
+      <text v-show="item.orderStatus==0" class="qfk-text" @click.stop="toFk(item)">去付款</text>
+      <text v-show="item.orderStatus==2" class="qrsh-text" @click.stop="confirmReceipt(item)">确认收货</text>
     </view>
   </view>
 </template>
@@ -35,39 +35,50 @@
       }
 
     },
+    data() {
+      return {}
+    },
     computed: {
       imageUrl() {
         if (this.item && this.item.thumbnail) {
-          let imageUrl = uni.$util.assetsPath.IMAGE_URL + this.item.thumbnail;
+          const imageUrl = uni.$util.assetsPath.IMAGE_URL + this.item.thumbnail
           return imageUrl
         } else {
           return uni.$util.config.loadingImg
         }
+      },
+      orderStatusStr() {
+        if (this.item) {
+          if (this.item.writeOff != null) {
+            const writeOff = this.item.writeOff
+            return writeOff == 0 ? '待核销' : writeOff == 2 ? '核销不通过' : this.item.orderStatusStr
+          } else {
+            return this.item.orderStatusStr
+          }
+
+        } else {
+          return ""
+        }
+
       }
     },
-    data() {
-      return {}
-    },
     methods: {
-      //去付款
+      // 去付款
       toFk(item) {
-        console.log("toFk")
+        console.log('toFk')
 
         if (this.item.paymentMode == 1) {
-          //对公支付 去上传凭证页面
+          // 对公支付 去上传凭证页面
           uni.navigateTo({
             url: `./order-public?orderPayId=${item.orderPayId}`
           })
         } else {
-
           uni.navigateTo({
             url: `../shopping-info/submit-order?total=${item.total}&orderPayId=${item.orderPayId}&orderWay=${item.orderWay}`
           })
-
         }
-
       },
-      //确认收货
+      // 确认收货
       confirmReceipt(item) {
         uni.showLoading({
           title: ''
@@ -80,7 +91,7 @@
               title: '已确认收货'
             })
           })
-          uni.$emit("orderList")
+        uni.$emit('orderList')
           .catch(err => {
             uni.hideLoading()
           })

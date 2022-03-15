@@ -1,8 +1,8 @@
 <template>
   <!-- 对公支付 -->
   <view style="width: 100%;">
-    <u-navbar back-icon-color="#666666" :titleBold="true" :background="{background: 'rgba(255,255,255)'}" z-index="333"
-      title="上传支付凭证" :border-bottom="false" title-color="#333333" />
+    <u-navbar :title-bold="true" :background="{background: 'rgba(255,255,255)'}" :border-bottom="false"
+      back-icon-color="#666666" z-index="333" title="上传支付凭证" title-color="#333333" />
     <view style="padding-bottom: 120rpx;">
       <view class="shopping-list-view">
         <text class="label-text">汇款账户信息</text>
@@ -29,8 +29,9 @@
         </view>
 
         <view class="order-item-view">
-          <text class="order-item-text" style="font-size: 25rpx;line-height: 1.5;">（1）企业/单位可通过客服电话及客户经理完成采购需求、商品报价、商品样品寄送以及其他相关事宜：
-                客服电话：4000615855；
+          <text class="order-item-text"
+            style="font-size: 25rpx;line-height: 1.5;">（1）企业/单位可通过客服电话及客户经理完成采购需求、商品报价、商品样品寄送以及其他相关事宜：
+            客服电话：4000615855；
             （2）转款/汇款前请仔细核对账户信息；
             （3）对公汇款后请保存汇款凭证并及时与客户经理确认入账；
             （4）汇款完成后请及时与客户经理对接并确认交/收货事宜；
@@ -39,14 +40,14 @@
       </view>
       <view class="shopping-list-view">
         <text class="label-text">付款流水号</text>
-        <u-input v-model="paymentSerialNumber" placeholder="请输入付款流水号" style="width: 100%;"></u-input>
+        <u-input v-model="paymentSerialNumber" placeholder="请输入付款流水号" style="width: 100%;" />
         <text class="label-text" style="margin-top: 20rpx;">上传支付凭证</text>
 
         <view style="width: 100%;">
 
           <!-- <u-icon custom-prefix="hongyan-icon" name="shangchuantupian" color="#DDDDDD" size="120"></u-icon> -->
-          <u-upload width="160" height="160" max-count="1" :action="uploadUrl" :header="{Authorization}"
-            @on-success="onUploadSuccess" @on-remove="removeFile"></u-upload>
+          <u-upload :action="uploadUrl" :header="{Authorization}" :file-list="fileList" width="160" height="160"
+            max-count="1" @on-success="onUploadSuccess" @on-remove="removeFile" />
         </view>
       </view>
     </view>
@@ -58,30 +59,54 @@
   </view>
 </template>
 
-
 <script>
   import {
-    contraryToPay
+    getOrderDetail,
+    contraryToPay,
+    editPaymentInfo
   } from '@/api/order.js'
   export default {
     data() {
       return {
-        orderPayId: '', //订单编号
+        orderId: '', // 订单编号
+        orderPayId: '', // 支付平台id
+        modify: false, //是否 编辑修改  true是 false 否
         uri: '',
         paymentSerialNumber: '',
         Authorization: uni.$util.token.get(),
-        uploadUrl: window.location.origin + "/mall/api/file/onefile/upload"
+        uploadUrl: window.location.origin + '/mall/api/file/onefile/upload',
+        orderInfo: {},
+        fileList: []
       }
     },
     onLoad(option) {
+      this.orderId = option.orderId
       this.orderPayId = option.orderPayId
-      // console.log(window.location.origin)
-
+      this.modify = option.modify
+    },
+    mounted() {
+      this.getOrderDetail()
     },
     methods: {
+      getOrderDetail() {
+        uni.showLoading({
+          title: ''
+        })
+        getOrderDetail(this.orderId)
+          .then(res => {
+            uni.hideLoading()
+            // this.orderInfo = res.data
+            this.paymentSerialNumber = res.data.paymentSerialNumber
+            this.fileList.push({
+              url: uni.$util.assetsPath.IMAGE_URL + res.data.paymentDocument
+            })
+            this.uri = res.data.paymentDocument
+          }).catch(err => {
+            uni.hideLoading()
+          })
+      },
       upload() {
         if (!this.paymentSerialNumber) {
-
           uni.showToast({
             icon: 'none',
             title: '请输入付款流水号'
@@ -100,24 +125,33 @@
         uni.showLoading({
           title: ''
         })
-        let param = {
+        const param = {
           orderPayId: this.orderPayId,
           paymentDocument: this.uri,
           paymentSerialNumber: this.paymentSerialNumber
         }
 
-        contraryToPay(param)
-          .then(res => {
-            uni.hideLoading()
-            const pages = getCurrentPages()
+        let promise
+        if (this.modify == "true") {
+          promise = editPaymentInfo(param)
+        } else {
+          promise = contraryToPay(param)
+        }
 
-            uni.navigateBack({
-              delta: pages.length-1
-            })
-          }).catch(err => {
-            uni.hideLoading()
+        promise.then(res => {
+          uni.hideLoading()
+          const pages = getCurrentPages()
+          uni.showToast({
+            icon: 'none',
+            title: this.modify == "true" ? '修改成功' : '提交成功'
+          })
+          uni.navigateBack({
+            delta: pages.length - 1
           })
 
+        }).catch(err => {
+          uni.hideLoading()
+        })
       },
       /**
        * 上传成功回调
@@ -126,9 +160,9 @@
         console.log(data.data.uri)
         this.uri = data.data.uri
       },
-      //移除文件
-      removeFile(index, lists, index2){
-         this.uri = ""
+      // 移除文件
+      removeFile(index, lists, index2) {
+        this.uri = ''
       }
     }
   }
@@ -155,7 +189,6 @@
     margin-bottom: 10rpx;
     font-weight: bold;
   }
-
 
   .order-item-view {
     display: flex;
