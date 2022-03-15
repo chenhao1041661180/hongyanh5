@@ -1,47 +1,78 @@
 <template>
-	<view class="">
-		<view class="u-navbar" :style="[navbarStyle]" :class="{ 'u-navbar-fixed': isFixed, 'u-border-bottom': borderBottom }">
-			<view class="u-status-bar" :style="{ height: statusBarHeight + 'px' }"></view>
-			<view class="u-navbar-inner" :style="[navbarInnerStyle]">
-				<view class="u-back-wrap" v-if="isBack" @tap="goBack">
-					<view class="u-icon-wrap">
-						<u-icon :name="backIconName" :color="backIconColor" :size="backIconSize"></u-icon>
-					</view>
-					<view class="u-icon-wrap u-back-text u-line-1" v-if="backText" :style="[backTextStyle]">{{ backText }}</view>
-				</view>
-				<view class="u-navbar-content-title" :style="[titleStyle]" v-if="title" >
-					<text
-					    class="u-title u-line-1"
-					    :style="{
-							color: titleColor,
-							fontSize: titleSize + 'rpx',
-							fontWeight: titleBold ? 'bold' : 'normal'
-						}">
-						{{ title }}
-					</text>
-				</view>
-				<view class="u-slot-content">
-					<slot></slot>
-				</view>
-				<view class="u-slot-right">
-					<slot name="right"></slot>
-				</view>
-			</view>
-		</view>
-		<!-- 解决fixed定位后导航栏塌陷的问题 -->
-		<view class="u-navbar-placeholder" v-if="isFixed && !immersive" :style="{ width: '100%', height: Number(navbarHeight) + statusBarHeight + 'px' }"></view>
-	</view>
+  <view class="">
+    <view
+      :style="[navbarStyle]"
+      :class="{ 'u-navbar-fixed': isFixed, 'u-border-bottom': borderBottom }"
+      class="u-navbar"
+    >
+      <view
+        :style="{ height: statusBarHeight + 'px' }"
+        class="u-status-bar"
+      />
+      <view
+        :style="[navbarInnerStyle]"
+        class="u-navbar-inner"
+      >
+        <view
+          v-if="isBack"
+          class="u-back-wrap"
+          @tap.stop="goBack"
+        >
+          <view class="u-icon-wrap">
+            <u-icon
+              :name="backIconName"
+              :color="backIconColor"
+              :size="backIconSize"
+            />
+          </view>
+          <view
+            v-if="backText"
+            :style="[backTextStyle]"
+            class="u-icon-wrap u-back-text u-line-1"
+          >{{ backText }}</view>
+        </view>
+        <view
+          v-if="title"
+          :style="[titleStyle]"
+          class="u-navbar-content-title"
+        >
+          <text
+            :style="{
+              color: titleColor,
+              fontSize: titleSize + 'rpx',
+              fontWeight: titleBold ? 'bold' : 'normal'
+            }"
+            class="u-title u-line-1"
+          >
+            {{ title }}
+          </text>
+        </view>
+        <view class="u-slot-content">
+          <slot />
+        </view>
+        <view class="u-slot-right">
+          <slot name="right" />
+        </view>
+      </view>
+    </view>
+    <!-- 解决fixed定位后导航栏塌陷的问题 -->
+    <view
+      v-if="isFixed && !immersive"
+      :style="{ width: '100%', height: Number(navbarHeight) + statusBarHeight + 'px' }"
+      class="u-navbar-placeholder"
+    />
+  </view>
 </template>
 
 <script>
-	// 获取系统状态栏的高度
-	let systemInfo = uni.getSystemInfoSync();
-	let menuButtonInfo = {};
-	// 如果是小程序，获取右上角胶囊的尺寸信息，避免导航栏右侧内容与胶囊重叠(支付宝小程序非本API，尚未兼容)
-	// #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-QQ
-	menuButtonInfo = uni.getMenuButtonBoundingClientRect();
-	// #endif
-	/**
+// 获取系统状态栏的高度
+const systemInfo = uni.getSystemInfoSync()
+let menuButtonInfo = {}
+// 如果是小程序，获取右上角胶囊的尺寸信息，避免导航栏右侧内容与胶囊重叠(支付宝小程序非本API，尚未兼容)
+// #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-QQ
+menuButtonInfo = uni.getMenuButtonBoundingClientRect()
+// #endif
+/**
 	 * navbar 自定义导航栏
 	 * @description 此组件一般用于在特殊情况下，需要自定义导航栏的时候用到，一般建议使用uniapp自带的导航栏。
 	 * @tutorial https://www.uviewui.com/components/navbar.html
@@ -64,178 +95,178 @@
 	 * @property {Boolean} border-bottom 导航栏底部是否显示下边框，如定义了较深的背景颜色，可取消此值（默认true）
 	 * @example <u-navbar back-text="返回" title="剑未配妥，出门已是江湖"></u-navbar>
 	 */
-	export default {
-		name: "u-navbar",
-		props: {
-			// 导航栏高度，单位px，非rpx
-			height: {
-				type: [String, Number],
-				default: ''
-			},
-			// 返回箭头的颜色
-			backIconColor: {
-				type: String,
-				default: '#606266'
-			},
-			// 左边返回的图标
-			backIconName: {
-				type: String,
-				default: 'nav-back'
-			},
-			// 左边返回图标的大小，rpx
-			backIconSize: {
-				type: [String, Number],
-				default: '44'
-			},
-			// 返回的文字提示
-			backText: {
-				type: String,
-				default: ''
-			},
-			// 返回的文字的 样式
-			backTextStyle: {
-				type: Object,
-				default () {
-					return {
-						color: '#606266'
-					}
-				}
-			},
-			// 导航栏标题
-			title: {
-				type: String,
-				default: ''
-			},
-			// 标题的宽度，如果需要自定义右侧内容，且右侧内容很多时，可能需要减少这个宽度，单位rpx
-			titleWidth: {
-				type: [String, Number],
-				default: '250'
-			},
-			// 标题的颜色
-			titleColor: {
-				type: String,
-				default: '#333333'
-			},
-			// 标题字体是否加粗
-			titleBold: {
-				type: Boolean,
-				default: false
-			},
-			// 标题的字体大小
-			titleSize: {
-				type: [String, Number],
-				default: 32
-			},
-			isBack: {
-				type: [Boolean, String],
-				default: true
-			},
-			// 对象形式，因为用户可能定义一个纯色，或者线性渐变的颜色
-			background: {
-				type: Object,
-				default () {
-					return {
-						background: '#ffffff'
-					}
-				}
-			},
-			// 导航栏是否固定在顶部
-			isFixed: {
-				type: Boolean,
-				default: true
-			},
-			// 是否沉浸式，允许fixed定位后导航栏塌陷，仅fixed定位下生效
-			immersive: {
-				type: Boolean,
-				default: false
-			},
-			// 是否显示导航栏的下边框
-			borderBottom: {
-				type: Boolean,
-				default: true
-			},
-			zIndex: {
-				type: [String, Number],
-				default: ''
-			},
-			// 自定义返回逻辑
-			customBack: {
-				type: Function,
-				default: null
-			}
-		},
-		data() {
-			return {
-				menuButtonInfo: menuButtonInfo,
-				statusBarHeight: systemInfo.statusBarHeight
-			};
-		},
-		computed: {
-			// 导航栏内部盒子的样式
-			navbarInnerStyle() {
-				let style = {};
-				// 导航栏宽度，如果在小程序下，导航栏宽度为胶囊的左边到屏幕左边的距离
-				style.height = this.navbarHeight + 'px';
-				// // 如果是各家小程序，导航栏内部的宽度需要减少右边胶囊的宽度
-				// #ifdef MP
-				let rightButtonWidth = systemInfo.windowWidth - menuButtonInfo.left;
-				style.marginRight = rightButtonWidth + 'px';
-				// #endif
-				return style;
-			},
-			// 整个导航栏的样式
-			navbarStyle() {
-				let style = {};
-				style.zIndex = this.zIndex ? this.zIndex : this.$u.zIndex.navbar;
-				// 合并用户传递的背景色对象
-				Object.assign(style, this.background);
-				return style;
-			},
-			// 导航中间的标题的样式
-			titleStyle() {
-				let style = {};
-				// #ifndef MP
-				style.left = (systemInfo.windowWidth - uni.upx2px(this.titleWidth)) / 2 + 'px';
-				style.right = (systemInfo.windowWidth - uni.upx2px(this.titleWidth)) / 2 + 'px';
-				// #endif
-				// #ifdef MP
-				// 此处是为了让标题显示区域即使在小程序有右侧胶囊的情况下也能处于屏幕的中间，是通过绝对定位实现的
-				let rightButtonWidth = systemInfo.windowWidth - menuButtonInfo.left;
-				style.left = (systemInfo.windowWidth - uni.upx2px(this.titleWidth)) / 2 + 'px';
-				style.right = rightButtonWidth - (systemInfo.windowWidth - uni.upx2px(this.titleWidth)) / 2 + rightButtonWidth +
-					'px';
-				// #endif
-				// style.width = uni.upx2px(this.titleWidth) + 'px';
-				return style;
-			},
-			// 转换字符数值为真正的数值
-			navbarHeight() {
-				// #ifdef APP-PLUS || H5
-				return this.height ? this.height : 44;
-				// #endif
-				// #ifdef MP
-				// 小程序特别处理，让导航栏高度 = 胶囊高度 + 两倍胶囊顶部与状态栏底部的距离之差(相当于同时获得了导航栏底部与胶囊底部的距离)
-				// 此方法有缺陷，暂不用(会导致少了几个px)，采用直接固定值的方式
-				// return menuButtonInfo.height + (menuButtonInfo.top - this.statusBarHeight) * 2;//导航高度
-				let height = systemInfo.platform == 'ios' ? 44 : 48;
-				return this.height ? this.height : height;
-				// #endif
-			}
-		},
-		created() {},
-		methods: {
-			goBack() {
-				// 如果自定义了点击返回按钮的函数，则执行，否则执行返回逻辑
-				if (typeof this.customBack === 'function') {
-					// 在微信，支付宝等环境(H5正常)，会导致父组件定义的customBack()函数体中的this变成子组件的this
-					// 通过bind()方法，绑定父组件的this，让this.customBack()的this为父组件的上下文
-					this.customBack.bind(this.$u.$parent.call(this))();
-				} else {
-					uni.navigateBack();
-				}
-			}
-		}
-	};
+export default {
+  name: 'UNavbar',
+  props: {
+    // 导航栏高度，单位px，非rpx
+    height: {
+      type: [String, Number],
+      default: ''
+    },
+    // 返回箭头的颜色
+    backIconColor: {
+      type: String,
+      default: '#606266'
+    },
+    // 左边返回的图标
+    backIconName: {
+      type: String,
+      default: 'nav-back'
+    },
+    // 左边返回图标的大小，rpx
+    backIconSize: {
+      type: [String, Number],
+      default: '44'
+    },
+    // 返回的文字提示
+    backText: {
+      type: String,
+      default: ''
+    },
+    // 返回的文字的 样式
+    backTextStyle: {
+      type: Object,
+      default() {
+        return {
+          color: '#606266'
+        }
+      }
+    },
+    // 导航栏标题
+    title: {
+      type: String,
+      default: ''
+    },
+    // 标题的宽度，如果需要自定义右侧内容，且右侧内容很多时，可能需要减少这个宽度，单位rpx
+    titleWidth: {
+      type: [String, Number],
+      default: '250'
+    },
+    // 标题的颜色
+    titleColor: {
+      type: String,
+      default: '#333333'
+    },
+    // 标题字体是否加粗
+    titleBold: {
+      type: Boolean,
+      default: false
+    },
+    // 标题的字体大小
+    titleSize: {
+      type: [String, Number],
+      default: 32
+    },
+    isBack: {
+      type: [Boolean, String],
+      default: true
+    },
+    // 对象形式，因为用户可能定义一个纯色，或者线性渐变的颜色
+    background: {
+      type: Object,
+      default() {
+        return {
+          background: '#ffffff'
+        }
+      }
+    },
+    // 导航栏是否固定在顶部
+    isFixed: {
+      type: Boolean,
+      default: true
+    },
+    // 是否沉浸式，允许fixed定位后导航栏塌陷，仅fixed定位下生效
+    immersive: {
+      type: Boolean,
+      default: false
+    },
+    // 是否显示导航栏的下边框
+    borderBottom: {
+      type: Boolean,
+      default: true
+    },
+    zIndex: {
+      type: [String, Number],
+      default: ''
+    },
+    // 自定义返回逻辑
+    customBack: {
+      type: Function,
+      default: null
+    }
+  },
+  data() {
+    return {
+      menuButtonInfo: menuButtonInfo,
+      statusBarHeight: systemInfo.statusBarHeight
+    }
+  },
+  computed: {
+    // 导航栏内部盒子的样式
+    navbarInnerStyle() {
+      const style = {}
+      // 导航栏宽度，如果在小程序下，导航栏宽度为胶囊的左边到屏幕左边的距离
+      style.height = this.navbarHeight + 'px'
+      // // 如果是各家小程序，导航栏内部的宽度需要减少右边胶囊的宽度
+      // #ifdef MP
+      const rightButtonWidth = systemInfo.windowWidth - menuButtonInfo.left
+      style.marginRight = rightButtonWidth + 'px'
+      // #endif
+      return style
+    },
+    // 整个导航栏的样式
+    navbarStyle() {
+      const style = {}
+      style.zIndex = this.zIndex ? this.zIndex : this.$u.zIndex.navbar
+      // 合并用户传递的背景色对象
+      Object.assign(style, this.background)
+      return style
+    },
+    // 导航中间的标题的样式
+    titleStyle() {
+      const style = {}
+      // #ifndef MP
+      style.left = (systemInfo.windowWidth - uni.upx2px(this.titleWidth)) / 2 + 'px'
+      style.right = (systemInfo.windowWidth - uni.upx2px(this.titleWidth)) / 2 + 'px'
+      // #endif
+      // #ifdef MP
+      // 此处是为了让标题显示区域即使在小程序有右侧胶囊的情况下也能处于屏幕的中间，是通过绝对定位实现的
+      const rightButtonWidth = systemInfo.windowWidth - menuButtonInfo.left
+      style.left = (systemInfo.windowWidth - uni.upx2px(this.titleWidth)) / 2 + 'px'
+      style.right = rightButtonWidth - (systemInfo.windowWidth - uni.upx2px(this.titleWidth)) / 2 + rightButtonWidth +
+					'px'
+      // #endif
+      // style.width = uni.upx2px(this.titleWidth) + 'px';
+      return style
+    },
+    // 转换字符数值为真正的数值
+    navbarHeight() {
+      // #ifdef APP-PLUS || H5
+      return this.height ? this.height : 44
+      // #endif
+      // #ifdef MP
+      // 小程序特别处理，让导航栏高度 = 胶囊高度 + 两倍胶囊顶部与状态栏底部的距离之差(相当于同时获得了导航栏底部与胶囊底部的距离)
+      // 此方法有缺陷，暂不用(会导致少了几个px)，采用直接固定值的方式
+      // return menuButtonInfo.height + (menuButtonInfo.top - this.statusBarHeight) * 2;//导航高度
+      const height = systemInfo.platform == 'ios' ? 44 : 48
+      return this.height ? this.height : height
+      // #endif
+    }
+  },
+  created() {},
+  methods: {
+    goBack() {
+      // 如果自定义了点击返回按钮的函数，则执行，否则执行返回逻辑
+      if (typeof this.customBack === 'function') {
+        // 在微信，支付宝等环境(H5正常)，会导致父组件定义的customBack()函数体中的this变成子组件的this
+        // 通过bind()方法，绑定父组件的this，让this.customBack()的this为父组件的上下文
+        this.customBack.bind(this.$u.$parent.call(this))()
+      } else {
+        uni.navigateBack({ delta: 1 })
+      }
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">

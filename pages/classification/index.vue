@@ -52,7 +52,7 @@
       },
       itemClick(index) {
           uni.navigateTo({
-            url: `../more-shopping/index?categoryId=${this.homeFlList[index].id}`
+            url: `/pages/more-shopping/index?categoryId=${this.homeFlList[index].id}`
           })
       }
     }
