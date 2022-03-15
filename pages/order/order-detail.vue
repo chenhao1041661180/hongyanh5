@@ -10,7 +10,8 @@
           <image src="../../static/images/bg_dingdanxiangqing.png" style="width: 100%;height: 214rpx;display: flex;" />
           <view class="status-view">
             <u-icon custom-prefix="hongyan-icon" name="a-ic_to_pay2x" color="#FFFFFF" size="38" />
-            <text class="status-text">{{ orderInfo.writeOff == 0 ?'待核销':orderInfo.writeOff ==2?'核销不通过': orderStatusStr }}</text>
+            <text
+              class="status-text">{{ orderInfo.writeOff == 0 ?'待核销':orderInfo.writeOff ==2?'核销不通过': orderStatusStr }}</text>
           </view>
 
           <view class="address-view">
@@ -59,9 +60,20 @@
             <text class="order-item-text">创建时间</text>
             <text class="order-item-text" style="color: #333333;">{{ orderInfo.gmtCreate }}</text>
           </view>
+          <view class="order-item-view" v-if="orderInfo.paymentMode==1">
+            <text class="order-item-text">付款流水号</text>
+            <text class="order-item-text" style="color: #333333;">{{ orderInfo.paymentSerialNumber }}</text>
+          </view>
+          <view class="order-item-view" v-if="orderInfo.paymentMode == 1">
+            <text class="order-item-text">付款凭证</text>
+            <u-upload :file-list="fileList" width="160" height="160" max-count="1" :showProgress="false"
+              :deletable="false" />
+          </view>
+
           <view class="order-item-view" v-if="orderInfo.writeOff==2">
             <text class="order-item-text">核销失败原因</text>
-            <text class="order-item-text" style="color: #F94265; flex: 1; text-align: end;margin-left: 10rpx;">{{ orderInfo.writeOffRefusalReason }}{{ orderInfo.writeOffRefusalReason }}{{ orderInfo.writeOffRefusalReason }}</text>
+            <text class="order-item-text"
+              style="color: #F94265; flex: 1; text-align: end;margin-left: 10rpx;">{{ orderInfo.writeOffRefusalReason }}{{ orderInfo.writeOffRefusalReason }}{{ orderInfo.writeOffRefusalReason }}</text>
           </view>
         </view>
 
@@ -106,7 +118,7 @@
       <text class="bottom-btn-text delete-text" @click="showDeletePopup = true">删除订单</text>
       <text class="bottom-btn-text gm-text" @click="toConfirmOrder">{{ orderInfo.paymentMode==1?'上传支付凭证':'去付款' }}</text>
     </view>
- <view v-else-if="orderInfo.writeOff ==0 ||orderInfo.writeOff ==2" class="bottom-view">
+    <view v-else-if="orderInfo.writeOff ==0 ||orderInfo.writeOff ==2" class="bottom-view">
       <text class="bottom-btn-text delete-text" @click="modifyPz">修改凭证</text>
 
     </view>
@@ -129,7 +141,8 @@
         orderId: '',
         paymentMode: 0, // 支付方式：0-在线支付，1-对公支付
         orderInfo: {},
-        orderStatus: ''
+        orderStatus: '',
+        fileList: [] //付款凭证
       }
     },
 
@@ -161,6 +174,9 @@
           .then(res => {
             uni.hideLoading()
             this.orderInfo = res.data
+            this.fileList.push({
+              url: uni.$util.assetsPath.IMAGE_URL + res.data.paymentDocument
+            })
           }).catch(err => {
             uni.hideLoading()
           })
@@ -203,11 +219,11 @@
         }, 200)
       },
       //去修改凭证
-      modifyPz(){
-          // 对公付款
-          uni.navigateTo({
-            url: `./order-public?orderId=${this.orderInfo.orderId}&orderPayId=${this.orderInfo.orderPayId}&modify=true`
-          })
+      modifyPz() {
+        // 对公付款
+        uni.navigateTo({
+          url: `./order-public?orderId=${this.orderInfo.orderId}&orderPayId=${this.orderInfo.orderPayId}&modify=true`
+        })
       }
     }
   }
@@ -342,6 +358,7 @@
   }
 
   .title-text {
+    width: 470rpx;
     color: #333333;
     font-size: 28rpx;
     word-break: break-all;
@@ -370,7 +387,7 @@
   }
 
   .price-text {
-    font-size: 30rpx;
+    font-size: 36rpx;
     font-weight: bold;
     font-family: medium;
   }

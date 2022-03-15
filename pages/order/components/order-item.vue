@@ -133,6 +133,7 @@
   }
 
   .title-text {
+    width: 470rpx;
     color: #333333;
     font-size: 28rpx;
     word-break: break-all;
@@ -161,7 +162,7 @@
   }
 
   .price-text {
-    font-size: 30rpx;
+    font-size: 36rpx;
     font-weight: bold;
     font-family: medium;
   }

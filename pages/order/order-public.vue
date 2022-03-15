@@ -7,23 +7,23 @@
       <view class="shopping-list-view">
         <text class="label-text">汇款账户信息</text>
 
-        <view class="order-item-view">
+        <view class="order-item-view" @click="copys(1,'江苏职工之家网络信息科技有限公司')">
           <text class="order-item-text">公司名称</text>
           <text class="order-item-text" style="color: #333333;">江苏职工之家网络信息科技有限公司</text>
         </view>
-        <view class="order-item-view">
+        <view class="order-item-view" @click="copys(2,'91320106302645648U')">
           <text class="order-item-text">信用代码</text>
           <text class="order-item-text" style="color: #333333;">91320106302645648U</text>
         </view>
-        <view class="order-item-view">
+        <view class="order-item-view" @click="copys(3,'32001595636052513089')">
           <text class="order-item-text">银行账户</text>
           <text class="order-item-text" style="color: #333333;">32001595636052513089</text>
         </view>
-        <view class="order-item-view">
+        <view class="order-item-view" @click="copys(4,'中国建设银行南京市白下支行柜台')">
           <text class="order-item-text">开户行</text>
           <text class="order-item-text" style="color: #333333;">中国建设银行南京市白下支行柜台</text>
         </view>
-        <view class="order-item-view">
+        <view class="order-item-view" @click="copys(5,'13062598165')">
           <text class="order-item-text">联系电话</text>
           <text class="order-item-text" style="color: #333333;">13062598165</text>
         </view>
@@ -163,6 +163,17 @@
       // 移除文件
       removeFile(index, lists, index2) {
         this.uri = ''
+      },
+      copys(type,value){
+       uni.setClipboardData({
+           data: value,
+           success: function () {
+             uni.showToast({
+               icon:'none',
+               title:type ==1?"已复制公司名称":type ==2?"已复制信用代码":type ==3?"已复制银行账户":type ==4?"已复制开户行":"已复制联系方式"
+             })
+           }
+       });
       }
     }
   }
