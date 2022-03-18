@@ -17,8 +17,9 @@
 
     <u-grid
       :border="false"
-      col="4"
-      style="margin-top: 24rpx;margin-left: 24rpx; margin-right: 24rpx;display: flex;width: 702rpx; border-radius: 16rpx;"
+      col="3"
+      align="left"
+      style="margin-top: 24rpx;margin-left: 24rpx; margin-right: 24rpx;display: flex;width: 702rpx; border-radius: 16rpx; background-color: white;"
     >
       <u-grid-item
         v-for="(item,index) in homeFlList"
@@ -213,7 +214,7 @@ export default {
         })
     },
     itemClick(index) {
-      if (index == 3) {
+      if (index == 4) {
         uni.switchTab({
           url: '/pages/classification/index',
           fail: () => {

@@ -64,7 +64,7 @@ const CONFIG = {
     // API地址
     // #ifdef H5
     base_url: '/',
-    image_url: 'https://jd.hongyanfuli.com',
+    image_url: 'https://fp.hongyanfuli.com',
     // image_url: window.location.origin,
     // #endif
     // #ifndef H5
@@ -81,7 +81,7 @@ const CONFIG = {
     // #ifdef H5
     base_url: '/',
     // image_url: window.location.origin,
-    image_url: 'https://jd.hongyanfuli.com',
+    image_url: 'https://fp.hongyanfuli.com',
     // #endif
     // #ifndef H5
     // 使用原生壳url http://ygzx.hongshigroup.com

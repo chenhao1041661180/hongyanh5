@@ -102,7 +102,7 @@ export default {
 	/* #ifndef MP */
 	@include vue-flex;
 	flex-wrap: wrap;
-	align-items: center;
+	// align-items: center;
 	/* #endif */
 }
 </style>
