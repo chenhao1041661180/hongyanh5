@@ -1,80 +1,106 @@
 <template>
   <!-- 支付成功页面 -->
   <view style="width: 100%;">
-    <u-navbar back-icon-color="#666666" :titleBold="true" :background="{background: 'rgba(255,255,255)'}" z-index="333"
-      title="支付结果" :border-bottom="false" :customBack="customBack"/>
+    <u-navbar
+      :title-bold="true"
+      :background="{background: 'rgba(255,255,255)'}"
+      :border-bottom="false"
+      :custom-back="customBack"
+      back-icon-color="#666666"
+      z-index="333"
+      title="支付结果"
+    />
     <view class="head-bg-view">
       <!-- <image src="../../static/images/bg_dingdanxiangqing.png" style="width: 100%;height: 214rpx;display: flex;" /> -->
       <view class="status-view">
-        <u-icon name="zhifuchenggong" custom-prefix="hongyan-icon" size="90" color="#FFFFFF" />
+        <u-icon
+          name="zhifuchenggong"
+          custom-prefix="hongyan-icon"
+          size="90"
+          color="#FFFFFF"
+        />
         <text class="zf-success-text">支付成功!</text>
       </view>
     </view>
     <view class="shopping-list-view">
       <view class="order-item-view">
         <text class="order-item-text">交易金额</text>
-        <text class="order-item-text" style="color: #333333;">{{dataInfo.total}}</text>
+        <text
+          class="order-item-text"
+          style="color: #333333;"
+        >{{ dataInfo.total }}</text>
       </view>
       <view class="order-item-view">
         <text class="order-item-text">订单编号</text>
-        <text class="order-item-text" style="color: #333333;">{{dataInfo.orderPayId}}</text>
+        <text
+          class="order-item-text"
+          style="color: #333333;"
+        >{{ dataInfo.orderPayId }}</text>
       </view>
       <view class="order-item-view">
         <text class="order-item-text">创建时间</text>
-        <text class="order-item-text" style="color: #333333;">{{dataInfo.gmtCreate}}</text>
+        <text
+          class="order-item-text"
+          style="color: #333333;"
+        >{{ dataInfo.gmtCreate }}</text>
       </view>
       <view class="order-item-view">
         <text class="order-item-text">支付时间</text>
-        <text class="order-item-text" style="color: #333333;">{{dataInfo.paymentTime}}</text>
+        <text
+          class="order-item-text"
+          style="color: #333333;"
+        >{{ dataInfo.paymentTime }}</text>
       </view>
     </view>
 
-    <text class="complete-text" @click="customBack()">完成</text>
+    <text
+      class="complete-text"
+      @click="customBack()"
+    >完成</text>
   </view>
 </template>
 
 <script>
-  import {
-    queryPayOrder
-  } from '@/api/order.js'
-  export default {
-    data() {
-      return {
-        outTradeNo: '', //订单号
+import {
+  queryPayOrder
+} from '@/api/order.js'
+export default {
+  data() {
+    return {
+      orderPayId: '', // 订单号
 
-        /** 交易状态说明：订单创建，等待买家选择支付方式 */
-        //"ORDER_PRE_CREATE
-        /** 交易状态说明：交易创建，等待买家付款 */
-        //WAIT_BUYER_PAY
-        /** 交易状态说明：未付款交易超时关闭，或支付完成后全额退款（支付失败） */
-        //TRADE_CLOSED
-        /** 交易状态说明：交易支付成功 */
-        //TRADE_SUCCESS
-        tradeStatus: '',
-        dataInfo: {}
-      }
+      /** 交易状态说明：订单创建，等待买家选择支付方式 */
+      // "ORDER_PRE_CREATE
+      /** 交易状态说明：交易创建，等待买家付款 */
+      // WAIT_BUYER_PAY
+      /** 交易状态说明：未付款交易超时关闭，或支付完成后全额退款（支付失败） */
+      // TRADE_CLOSED
+      /** 交易状态说明：交易支付成功 */
+      // TRADE_SUCCESS
+      tradeStatus: '',
+      dataInfo: {}
+    }
+  },
+
+  onLoad(option) {
+    this.orderPayId = option.order_pay_id
+    this.tradeStatus = option.trade_status
+    this.getInfo()
+  },
+  methods: {
+    getInfo() {
+      queryPayOrder(this.orderPayId)
+        .then(res => {
+          this.dataInfo = res.data
+        }).catch(err => {})
     },
-
-    onLoad(option) {
-      this.outTradeNo = option.out_trade_no
-      this.tradeStatus = option.trade_status
-      this.getInfo()
-    },
-    methods: {
-      getInfo() {
-        queryPayOrder(this.outTradeNo)
-          .then(res => {
-
-            this.dataInfo = res.data
-          }).catch(err => {})
-      },
-      customBack(){
-        uni.reLaunch({
-          url:'../home/index'
-        })
-      }
+    customBack() {
+      uni.reLaunch({
+        url: '../home/index?flag=1'
+      })
     }
   }
+}
 </script>
 
 <style scoped>

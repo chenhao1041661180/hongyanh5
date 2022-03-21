@@ -3,7 +3,7 @@
   <view style="display: flex;flex-direction: column;position: relative;height: 100%;width: 750rpx;">
     <u-navbar back-icon-color="#FFFFFF" :background="{background: 'rgba(255,255,255,0)'}" z-index="333"
       :border-bottom="false" />
-    <u-swiper :list="bannerList" indicator-pos="bottomCenter" border-radius="0" height="560"
+    <u-swiper :list="bannerList" indicator-pos="bottomCenter" border-radius="0" height="750"
       style="position: absolute;top: 0;left: 0;right: 0;" />
     <view class="sp-view">
       <text class="title-text">{{goodsDetail.goodsName}}</text>
@@ -186,7 +186,7 @@
   .sp-view {
     display: flex;
     flex-direction: column;
-    margin-top: 472rpx;
+    margin-top: 670rpx;
     padding-left: 34rpx;
     padding-top: 34rpx;
     padding-bottom: 24rpx;
