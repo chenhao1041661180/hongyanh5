@@ -3,7 +3,7 @@
   <view class="item-view">
     <text :style="{color:item.orderStatus==3?'#666666':'#FF6900'}" class="state-text">{{orderStatusStr}}</text>
     <view v-for="(child,index) in item.orderGoodsItemVos" class="content-view">
-      <image :src="imageUrl" style="width: 192rpx;height: 192rpx;border-radius: 8rpx;" />
+      <image :src="imageUrl(child)" style="width: 192rpx;height: 192rpx;border-radius: 8rpx;" />
       <view class="content-item-view">
         <text class="title-text">{{ child.goodsName }}</text>
         <text class="describle-text">{{ child.goodsDescribe }}</text>
@@ -40,12 +40,17 @@
     },
     computed: {
       imageUrl() {
-        if (this.item && this.item.thumbnail) {
-          const imageUrl = uni.$util.assetsPath.IMAGE_URL + this.item.thumbnail
-          return imageUrl
-        } else {
-          return uni.$util.config.loadingImg
+
+        return function(child) {
+          if (child.thumbnail) {
+            const imageUrl = uni.$util.assetsPath.IMAGE_URL + child.thumbnail
+            console.log(imageUrl)
+            return imageUrl
+          } else {
+            return uni.$util.config.loadingImg
+          }
         }
+
       },
       orderStatusStr() {
         if (this.item) {

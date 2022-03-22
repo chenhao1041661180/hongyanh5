@@ -35,7 +35,7 @@
         <view class="shopping-list-view">
 
           <view v-for="(child,index) in orderInfo.orderGoodsItemVos" class="content-view">
-            <image :src="imageUrl" style="width: 192rpx;height: 192rpx;border-radius: 8rpx;" />
+            <image :src="imageUrl(child)" style="width: 192rpx;height: 192rpx;border-radius: 8rpx;" />
             <view class="content-item-view">
               <text class="title-text">{{ child.goodsName }}</text>
               <text class="describle-text">{{ child.goodsDescribe }}</text>
@@ -154,11 +154,14 @@
     },
     computed: {
       imageUrl() {
-        if (this.orderInfo && this.orderInfo.orderGoodsItemVos.thumbnail) {
-          const imageUrl = uni.$util.assetsPath.IMAGE_URL + this.orderInfo.orderGoodsItemVos.thumbnail
-          return imageUrl
-        } else {
-          return uni.$util.config.loadingImg
+        return function(child) {
+          if (child.thumbnail) {
+            const imageUrl = uni.$util.assetsPath.IMAGE_URL + child.thumbnail
+            console.log(imageUrl)
+            return imageUrl
+          } else {
+            return uni.$util.config.loadingImg
+          }
         }
       }
     },
