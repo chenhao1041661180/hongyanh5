@@ -3,7 +3,7 @@
     {
       "path": "pages/home/index",
       "style": {
-        "navigationBarTitleText": "红岩扶贫"
+        "navigationBarTitleText": "江苏工会红岩扶贫专馆"
       }
     },
     {
@@ -118,7 +118,7 @@
   			"pagePath": "pages/home/index",
   			"iconPath": "/static/tabbar/tabbar_homepage_normal.png",
   			"selectedIconPath": "static/tabbar/tabbar_homepage_click.png",
-  			"text": "红岩扶贫"
+  			"text": "首页"
 
   		},
       {

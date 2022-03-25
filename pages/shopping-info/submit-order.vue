@@ -53,7 +53,8 @@
     data() {
       return {
         total: '',
-        orderPayId: '',
+        orderId: '',//订单编号
+        orderPayId: '',//预支付id
         orderWay: 1, //下单方式：1-商品详情下单，2-购物车下单
       }
     },
@@ -61,6 +62,7 @@
     onLoad(option) {
       this.total = option.total
       this.orderPayId = option.orderPayId
+      this.orderId = option.orderId
       this.orderWay = option.orderWay
       uni.$emit('shopping-cart')
     },
@@ -86,7 +88,7 @@
             } else if (paymentMode == 1) {
               //对公打款
               uni.navigateTo({
-                url: `../order/order-public?orderPayId=${this.orderPayId}`
+                url: `../order/order-public?orderPayId=${this.orderPayId}&orderId=${this.orderId}`
               })
             }
           })

@@ -152,9 +152,11 @@ export default {
           uni.hideLoading()
           // this.orderInfo = res.data
           this.paymentSerialNumber = res.data.paymentSerialNumber
-          this.fileList.push({
-            url: uni.$util.assetsPath.IMAGE_URL + res.data.paymentDocument
-          })
+          if(res.data.paymentDocument){
+            this.fileList.push({
+              url: uni.$util.assetsPath.IMAGE_URL + res.data.paymentDocument
+            })
+          }
           this.uri = res.data.paymentDocument
         }).catch(err => {
           uni.hideLoading()

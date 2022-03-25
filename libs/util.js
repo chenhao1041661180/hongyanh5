@@ -31,7 +31,7 @@ const dayjs = require('dayjs')
 
 // 图片静态资源表
 import assetsPath from './assets/util.assets.js'
-const PAY_HERF = 'https://tyzy.jsghfw.com/sky-epay-test/epay/index.html?order_pay_id='
+const PAY_HERF = 'https://tyzy.jsghfw.com/sky-epay/epay/index.html?order_pay_id='
 const util = {
   app,
   dayjs,

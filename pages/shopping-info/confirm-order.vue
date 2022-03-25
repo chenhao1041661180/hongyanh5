@@ -180,10 +180,11 @@
           .then(res => {
             uni.hideLoading()
             let orderPayId = res.data.orderPayId //支付平台预支付ID
+            let orderId = res.data.orderId //支付平台预支付ID
             let total = res.data.total //订单总额
 
             uni.navigateTo({
-              url: `./submit-order?total=${total}&orderPayId=${orderPayId}&orderWay=${this.orderWay}`
+              url: `./submit-order?total=${total}&orderPayId=${orderPayId}&orderId=${orderId}&orderWay=${this.orderWay}`
             })
           }).catch(err => {
             uni.hideLoading()
