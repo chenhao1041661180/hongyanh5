@@ -14,12 +14,12 @@
       <!-- <image src="../../static/images/bg_dingdanxiangqing.png" style="width: 100%;height: 214rpx;display: flex;" /> -->
       <view class="status-view">
         <u-icon
-          name="zhifuchenggong"
+          :name="tradeStatus=='TRADE_SUCCESS'?'zhifuchenggong':'jiaoyishibai'"
           custom-prefix="hongyan-icon"
           size="90"
-          color="#FFFFFF"
+          :color="tradeStatus=='TRADE_SUCCESS'?'#FFFFFF':'#FF4241'"
         />
-        <text class="zf-success-text">支付成功!</text>
+        <text class="zf-success-text" :style="{color:tradeStatus=='TRADE_SUCCESS'?'#FFFFFF':'#FF4241'}">{{tradeStatus=="TRADE_SUCCESS"?'支付成功！':'交易失败！'}}</text>
       </view>
     </view>
     <view class="shopping-list-view">
@@ -28,7 +28,7 @@
         <text
           class="order-item-text"
           style="color: #333333;"
-        >{{ dataInfo.total }}</text>
+        >{{ dataInfo.total }}元</text>
       </view>
       <view class="order-item-view">
         <text class="order-item-text">订单编号</text>
