@@ -65,6 +65,7 @@ const CONFIG = {
     // #ifdef H5
     base_url: '/',
     image_url: 'https://fp.hongyanfuli.com',
+	  // image_url: 'http://175.24.203.118',
     // image_url: window.location.origin,
     // #endif
     // #ifndef H5
@@ -81,12 +82,12 @@ const CONFIG = {
     // #ifdef H5
     base_url: '/',
     // image_url: window.location.origin,
+    // image_url: 'http://175.24.203.118',
     image_url: 'https://fp.hongyanfuli.com',
     // #endif
     // #ifndef H5
     // 使用原生壳url http://ygzx.hongshigroup.com
     base_url: userTokenDomain ? _formatUrl(userTokenDomain, '/api') : 'http://ygzxapp.hs56.com/api',
-    image_url: window.location.origin,
     // #endif
     assetsPath: '/static/images' // 静态资源路径
   }

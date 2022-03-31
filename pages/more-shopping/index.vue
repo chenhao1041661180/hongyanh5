@@ -9,7 +9,7 @@
       <view class="search-wrap" v-if="search">
         <!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
         <u-search v-model="keyword" :show-action="showAction" height="56" :action-style="{color: '#666666'}"
-          action-text="取消" @search="searchCallback" @custom="cancelSearch" :focus="true" placeholder="请输入商品名称搜索">
+          action-text="取消" @search="searchCallback" @custom="cancelSearch" :focus="true" placeholder="输入商品编码或商品名称搜索">
         </u-search>
       </view>
       <!-- </view> -->

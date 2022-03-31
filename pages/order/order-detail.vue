@@ -73,7 +73,7 @@
           <view class="order-item-view" v-if="orderInfo.writeOff==2">
             <text class="order-item-text">核销失败原因</text>
             <text class="order-item-text"
-              style="color: #F94265; flex: 1; text-align: end;margin-left: 10rpx;">{{ orderInfo.writeOffRefusalReason }}{{ orderInfo.writeOffRefusalReason }}{{ orderInfo.writeOffRefusalReason }}</text>
+              style="color: #F94265; flex: 1; text-align: end;margin-left: 10rpx;">{{ orderInfo.writeOffRefusalReason }}</text>
           </view>
         </view>
 
@@ -114,11 +114,12 @@
         </view>
       </view>
     </scroll-view>
-    <view v-if="orderStatus != 4 && orderStatus!=1" class="bottom-view">
+    <view  class="bottom-view">
       <text class="bottom-btn-text delete-text" @click="showDeletePopup = true">删除订单</text>
-      <text class="bottom-btn-text gm-text" @click="toConfirmOrder">{{ orderInfo.paymentMode==1?'上传支付凭证':'去付款' }}</text>
+      <text  v-if="orderStatus == 0" class="bottom-btn-text gm-text" @click="toConfirmOrder">{{ orderInfo.paymentMode==1?'上传支付凭证':'去付款' }}</text>
     </view>
-    <view v-else-if="orderInfo.writeOff ==0 ||orderInfo.writeOff ==2" class="bottom-view">
+    
+    <view v-if="orderInfo.writeOff ==0 ||orderInfo.writeOff ==2" class="bottom-view">
       <text class="bottom-btn-text delete-text" @click="modifyPz">修改凭证</text>
 
     </view>

@@ -88,7 +88,7 @@
         uni.showLoading({
           title: ''
         })
-        signFor(item.orderPayId)
+        signFor(item.orderId)
           .then(res => {
             uni.hideLoading()
             uni.showToast({

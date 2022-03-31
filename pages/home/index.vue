@@ -71,7 +71,7 @@
         enstring: '',
         flag: '',
         showCall: false,
-        homeFlList: [',', '', '', '']
+        homeFlList: []
       }
     },
 
@@ -165,7 +165,7 @@
           })
       },
       itemClick(index) {
-        if (index == 4) {
+        if (index == (this.homeFlList.length-1)) {
           uni.switchTab({
             url: '/pages/classification/index',
             fail: () => {
@@ -174,7 +174,7 @@
           })
         } else {
           uni.navigateTo({
-            url: `/pages/more-shopping/index?categoryId=${this.homeFlList[index].id}`,
+            url: `/pages/more-shopping/index?v=2&categoryId=${this.homeFlList[index].id}`,
             fail: () => {
               console.log('navigateTo 失败')
             }

@@ -1,241 +1,231 @@
 <template>
   <!-- 对公支付 -->
   <view style="width: 100%;">
-    <u-navbar
-      :title-bold="true"
-      :background="{background: 'rgba(255,255,255)'}"
-      :border-bottom="false"
-      back-icon-color="#666666"
-      z-index="333"
-      title="上传支付凭证"
-      title-color="#333333"
-    />
+    <u-navbar :title-bold="true" :background="{background: 'rgba(255,255,255)'}" :border-bottom="false"
+      back-icon-color="#666666" z-index="333" title="上传支付凭证" title-color="#333333" />
     <view style="padding-bottom: 120rpx;">
       <view class="shopping-list-view">
         <text class="label-text">汇款账户信息</text>
 
-        <view
-          class="order-item-view"
-          @click="copys(1,'江苏职工之家网络信息科技有限公司')"
-        >
+        <view class="order-item-view" @click="copys(1,'江苏职工之家网络信息科技有限公司')">
           <text class="order-item-text">公司名称</text>
-          <text
-            class="order-item-text"
-            style="color: #333333;"
-          >江苏职工之家网络信息科技有限公司</text>
+          <text class="order-item-text" style="color: #333333;">江苏职工之家网络信息科技有限公司</text>
         </view>
-        <view
-          class="order-item-view"
-          @click="copys(2,'91320106302645648U')"
-        >
+        <view class="order-item-view" @click="copys(2,'91320106302645648U')">
           <text class="order-item-text">信用代码</text>
-          <text
-            class="order-item-text"
-            style="color: #333333;"
-          >91320106302645648U</text>
+          <text class="order-item-text" style="color: #333333;">91320106302645648U</text>
         </view>
-        <view
-          class="order-item-view"
-          @click="copys(3,'32001595636052513089')"
-        >
+        <view class="order-item-view" @click="copys(3,'32001595636052513089')">
           <text class="order-item-text">银行账户</text>
-          <text
-            class="order-item-text"
-            style="color: #333333;"
-          >32001595636052513089</text>
+          <text class="order-item-text" style="color: #333333;">32001595636052513089</text>
         </view>
-        <view
-          class="order-item-view"
-          @click="copys(4,'中国建设银行南京市白下支行柜台')"
-        >
+        <view class="order-item-view" @click="copys(4,'中国建设银行南京市白下支行柜台')">
           <text class="order-item-text">开户行</text>
-          <text
-            class="order-item-text"
-            style="color: #333333;"
-          >中国建设银行南京市白下支行柜台</text>
+          <text class="order-item-text" style="color: #333333;">中国建设银行南京市白下支行柜台</text>
         </view>
-        <view
-          class="order-item-view"
-          @click="copys(5,'13062598165')"
-        >
+        <view class="order-item-view" @click="copys(5,'13062598165')">
           <text class="order-item-text">联系电话</text>
-          <text
-            class="order-item-text"
-            style="color: #333333;"
-          >13062598165</text>
+          <text class="order-item-text" style="color: #333333;">13062598165</text>
         </view>
 
         <view class="order-item-view">
-          <text
-            class="order-item-text"
-            style="font-size: 25rpx;line-height: 1.5;"
-          >（1）企业/单位可通过客服电话及客户经理完成采购需求、商品报价、商品样品寄送以及其他相关事宜：
-          客服电话：4000615855；
-          （2）转款/汇款前请仔细核对账户信息；
-          （3）对公汇款后请保存汇款凭证并及时与客户经理确认入账；
-          （4）汇款完成后请及时与客户经理对接并确认交/收货事宜；
-          （5）涉及商品售后及其他相关事宜请及时与客户经理对接并确认。</text>
+          <text class="order-item-text"
+            style="font-size: 25rpx;line-height: 1.5;">（1）企业/单位可通过客服电话及客户经理完成采购需求、商品报价、商品样品寄送以及其他相关事宜：
+            客服电话：4000615855；
+            （2）转款/汇款前请仔细核对账户信息；
+            （3）对公汇款后请保存汇款凭证并及时与客户经理确认入账；
+            （4）汇款完成后请及时与客户经理对接并确认交/收货事宜；
+            （5）涉及商品售后及其他相关事宜请及时与客户经理对接并确认。</text>
         </view>
       </view>
       <view class="shopping-list-view">
+        <text class="label-text">发票信息</text>
+        <view class="fp-item-view">
+          <text class="order-item-text2">发票名称(抬头)</text>
+          <u-input v-model="invoiceTitle" placeholder="请输入发票名称(抬头)"
+           inputAlign="right" 
+            @input="invoiceTitleInput"/>
+        </view>
+        <view class="fp-item-view">
+          <text class="order-item-text2">纳税人识别号</text>
+          <u-input v-model="taxpayerId" placeholder="请输入纳税人识别号"
+
+             inputAlign="right" @input="taxpayerIdInput"/>
+        </view>
+        <view class="fp-item-view">
+          <text class="order-item-text2">收票人邮箱</text>
+          <u-input v-model="recipientEmail" placeholder="请输入收票人邮箱"
+          inputAlign="right"
+          @input="recipientEmailInput"
+            />
+        </view>
+      </view>
+
+
+
+
+
+      <view class="shopping-list-view">
         <text class="label-text">付款流水号</text>
-        <u-input
-          v-model="paymentSerialNumber"
-          placeholder="请输入付款流水号"
-          style="width: 100%;"
-        />
-        <text
-          class="label-text"
-          style="margin-top: 20rpx;"
-        >上传支付凭证</text>
+        <u-input v-model="paymentSerialNumber" placeholder="请输入付款流水号" style="width: 100%;" />
+        <text class="label-text" style="margin-top: 20rpx;">上传支付凭证</text>
 
         <view style="width: 100%;">
-          <u-upload
-            :action="uploadUrl"
-            :header="{Authorization}"
-            :file-list="fileList"
-            width="160"
-            height="160"
-            max-count="1"
-            @on-success="onUploadSuccess"
-            @on-remove="removeFile"
-          />
+          <u-upload :action="uploadUrl" :header="{Authorization}" :file-list="fileList" width="160" height="160"
+            max-count="1" @on-success="onUploadSuccess" @on-remove="removeFile" />
         </view>
       </view>
     </view>
 
     <view class="bottom-view">
 
-      <text
-        class="bottom-btn-text gm-text"
-        @click="upload"
-      >上传</text>
+      <text class="bottom-btn-text gm-text" @click="upload">上传</text>
     </view>
   </view>
 </template>
 
 <script>
-import {
-  getOrderDetail,
-  contraryToPay,
-  editPaymentInfo
-} from '@/api/order.js'
-export default {
-  data() {
-    return {
-      orderId: '', // 订单编号
-      orderPayId: '', // 支付平台id
-      modify: false, // 是否 编辑修改  true是 false 否
-      uri: '',
-      paymentSerialNumber: '',
-      Authorization: uni.$util.token.get(),
-      uploadUrl: window.location.origin + '/mall/api/file/onefile/upload',
-      orderInfo: {},
-      fileList: []
-    }
-  },
-  onLoad(option) {
-    this.orderId = option.orderId
-    this.orderPayId = option.orderPayId
-    this.modify = option.modify
-  },
-  mounted() {
-    this.getOrderDetail()
-  },
-  methods: {
-    getOrderDetail() {
-      uni.showLoading({
-        title: ''
-      })
-      getOrderDetail(this.orderId)
-        .then(res => {
+  import {
+    getOrderDetail,
+    contraryToPay,
+    editPaymentInfo
+  } from '@/api/order.js'
+  export default {
+    data() {
+      return {
+        orderId: '', // 订单编号
+        orderPayId: '', // 支付平台id
+        modify: false, // 是否 编辑修改  true是 false 否
+        uri: '',
+        paymentSerialNumber: '',
+        Authorization: uni.$util.token.get(),
+        uploadUrl: window.location.origin + '/mall/api/file/onefile/upload',
+        invoiceTitle: '', //发票抬头
+        taxpayerId: '', //纳税人识别号
+        recipientEmail: '', //收票人邮箱
+        orderInfo: {},
+        fileList: []
+      }
+    },
+    onLoad(option) {
+      this.orderId = option.orderId
+      this.orderPayId = option.orderPayId
+      this.modify = option.modify
+    },
+    mounted() {
+      this.getOrderDetail()
+    },
+    methods: {
+      invoiceTitleInput(value){
+        this.invoiceTitle = value
+      },
+      taxpayerIdInput(value){
+        this.taxpayerId = value
+      },
+      recipientEmailInput(value){
+        this.recipientEmail = value
+      },
+      
+      getOrderDetail() {
+        uni.showLoading({
+          title: ''
+        })
+        getOrderDetail(this.orderId)
+          .then(res => {
+            uni.hideLoading()
+            // this.orderInfo = res.data
+            this.paymentSerialNumber = res.data.paymentSerialNumber
+            this.invoiceTitle = res.data.invoiceTitle
+            this.taxpayerId = res.data.taxpayerId
+            this.recipientEmail = res.data.recipientEmail
+
+            if (res.data.paymentDocument) {
+              this.fileList.push({
+                url: uni.$util.assetsPath.IMAGE_URL + res.data.paymentDocument
+              })
+            }
+            this.uri = res.data.paymentDocument
+          }).catch(err => {
+            uni.hideLoading()
+          })
+      },
+      upload() {
+        if (!this.paymentSerialNumber) {
+          uni.showToast({
+            icon: 'none',
+            title: '请输入付款流水号'
+          })
+
+          return
+        }
+        if (!this.uri) {
+          uni.showToast({
+            icon: 'none',
+            title: '请上传支付凭证'
+          })
+          return
+        }
+
+        uni.showLoading({
+          title: ''
+        })
+        const param = {
+          orderPayId: this.orderPayId,
+          paymentDocument: this.uri,
+          paymentSerialNumber: this.paymentSerialNumber,
+          invoiceTitle: this.invoiceTitle,
+          taxpayerId: this.taxpayerId,
+          recipientEmail: this.recipientEmail
+        }
+        let promise
+        if (this.modify == 'true') {
+          promise = editPaymentInfo(param)
+        } else {
+          promise = contraryToPay(param)
+        }
+
+        promise.then(res => {
           uni.hideLoading()
-          // this.orderInfo = res.data
-          this.paymentSerialNumber = res.data.paymentSerialNumber
-          if(res.data.paymentDocument){
-            this.fileList.push({
-              url: uni.$util.assetsPath.IMAGE_URL + res.data.paymentDocument
-            })
-          }
-          this.uri = res.data.paymentDocument
+          const pages = getCurrentPages()
+          uni.showToast({
+            icon: 'none',
+            title: this.modify == 'true' ? '修改成功' : '提交成功'
+          })
+          uni.navigateBack({
+            delta: pages.length - 1
+          })
         }).catch(err => {
           uni.hideLoading()
         })
-    },
-    upload() {
-      if (!this.paymentSerialNumber) {
-        uni.showToast({
-          icon: 'none',
-          title: '请输入付款流水号'
-        })
-
-        return
-      }
-      if (!this.uri) {
-        uni.showToast({
-          icon: 'none',
-          title: '请上传支付凭证'
-        })
-        return
-      }
-
-      uni.showLoading({
-        title: ''
-      })
-      const param = {
-        orderPayId: this.orderPayId,
-        paymentDocument: this.uri,
-        paymentSerialNumber: this.paymentSerialNumber
-      }
-
-      let promise
-      if (this.modify == 'true') {
-        promise = editPaymentInfo(param)
-      } else {
-        promise = contraryToPay(param)
-      }
-
-      promise.then(res => {
-        uni.hideLoading()
-        const pages = getCurrentPages()
-        uni.showToast({
-          icon: 'none',
-          title: this.modify == 'true' ? '修改成功' : '提交成功'
-        })
-        uni.navigateBack({
-          delta: pages.length - 1
-        })
-      }).catch(err => {
-        uni.hideLoading()
-      })
-    },
-    /**
+      },
+      /**
        * 上传成功回调
        */
-    onUploadSuccess(data, index, lists, index2) {
-      console.log(data.data.uri)
-      uni.showLoading({
-        title: data.data.uri
-      })
-      this.uri = data.data.uri
-    },
-    // 移除文件
-    removeFile(index, lists, index2) {
-      this.uri = ''
-    },
-    copys(type, value) {
-      uni.setClipboardData({
-        data: value,
-        success: function() {
-          uni.showToast({
-            icon: 'none',
-            title: type == 1 ? '已复制公司名称' : type == 2 ? '已复制信用代码' : type == 3 ? '已复制银行账户' : type == 4 ? '已复制开户行' : '已复制联系方式'
-          })
-        }
-      })
+      onUploadSuccess(data, index, lists, index2) {
+        console.log(data.data.uri)
+        uni.showLoading({
+          title: data.data.uri
+        })
+        this.uri = data.data.uri
+      },
+      // 移除文件
+      removeFile(index, lists, index2) {
+        this.uri = ''
+      },
+      copys(type, value) {
+        uni.setClipboardData({
+          data: value,
+          success: function() {
+            uni.showToast({
+              icon: 'none',
+              title: type == 1 ? '已复制公司名称' : type == 2 ? '已复制信用代码' : type == 3 ? '已复制银行账户' : type == 4 ?
+                '已复制开户行' : '已复制联系方式'
+            })
+          }
+        })
+      }
     }
   }
-}
 </script>
 
 <style scoped>
@@ -272,6 +262,21 @@ export default {
     color: #999999;
     font-size: 30rpx;
     font-family: PingFangSC-Regular;
+  }
+
+  .order-item-text2 {
+    color: #333333;
+    font-size: 30rpx;
+    font-family: PingFangSC-Regular;
+  }
+
+  .fp-item-view {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    /* flex: 1; */
+    flex-direction: row;
   }
 
   .bottom-view {
