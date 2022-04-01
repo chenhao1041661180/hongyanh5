@@ -13,7 +13,7 @@
             <text
               class="status-text">{{ orderInfo.writeOff == 0 ?'待核销':orderInfo.writeOff ==2?'核销不通过': orderStatusStr }}</text>
           </view>
-
+<!-- 地址信息 -->
           <view class="address-view">
             <view v-if="orderInfo.shippingAddressVo" class="address-view2" @click="toAddressList">
               <image src="../../static/images/ic_address.png" style="width: 32rpx;height: 32rpx;" />
@@ -32,6 +32,7 @@
             <image src="../../static/images/img_address_line.png" class="line-image" />
           </view>
         </view>
+        <!-- 商品列表 -->
         <view class="shopping-list-view">
 
           <view v-for="(child,index) in orderInfo.orderGoodsItemVos" class="content-view">
@@ -47,7 +48,7 @@
           </view>
 
         </view>
-
+<!-- 订单信息 -->
         <view class="shopping-list-view">
           <text
             style="width: 100%; font-family: PingFangSC-Regular; color: #333333; font-size: 30rpx;margin-bottom: 10rpx;">订单信息</text>
@@ -76,6 +77,26 @@
               style="color: #F94265; flex: 1; text-align: end;margin-left: 10rpx;">{{ orderInfo.writeOffRefusalReason }}</text>
           </view>
         </view>
+
+
+
+        <view class="shopping-list-view" v-if="orderInfo.deliveryType!=null">
+          <text
+            style="width: 100%; font-family: PingFangSC-Regular; color: #333333; font-size: 30rpx;margin-bottom: 10rpx;">配送信息</text>
+          <view class="order-item-view">
+            <text class="order-item-text">配送方式</text>
+            <text class="order-item-text" style="color: #333333;">{{ orderInfo.deliveryType==1?"自有车辆配送":"物流配送" }}</text>
+          </view>
+          <view class="order-item-view">
+            <text class="order-item-text">{{orderInfo.deliveryType==1?"司机名称":"物流公司"}}</text>
+            <text class="order-item-text" style="color: #333333;">{{ orderInfo.deliveryType==1?orderInfo.driverName:orderInfo.logisticsCompany }}</text>
+          </view>
+          <view class="order-item-view" >
+            <text class="order-item-text">{{orderInfo.deliveryType==1?"司机联系方式":"快递单号"}}</text>
+            <text class="order-item-text" style="color: #409EFF;" @click="toDoSomething">{{orderInfo.deliveryType==1? orderInfo.driverMobile:orderInfo.trackingNumber }}</text>
+          </view>
+        </view>
+
 
         <view v-if="paymentMode==1" class="shopping-list-view">
           <text
@@ -118,7 +139,7 @@
       <text class="bottom-btn-text delete-text" @click="showDeletePopup = true">删除订单</text>
       <text  v-if="orderStatus == 0" class="bottom-btn-text gm-text" @click="toConfirmOrder">{{ orderInfo.paymentMode==1?'上传支付凭证':'去付款' }}</text>
     </view>
-    
+
     <view v-if="orderInfo.writeOff ==0 ||orderInfo.writeOff ==2" class="bottom-view">
       <text class="bottom-btn-text delete-text" @click="modifyPz">修改凭证</text>
 
@@ -228,6 +249,26 @@
         uni.navigateTo({
           url: `./order-public?orderId=${this.orderInfo.orderId}&orderPayId=${this.orderInfo.orderPayId}&modify=true`
         })
+      },
+      toDoSomething(){
+        if(this.orderInfo.deliveryType == 1){
+          //去拨打电话
+          // this.orderInfo.driverMobile
+          uni.makePhoneCall({
+              phoneNumber: this.orderInfo.driverMobile//仅为示例
+          });
+        }else{
+          //复制订单号
+          uni.setClipboardData({
+            data: this.orderInfo.trackingNumber,
+            success: function() {
+              uni.showToast({
+                icon: 'none',
+                title:'已复制快递单号'
+              })
+            }
+          })
+        }
       }
     }
   }

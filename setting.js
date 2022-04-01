@@ -66,7 +66,6 @@ const CONFIG = {
     base_url: '/',
     image_url: 'https://fp.hongyanfuli.com',
 	  // image_url: 'http://175.24.203.118',
-    // image_url: window.location.origin,
     // #endif
     // #ifndef H5
     base_url: '/api',
@@ -81,7 +80,6 @@ const CONFIG = {
     // API地址
     // #ifdef H5
     base_url: '/',
-    // image_url: window.location.origin,
     // image_url: 'http://175.24.203.118',
     image_url: 'https://fp.hongyanfuli.com',
     // #endif
