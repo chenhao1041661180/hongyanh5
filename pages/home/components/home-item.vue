@@ -6,7 +6,7 @@
     <view class="price-view">
       <text class="price-text">￥{{item.goodsPrice}}</text>
       <text
-        class="sum-text">{{item.goodsSales}}人已付款</text>
+        class="sum-text">销量 {{item.goodsSales}}</text>
     </view>
   </view>
 </template>

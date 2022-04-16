@@ -83,7 +83,7 @@
 
       <view style="display: flex;
 			flex-wrap: wrap;">
-        <text class="history-item-text" v-for="(item,index) in historyList">{{item}}</text>
+        <text class="history-item-text" v-for="(item,index) in historyList"   @click="searchHistory(item)">{{item}}</text>
       </view>
     </view>
   </view>
@@ -136,7 +136,7 @@
       this.categoryId = option.categoryId
     },
     mounted() {
-      this.getList()
+      this.getList(this.categoryId)
       this.doWithHistory()
       window.addEventListener("popstate", function(e) {
         console.log(e)
@@ -157,16 +157,16 @@
         this.pageNum = this.pageNum + 1
         // 模拟数据加载
         setTimeout(() => {
-          this.getList();
+          this.getList(this.categoryId);
         }, 200);
       },
-      getList() {
+      getList(categoryId) {
         let params = {
           pageNum: this.pageNum,
           pageSize: 10,
           keyword: this.keyword,
           sortord: this.sortord,
-          categoryId: this.categoryId
+          categoryId: categoryId
         }
         homeList(params)
           .then(res => {
@@ -223,6 +223,7 @@
        */
       searchCallback(e) {
         this.keyword = e
+        console.log()
         this.useSlot = false
         let temHistoryList = this.doWithHistory();
         //保存当前搜索的数据 添加到第一位
@@ -232,7 +233,8 @@
         this.historyList = temHistoryList
         let historyListStr = temHistoryList.toString()
         uni.$util.uniStore.setStorage("historyList", historyListStr)
-        this.getList()
+
+        this.getList("")
       },
       uniq(array) {
         var temp = []; //一个新的临时数组
@@ -255,7 +257,7 @@
         this.pageNum = 1
 
         setTimeout(() => {
-          this.getList()
+          this.getList(this.categoryId)
         })
 
       },
@@ -265,7 +267,7 @@
           this.pageNum = 1
           this.sortord = 0
           this.leftDropText = "综合"
-          this.getList()
+          this.getList(this.categoryId)
         }
       },
       dropClose(current) {
@@ -274,7 +276,7 @@
           this.pageNum = 1
           this.sortord = ""
           this.leftDropText = "综合"
-          this.getList()
+          this.getList(this.categoryId)
         }
       },
 
@@ -284,7 +286,7 @@
         this.leftDropText = this.options1[index].label
         this.sortord = this.options1[index].value
         this.showMask = false
-        this.getList()
+        this.getList(this.categoryId)
 
       },
       /**
@@ -296,12 +298,24 @@
       this.pageNum = this.pageNum + 1
       // 模拟数据加载
       setTimeout(() => {
-        this.getList();
+        this.getList(this.categoryId);
       }, 200);
       },
       goToDetail(item) {
         uni.navigateTo({
           url: `../shopping-info/index?id=${item.id}`
+        })
+      },
+      searchHistory(keycode){
+        this.keyword = keycode
+        this.slotRight = true
+        this.useSlot = false
+        this.search = false
+        this.title = "更多商品"
+        this.pageNum = 1
+
+        setTimeout(() => {
+          this.getList("")
         })
       }
     }

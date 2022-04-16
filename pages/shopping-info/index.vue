@@ -4,7 +4,7 @@
     <u-navbar
       :background="{background: 'rgba(255,255,255,0)'}"
       :border-bottom="false"
-      back-icon-color="#FFFFFF"
+      back-icon-color="#CCCCCC"
       z-index="333"
     />
     <u-swiper
@@ -16,6 +16,10 @@
     />
     <view class="sp-view">
       <text class="title-text">{{ goodsDetail.goodsName }}</text>
+      <view style="align-items: center;margin-top: 10rpx;">
+      <text class="num-text">商品编号：{{ goodsDetail.goodsCode }}</text>
+     <u-icon custom-prefix="hongyan-icon" name="fuzhi" size="32" color="#7F7E86" style="margin-left: 20rpx;" @click="copyNum(goodsDetail.goodsCode)"/>
+      </view>
 
       <view class="jg-view">
         <text class="price-text">￥{{ goodsDetail.goodsPrice }}</text>
@@ -140,6 +144,19 @@ export default {
     this.getCartCount()
   },
   methods: {
+    //复制商品编号
+    copyNum(value){
+      uni.setClipboardData({
+        data: value,
+        success: function() {
+          uni.showToast({
+            icon: 'none',
+            title: '商品编号已复制'
+          })
+        }
+      })
+
+    },
     toConfirmOrder() {
       // let idArr = []
       // this.cartList.forEach(item => {
@@ -235,6 +252,10 @@ export default {
     font-family: PingFangSC-Medium;
 
   }
+  .num-text{
+    color: #999999;
+    font-size: 28rpx;
+  }
 
   .sp-view {
     display: flex;
@@ -248,7 +269,7 @@ export default {
   }
 
   .jg-view {
-    margin-top: 15rpx;
+    margin-top: 27rpx;
     display: flex;
     flex-direction: row;
     align-items: center;

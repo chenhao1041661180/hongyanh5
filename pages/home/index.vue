@@ -11,7 +11,7 @@
     <u-grid :border="false" col="3" align="left"
       style="margin-top: 24rpx;margin-left: 24rpx; margin-right: 24rpx;display: flex;width: 702rpx; border-radius: 16rpx; background-color: white;">
       <u-grid-item v-for="(item,index) in homeFlList" :name="'item'+index" :index="index" @click="itemClick">
-        <image :src="imgUrl(item)" style="width: 90rpx;height: 90rpx;" />
+        <image :src="imgUrl(item)" style="width: 100rpx;height: 100rpx;" />
         </image>
         <view class="grid-text">{{ item.categoryName }}</view>
       </u-grid-item>
@@ -150,7 +150,7 @@
       getList() {
         const params = {
           pageNum: 1,
-          pageSize: 10,
+          pageSize: 18,
           keyword: '',
           sortord: '',
           categoryId: ''
