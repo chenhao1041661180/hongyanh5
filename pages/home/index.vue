@@ -2,7 +2,7 @@
   <view style="position: relative;">
     <!-- <view class="head-bg" /> -->
     <!-- <view class="title-view">
-      <text class="title-text">红岩扶贫</text>
+      <text class="title-text">京E鲜采</text>
     </view> -->
 
     <u-swiper v-if="bannerList.length" :list="bannerList" :height="400" :border-radius="0" mode="round"

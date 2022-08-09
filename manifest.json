@@ -1,5 +1,5 @@
 {
-    "name" : "运营数据",
+    "name" : "京E鲜采",
     "appid" : "__UNI__C8F4AD5",
     "description" : "",
     "versionName" : "1.0.0",
@@ -209,7 +209,7 @@
         "usingComponents" : true
     },
     "h5" : {
-        "title" : "红岩扶贫",
+        "title" : "京E鲜采",
         // "domain" : "",
         "template" : "public/index.html",
         "devServer" : {
@@ -218,7 +218,7 @@
             "proxy" : {
                 "/api" : {
                     // "target" : "http://175.24.203.118/",
-                    "target" : "https://fp.hongyanfuli.com/",
+                    "target" : "https://njmfsy.mfshanchen.com/",
                     "changeOrigin" : true, //是否跨域
                     "secure" : true, // 设置支持https协议的代理
                     "pathRewrite" : {
@@ -227,7 +227,7 @@
                 },
                 "/board" : {
                     // "target" : "http://175.24.203.118/",
-                    "target" : "https://fp.hongyanfuli.com/",
+                    "target" : "https://njmfsy.mfshanchen.com/",
                     "changeOrigin" : true, //是否跨域
                     "secure" : true, // 设置支持https协议的代理
                     "pathRewrite" : {
